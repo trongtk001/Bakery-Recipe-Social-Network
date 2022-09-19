@@ -7,7 +7,6 @@ import SockJS from 'sockjs-client';
 import { over } from 'stompjs';
 import { useIsLogin } from "../hooks/useIsLogin";
 import { useDispatch, useSelector } from "react-redux";
-import { setListMess } from "../store/actions/user.action";
 import '../utils/prototype/array'
 import { getMessage, messageSelector } from "../store/actions/message.action";
 
@@ -45,7 +44,7 @@ export default function Message() {
         console.log("connected");
         stompClient.subscribe('/app/chat/online', onActive, header);
         stompClient.subscribe(`/user/${user.username}/queue/private`, onMessageReceived, header);
-        stompClient.subscribe(`/user/${user.username}/info/error`, onMessageReceived, header);
+        stompClient.subscribe(`/user/${user.username}/info/error`, onError, header);
     }
 
 
@@ -66,7 +65,7 @@ export default function Message() {
 
     useEffect(() => {
         if (isLogin?.id && active?.id) {
-            listMess.get(active.id).length  ?
+            listMess.get(active.id).length ?
                 setMessages(listMess.get(active.id)) :
                 dispatch(getMessage(isLogin.id, active.id, 1, 8, setMessages))
         }
@@ -79,25 +78,26 @@ export default function Message() {
             receiverID: active.id,
             messageBody: message
         }));
-        setMessages(pre => [...pre, message]);
+        setMessages(pre => [...pre, {
+            senderID: isLogin.id,
+            receiverID: active.id,
+            messageBody: message
+        }]);
         setMessage('');
     }
 
     const onMessageReceived = (payload) => {
         // setListMess(payload.body);
+        console.log(true)
         let a = JSON.parse(payload.body);
         dispatch({
             type: "RECEIVED_MESSAGE",
             payload: {
-                memberID: payload.senderID,
-                messages: payload.messageBody
+                memberID: a.senderID,
+                messages: a
             }
         })
-        dispatch(setListMess({
-            senderID: a.senderID,
-            receiverID: a.receiverID,
-            messageBody: a.messageBody
-        }))
+        setMessages(pre => [...pre, a]);
     }
 
     const onActive = (payload) => {

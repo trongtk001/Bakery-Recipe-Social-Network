@@ -1,4 +1,4 @@
-import { LIST_MESS, LIST_MESS_NULL, LOGIN_FAILED, LOGIN_SUCCESS, ACT_LOGOUT, USER_SUCCESS, USER_FAILED, POST_BY_USER_SUCCESS, POST_BY_USER_FAILED } from "../constants/user.const";
+import { LOGIN_FAILED, LOGIN_SUCCESS, ACT_LOGOUT, USER_SUCCESS, USER_FAILED, POST_BY_USER_SUCCESS, POST_BY_USER_FAILED } from "../constants/user.const";
 
 const initialState = {
     user:
@@ -19,12 +19,7 @@ const userReducer = (state = initialState, action) => {
         case LOGIN_SUCCESS: {
             return { ...state, user: payload };
         }
-        case LIST_MESS: {
-            return { ...state, listMess: [...state.listMess, payload] };
-        }
-        case LIST_MESS_NULL: {
-            return { ...state, listMess: [] };
-        }
+
         case LOGIN_FAILED: {
             return { ...state, errors: payload };
         }

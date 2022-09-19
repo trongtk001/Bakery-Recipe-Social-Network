@@ -68,6 +68,8 @@ public class PostService implements BaseService<PostDTO> {
         }
     }
 
+
+
     public Page<PostDTO> findAll(Pageable pageable) {
 
         entityManager.unwrap(Session.class).enableFilter("likeFilter");
@@ -103,7 +105,7 @@ public class PostService implements BaseService<PostDTO> {
     public PostDTO search(Long id) {
         Post post = postRepository.findById(id).orElse(null);
         if (post == null) {
-            new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found this post");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found this post");
         }
         return mapper.toDTO(post);
     }
@@ -119,4 +121,5 @@ public class PostService implements BaseService<PostDTO> {
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Not found");
     }
+
 }

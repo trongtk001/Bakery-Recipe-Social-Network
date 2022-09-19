@@ -40,12 +40,15 @@ const messageReducer = (state = initialState, action) => {
         case "SEND_MESSAGE":
             return {
                 ...state,
-                listMessage: state.listMessage.set(payload.memberId, payload.messages),
             };
         case "RECEIVED_MESSAGE":
+            temp = new Map(state.usersActive)
+            if (temp.has(payload.memberID)) {
+                temp.set(payload.memberID, [...temp.get(payload.memberID), payload.messages])
+            }
             return {
                 ...state,
-                listMessage: state.listMessage.set(payload.memberId, payload.messages),
+                usersActive: [...temp]
             }
         default:
             return state;
