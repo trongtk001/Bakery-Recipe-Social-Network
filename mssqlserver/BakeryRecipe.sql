@@ -1,12 +1,3 @@
---use master 
---drop database BakeryRecipe
---go
-
-create database BakeryRecipe
-go
-use BakeryRecipe
-go
-
 -- ************************************** [Member]
 CREATE TABLE [Member]
 (
