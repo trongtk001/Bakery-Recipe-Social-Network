@@ -1,7 +1,16 @@
--- ************************************** [Menber]
-CREATE TABLE [Menber]
+--use master 
+--drop database BakeryRecipe
+--go
+
+create database BakeryRecipe
+go
+use BakeryRecipe
+go
+
+-- ************************************** [Member]
+CREATE TABLE [Member]
 (
- [menber_id] bigint NOT NULL ,
+ [member_id] bigint NOT NULL ,
  [name]      varchar(50) NOT NULL ,
  [email]     varchar(50) NOT NULL ,
  [DOB]       date NOT NULL ,
@@ -10,7 +19,7 @@ CREATE TABLE [Menber]
  [avartar]   varchar(50) NULL ,
 
 
- CONSTRAINT [Role_User_PK] PRIMARY KEY CLUSTERED ([menber_id] ASC)
+ CONSTRAINT [Role_User_PK] PRIMARY KEY CLUSTERED ([member_id] ASC)
 );
 GO
 -- ************************************** [Role]
@@ -23,15 +32,15 @@ CREATE TABLE [Role]
  CONSTRAINT [Role_PK] PRIMARY KEY CLUSTERED ([role_id] ASC)
 );
 GO
--- ************************************** [Menber_Role]
-CREATE TABLE [Menber_Role]
+-- ************************************** [Member_Role]
+CREATE TABLE [Member_Role]
 (
- [menber_id] bigint NOT NULL ,
+ [member_id] bigint NOT NULL ,
  [role_id]   int NOT NULL ,
 
 
- CONSTRAINT [UR_PK] PRIMARY KEY CLUSTERED ([menber_id] ASC, [role_id] ASC),
- CONSTRAINT [Menber_UR_RS] FOREIGN KEY ([menber_id])  REFERENCES [Menber]([menber_id]),
+ CONSTRAINT [UR_PK] PRIMARY KEY CLUSTERED ([member_id] ASC, [role_id] ASC),
+ CONSTRAINT [Member_UR_RS] FOREIGN KEY ([member_id])  REFERENCES [Member]([member_id]),
  CONSTRAINT [Role_UR_RS] FOREIGN KEY ([role_id])  REFERENCES [Role]([role_id])
 );
 GO
@@ -39,14 +48,14 @@ GO
 -- ************************************** [Friend]
 CREATE TABLE [Friend]
 (
- [menber_id] bigint NOT NULL ,
+ [member_id] bigint NOT NULL ,
  [frend_id]  bigint NOT NULL ,
  [status]    smallint NOT NULL ,
 
 
- CONSTRAINT [Friend_PK] PRIMARY KEY CLUSTERED ([menber_id] ASC, [frend_id] ASC),
- CONSTRAINT [Menber_Friend_RS] FOREIGN KEY ([menber_id])  REFERENCES [Menber]([menber_id]),
- CONSTRAINT [Menber_Friend_RS_2] FOREIGN KEY ([frend_id])  REFERENCES [Menber]([menber_id])
+ CONSTRAINT [Friend_PK] PRIMARY KEY CLUSTERED ([member_id] ASC, [frend_id] ASC),
+ CONSTRAINT [Member_Friend_RS] FOREIGN KEY ([member_id])  REFERENCES [Member]([member_id]),
+ CONSTRAINT [Member_Friend_RS_2] FOREIGN KEY ([frend_id])  REFERENCES [Member]([member_id])
 );
 GO
 -- ************************************** [Message]
@@ -54,21 +63,21 @@ CREATE TABLE [Message]
 (
  [massage_id]         bigint NOT NULL ,
  [massage_body]       nvarchar(500) NOT NULL ,
- [menber_sender_id]   bigint NOT NULL ,
- [menber_receiver_id] bigint NOT NULL ,
+ [member_sender_id]   bigint NOT NULL ,
+ [member_receiver_id] bigint NOT NULL ,
  [mss_create_date]    datetime NOT NULL ,
 
 
  CONSTRAINT [Massage_PK] PRIMARY KEY CLUSTERED ([massage_id] ASC),
- CONSTRAINT [Menber_Message_Receiver_RS] FOREIGN KEY ([menber_receiver_id])  REFERENCES [Menber]([menber_id]),
- CONSTRAINT [Menber_Message_Sender_RS] FOREIGN KEY ([menber_sender_id])  REFERENCES [Menber]([menber_id])
+ CONSTRAINT [Member_Message_Receiver_RS] FOREIGN KEY ([member_receiver_id])  REFERENCES [Member]([member_id]),
+ CONSTRAINT [Member_Message_Sender_RS] FOREIGN KEY ([member_sender_id])  REFERENCES [Member]([member_id])
 );
 GO
 -- ************************************** [Post]
 CREATE TABLE [Post]
 (
  [post_id]     bigint NOT NULL ,
- [menber_id]   bigint NOT NULL ,
+ [member_id]   bigint NOT NULL ,
  [image]       varchar(50) NULL ,
  [video]       varchar(50) NULL ,
  [create_date] datetime NOT NULL ,
@@ -77,7 +86,7 @@ CREATE TABLE [Post]
 
 
  CONSTRAINT [Post_PK] PRIMARY KEY CLUSTERED ([post_id] ASC),
- CONSTRAINT [User_Post_RS] FOREIGN KEY ([menber_id])  REFERENCES [Menber]([menber_id])
+ CONSTRAINT [User_Post_RS] FOREIGN KEY ([member_id])  REFERENCES [Member]([member_id])
 );
 GO
 -- ************************************** [Post_Image]
@@ -108,7 +117,7 @@ GO
 CREATE TABLE [Comment]
 (
  [comment_id]     bigint NOT NULL ,
- [menber_id]      bigint NOT NULL ,
+ [member_id]      bigint NOT NULL ,
  [post_id]        bigint NOT NULL ,
  [comment_detail] nvarchar(500) NOT NULL ,
  [image]          varchar(50) NULL ,
@@ -117,7 +126,7 @@ CREATE TABLE [Comment]
 
  CONSTRAINT [Commnet_PK] PRIMARY KEY CLUSTERED ([comment_id] ASC),
  CONSTRAINT [Post_Comment_RS] FOREIGN KEY ([post_id])  REFERENCES [Post]([post_id]),
- CONSTRAINT [User_Comment_RS] FOREIGN KEY ([menber_id])  REFERENCES [Menber]([menber_id])
+ CONSTRAINT [Member_Comment_RS] FOREIGN KEY ([member_id])  REFERENCES [Member]([member_id])
 );
 GO
 -- ************************************** [Food]
@@ -161,13 +170,13 @@ CREATE TABLE [Store]
 (
  [store_id]   bigint NOT NULL ,
  [store_name] varchar(50) NOT NULL ,
- [menber_id]  bigint NOT NULL ,
+ [member_id]  bigint NOT NULL ,
  [address]    nvarchar(500) NOT NULL ,
  [phone]      varchar(50) NOT NULL ,
 
 
  CONSTRAINT [Store_PK] PRIMARY KEY CLUSTERED ([store_id] ASC),
- CONSTRAINT [User_Store_RS] FOREIGN KEY ([menber_id])  REFERENCES [Menber]([menber_id])
+ CONSTRAINT [Menber_Store_RS] FOREIGN KEY ([member_id])  REFERENCES [Member]([member_id])
 );
 GO
 -- ************************************** [Store_Material]
@@ -189,12 +198,12 @@ CREATE TABLE [Order]
 (
  [oder_id]   bigint NOT NULL ,
  [date]      date NOT NULL ,
- [menber_id] bigint NOT NULL ,
+ [member_id] bigint NOT NULL ,
  [status]    tinyint NOT NULL ,
 
 
  CONSTRAINT [Order_PK] PRIMARY KEY CLUSTERED ([oder_id] ASC),
- CONSTRAINT [User_Order_RS] FOREIGN KEY ([menber_id])  REFERENCES [Menber]([menber_id])
+ CONSTRAINT [Member_Order_RS] FOREIGN KEY ([member_id])  REFERENCES [Member]([member_id])
 );
 GO
 -- ************************************** [Order_Detail]
