@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 --use master 
 --drop database BakeryRecipe
 --go
@@ -7,6 +8,8 @@ go
 use BakeryRecipe
 go
 
+=======
+>>>>>>> 9aff59bc84c5fa7f1c3d9a0bb3383de9be12b267
 -- ************************************** [Member]
 CREATE TABLE [Member]
 (
