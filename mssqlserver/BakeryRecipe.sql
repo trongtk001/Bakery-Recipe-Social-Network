@@ -17,7 +17,7 @@ CREATE TABLE [Member]
  [email]     varchar(50) NOT NULL ,
  [DOB]       date NOT NULL ,
  [username]  varchar(50) NOT NULL ,
- [password]  varchar(100) NOT NULL ,
+ [password]  varchar(70) NOT NULL ,
  [avatar]   varchar(50) NULL ,
 
 
@@ -222,4 +222,19 @@ CREATE TABLE [Order_Detail]
  CONSTRAINT [OD_Material_FK] FOREIGN KEY ([material_id])  REFERENCES [Material]([material_id]),
  CONSTRAINT [Order_OD_FK] FOREIGN KEY ([oder_id])  REFERENCES [Order]([oder_id])
 );
+GO
+
+insert into dbo.Member (member_id, name, email, DOB, username, password, avatar)
+values  (3, N'user', N'user@gmail.com', N'2001-10-17', N'user', N'$2a$10$Ok1e.GgYAsCWbvqX9hVaZOvDgs5UuCLVt45ufhxUOa.hyw8TytjT6', null),
+        (4, N'user2', N'user@gmail.com', N'2001-10-17', N'user2', N'$2a$10$xXPiBG6IrTBOHv86TZ8fo.uQKraLOwi1pAp8C2kyiqsDoZocF1Wwe', null);
+GO
+
+insert into dbo.Role (role_id, role_name)
+values  (1, N'ADMIN'),
+        (2, N'USER');
+GO
+
+insert into dbo.Member_Role (member_id, role_id)
+values  (3, 2),
+        (4, 2);
 GO
