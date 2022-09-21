@@ -1,19 +1,18 @@
 package com.example.bakeryrecipe.api;
 
 import com.example.bakeryrecipe.api.input.LoginInput;
-import com.example.bakeryrecipe.authentication.JwtUtils;
 import com.example.bakeryrecipe.dto.MemberDTO;
+import com.example.bakeryrecipe.entity.Role;
 import com.example.bakeryrecipe.service.MemberService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:3000/", maxAge = (3600), allowCredentials = "true")
 @RestController
@@ -23,24 +22,17 @@ public class AuthenticationAPI {
 
     private final MemberService memberService;
 
-    private final AuthenticationManager authenticationManager;
+    private final PasswordEncoder passwordEncoder;
 
-    private final JwtUtils jwtUtils;
-
-
-    public AuthenticationAPI(MemberService memberService, AuthenticationManager authenticationManager, JwtUtils jwtUtils) {
+    public AuthenticationAPI(MemberService memberService, PasswordEncoder passwordEncoder) {
         this.memberService = memberService;
-        this.authenticationManager = authenticationManager;
-        this.jwtUtils = jwtUtils;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody LoginInput loginInput) {
-        String username = loginInput.getUsername();
-        String password = loginInput.getPassword();
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtUtils.generateJwtCookie(username).toString()).build();
+        ResponseCookie cookie = memberService.Login(loginInput.getUsername(), loginInput.getPassword());
+        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString()).build();
     }
 
     @PostMapping("/register")

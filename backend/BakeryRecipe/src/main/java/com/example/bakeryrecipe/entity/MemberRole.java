@@ -1,12 +1,6 @@
 package com.example.bakeryrecipe.entity;
 
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "Member_Role")
@@ -28,6 +22,7 @@ public class MemberRole {
     }
 
     public MemberRole(Member member, Role role) {
+        this.id = new MemberRoleId(member.getId(), role.getId());
         this.member = member;
         this.role = role;
     }
