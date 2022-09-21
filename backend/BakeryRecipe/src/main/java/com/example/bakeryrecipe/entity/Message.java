@@ -6,6 +6,7 @@ import java.time.Instant;
 @Entity
 public class Message {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "massage_id", nullable = false)
     private Long id;
 

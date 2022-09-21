@@ -1,12 +1,11 @@
 package com.example.bakeryrecipe.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Material {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "material_id", nullable = false)
     private Long id;
 
@@ -15,6 +14,9 @@ public class Material {
 
     @Column(name = "description", nullable = false, length = 500)
     private String description;
+
+    @Column(name = "Unit", nullable = false, length = 50)
+    private String unit;
 
     public Long getId() {
         return id;
@@ -38,6 +40,14 @@ public class Material {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
     }
 
 }
