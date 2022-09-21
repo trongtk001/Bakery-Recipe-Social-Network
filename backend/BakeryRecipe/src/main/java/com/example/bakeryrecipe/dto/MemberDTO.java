@@ -1,32 +1,19 @@
-package com.example.bakeryrecipe.entity;
+package com.example.bakeryrecipe.dto;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Id;
 import java.time.LocalDate;
+import java.util.List;
 
-@Entity
-public class Member {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "member_id", nullable = false)
+public class MemberDTO {
     private Long id;
-
-    @Column(name = "name", nullable = false, length = 50)
     private String name;
-
-    @Column(name = "email", nullable = false, length = 50)
     private String email;
-
-    @Column(name = "DOB", nullable = false)
     private LocalDate dob;
-
-    @Column(name = "username", nullable = false, length = 50)
     private String username;
-
-    @Column(name = "password", nullable = false, length = 100)
     private String password;
-
-    @Column(name = "avatar", length = 50)
     private String avatar;
+    private List<String> roles;
 
     public Long getId() {
         return id;
@@ -84,16 +71,11 @@ public class Member {
         this.avatar = avatar;
     }
 
-    @Override
-    public String toString() {
-        return "Member{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", dob=" + dob +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", avatar='" + avatar + '\'' +
-                '}';
+    public List<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
     }
 }

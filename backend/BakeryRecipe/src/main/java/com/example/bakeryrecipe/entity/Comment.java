@@ -5,6 +5,7 @@ import javax.persistence.*;
 @Entity
 public class Comment {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "comment_id", nullable = false)
     private Long id;
 
