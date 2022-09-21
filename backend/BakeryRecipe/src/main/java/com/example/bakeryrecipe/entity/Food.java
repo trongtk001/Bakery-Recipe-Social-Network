@@ -5,6 +5,7 @@ import javax.persistence.*;
 @Entity
 public class Food {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_id", nullable = false)
     private Long id;
 

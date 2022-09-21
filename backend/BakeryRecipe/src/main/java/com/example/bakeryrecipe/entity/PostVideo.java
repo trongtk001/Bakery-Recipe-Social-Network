@@ -6,6 +6,7 @@ import javax.persistence.*;
 @Table(name = "Post_Video")
 public class PostVideo {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_video_id", nullable = false)
     private Long id;
 

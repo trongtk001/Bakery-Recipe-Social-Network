@@ -6,6 +6,7 @@ import javax.persistence.*;
 @Table(name = "Post_Image")
 public class PostImage {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_image_id", nullable = false)
     private Long id;
 

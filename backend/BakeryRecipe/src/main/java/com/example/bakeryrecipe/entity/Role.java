@@ -1,12 +1,13 @@
 package com.example.bakeryrecipe.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import org.springframework.security.core.GrantedAuthority;
+
+import javax.persistence.*;
 
 @Entity
-public class Role {
+public class Role implements GrantedAuthority {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "role_id", nullable = false)
     private Integer id;
 
@@ -29,4 +30,16 @@ public class Role {
         this.roleName = roleName;
     }
 
+    @Override
+    public String getAuthority() {
+        return roleName;
+    }
+
+    @Override
+    public String toString() {
+        return "Role{" +
+                "id=" + id +
+                ", roleName='" + roleName + '\'' +
+                '}';
+    }
 }
