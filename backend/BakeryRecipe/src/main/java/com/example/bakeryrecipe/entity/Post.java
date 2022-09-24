@@ -1,6 +1,13 @@
 package com.example.bakeryrecipe.entity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.time.Instant;
 
 @Entity
@@ -14,20 +21,11 @@ public class Post {
     @JoinColumn(name = "member_id", nullable = false)
     private Member member;
 
-    @Column(name = "image", length = 50)
-    private String image;
-
-    @Column(name = "video", length = 50)
-    private String video;
-
     @Column(name = "create_date", nullable = false)
     private Instant createDate;
 
-    @Column(name = "tool", nullable = false, length = 500)
-    private String tool;
-
-    @Column(name = "steps", nullable = false, length = 3000)
-    private String steps;
+    @Column(name = "post_body", nullable = false, length = 3000)
+    private String postBody;
 
     public Long getId() {
         return id;
@@ -45,22 +43,6 @@ public class Post {
         this.member = member;
     }
 
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public String getVideo() {
-        return video;
-    }
-
-    public void setVideo(String video) {
-        this.video = video;
-    }
-
     public Instant getCreateDate() {
         return createDate;
     }
@@ -69,20 +51,12 @@ public class Post {
         this.createDate = createDate;
     }
 
-    public String getTool() {
-        return tool;
+    public String getPostBody() {
+        return postBody;
     }
 
-    public void setTool(String tool) {
-        this.tool = tool;
-    }
-
-    public String getSteps() {
-        return steps;
-    }
-
-    public void setSteps(String steps) {
-        this.steps = steps;
+    public void setPostBody(String postBody) {
+        this.postBody = postBody;
     }
 
 }
