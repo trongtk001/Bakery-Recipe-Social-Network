@@ -4,13 +4,10 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class CommentDTO implements Serializable {
-    private Long id;
-    private String commentDetail;
-    private String image;
-    private String video;
-
-    public CommentDTO() {
-    }
+    private final Long id;
+    private final String commentDetail;
+    private final String image;
+    private final String video;
 
     public CommentDTO(Long id, String commentDetail, String image, String video) {
         this.id = id;
