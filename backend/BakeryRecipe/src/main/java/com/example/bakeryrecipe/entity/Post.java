@@ -1,5 +1,8 @@
 package com.example.bakeryrecipe.entity;
 
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -21,11 +24,16 @@ public class Post {
     @JoinColumn(name = "member_id", nullable = false)
     private Member member;
 
+    @CreatedDate
     @Column(name = "create_date", nullable = false)
     private Instant createDate;
 
     @Column(name = "post_body", nullable = false, length = 3000)
     private String postBody;
+
+    @CreatedBy
+    @Column(name = "create_by", nullable = false, length = 50)
+    private String createBy;
 
     public Long getId() {
         return id;
@@ -59,4 +67,11 @@ public class Post {
         this.postBody = postBody;
     }
 
+    public String getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
+    }
 }
