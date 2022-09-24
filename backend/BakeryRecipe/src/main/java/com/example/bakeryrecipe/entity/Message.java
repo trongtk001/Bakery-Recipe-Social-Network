@@ -1,6 +1,13 @@
 package com.example.bakeryrecipe.entity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.time.Instant;
 
 @Entity
@@ -10,9 +17,6 @@ public class Message {
     @Column(name = "massage_id", nullable = false)
     private Long id;
 
-    @Column(name = "massage_body", nullable = false, length = 500)
-    private String massageBody;
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "member_sender_id", nullable = false)
     private Member memberSender;
@@ -20,6 +24,9 @@ public class Message {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "member_receiver_id", nullable = false)
     private Member memberReceiver;
+
+    @Column(name = "massage_body", nullable = false, length = 500)
+    private String massageBody;
 
     @Column(name = "mss_create_date", nullable = false)
     private Instant mssCreateDate;
@@ -30,14 +37,6 @@ public class Message {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getMassageBody() {
-        return massageBody;
-    }
-
-    public void setMassageBody(String massageBody) {
-        this.massageBody = massageBody;
     }
 
     public Member getMemberSender() {
@@ -54,6 +53,14 @@ public class Message {
 
     public void setMemberReceiver(Member memberReceiver) {
         this.memberReceiver = memberReceiver;
+    }
+
+    public String getMassageBody() {
+        return massageBody;
+    }
+
+    public void setMassageBody(String massageBody) {
+        this.massageBody = massageBody;
     }
 
     public Instant getMssCreateDate() {

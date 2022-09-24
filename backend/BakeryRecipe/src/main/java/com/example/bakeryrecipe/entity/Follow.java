@@ -1,30 +1,36 @@
 package com.example.bakeryrecipe.entity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 
 @Entity
-public class Friend {
+public class Follow {
     @EmbeddedId
-    private FriendId id;
+    private FollowId id;
 
     @MapsId("memberId")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "member_id", nullable = false)
     private Member member;
 
-    @MapsId("frendId")
+    @MapsId("followerId")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "frend_id", nullable = false)
-    private Member frend;
+    @JoinColumn(name = "follower_id", nullable = false)
+    private Member follower;
 
     @Column(name = "status", nullable = false)
     private Integer status;
 
-    public FriendId getId() {
+    public FollowId getId() {
         return id;
     }
 
-    public void setId(FriendId id) {
+    public void setId(FollowId id) {
         this.id = id;
     }
 
@@ -36,12 +42,12 @@ public class Friend {
         this.member = member;
     }
 
-    public Member getFrend() {
-        return frend;
+    public Member getFollower() {
+        return follower;
     }
 
-    public void setFrend(Member frend) {
-        this.frend = frend;
+    public void setFollower(Member follower) {
+        this.follower = follower;
     }
 
     public Integer getStatus() {

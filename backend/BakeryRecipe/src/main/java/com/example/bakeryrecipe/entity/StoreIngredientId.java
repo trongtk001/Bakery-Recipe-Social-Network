@@ -9,20 +9,20 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
-public class StoreMaterialId implements Serializable {
-    private static final long serialVersionUID = 2731727887242800911L;
-    @Column(name = "material_id", nullable = false)
-    private Long materialId;
+public class StoreIngredientId implements Serializable {
+    private static final long serialVersionUID = 9091420525183758216L;
+    @Column(name = "ingredients_id", nullable = false)
+    private Long ingredientsId;
 
     @Column(name = "store_id", nullable = false)
     private Long storeId;
 
-    public Long getMaterialId() {
-        return materialId;
+    public Long getIngredientsId() {
+        return ingredientsId;
     }
 
-    public void setMaterialId(Long materialId) {
-        this.materialId = materialId;
+    public void setIngredientsId(Long ingredientsId) {
+        this.ingredientsId = ingredientsId;
     }
 
     public Long getStoreId() {
@@ -37,14 +37,14 @@ public class StoreMaterialId implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        StoreMaterialId entity = (StoreMaterialId) o;
-        return Objects.equals(this.materialId, entity.materialId) &&
+        StoreIngredientId entity = (StoreIngredientId) o;
+        return Objects.equals(this.ingredientsId, entity.ingredientsId) &&
                 Objects.equals(this.storeId, entity.storeId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(materialId, storeId);
+        return Objects.hash(ingredientsId, storeId);
     }
 
 }

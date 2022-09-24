@@ -1,48 +1,39 @@
 package com.example.bakeryrecipe.entity;
 
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Order_Detail")
-public class OrderDetail {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "order_detail_id", nullable = false)
-    private Long id;
+@Table(name = "Recipe_Ingredient")
+public class RecipeIngredient {
+    @EmbeddedId
+    private RecipeIngredientId id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "oder_id", nullable = false)
-    private Order oder;
-
+    @MapsId("ingredientsId")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "ingredients_id", nullable = false)
     private Ingredient ingredients;
 
+    @MapsId("postId")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "post_id", nullable = false)
+    private Recipe post;
+
     @Column(name = "quantity", nullable = false)
     private Integer quantity;
 
-    public Long getId() {
+    public RecipeIngredientId getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(RecipeIngredientId id) {
         this.id = id;
-    }
-
-    public Order getOder() {
-        return oder;
-    }
-
-    public void setOder(Order oder) {
-        this.oder = oder;
     }
 
     public Ingredient getIngredients() {
@@ -51,6 +42,14 @@ public class OrderDetail {
 
     public void setIngredients(Ingredient ingredients) {
         this.ingredients = ingredients;
+    }
+
+    public Recipe getPost() {
+        return post;
+    }
+
+    public void setPost(Recipe post) {
+        this.post = post;
     }
 
     public Integer getQuantity() {
