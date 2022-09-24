@@ -1,17 +1,24 @@
 package com.example.bakeryrecipe.entity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
+import javax.persistence.Table;
 
 @Entity
-@Table(name = "Store_Material")
-public class StoreMaterial {
+@Table(name = "Store_Ingredients")
+public class StoreIngredient {
     @EmbeddedId
-    private StoreMaterialId id;
+    private StoreIngredientId id;
 
-    @MapsId("materialId")
+    @MapsId("ingredientsId")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "material_id", nullable = false)
-    private Material material;
+    @JoinColumn(name = "ingredients_id", nullable = false)
+    private Ingredient ingredients;
 
     @MapsId("storeId")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -24,20 +31,20 @@ public class StoreMaterial {
     @Column(name = "quantity", nullable = false)
     private Integer quantity;
 
-    public StoreMaterialId getId() {
+    public StoreIngredientId getId() {
         return id;
     }
 
-    public void setId(StoreMaterialId id) {
+    public void setId(StoreIngredientId id) {
         this.id = id;
     }
 
-    public Material getMaterial() {
-        return material;
+    public Ingredient getIngredients() {
+        return ingredients;
     }
 
-    public void setMaterial(Material material) {
-        this.material = material;
+    public void setIngredients(Ingredient ingredients) {
+        this.ingredients = ingredients;
     }
 
     public Store getStore() {

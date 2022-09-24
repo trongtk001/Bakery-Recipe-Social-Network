@@ -1,9 +1,17 @@
 package com.example.bakeryrecipe.entity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
 
 @Entity
-public class Food {
+public class Recipe {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_id", nullable = false)
@@ -19,6 +27,12 @@ public class Food {
 
     @Column(name = "description", nullable = false, length = 500)
     private String description;
+
+    @Column(name = "steps", nullable = false, length = 3000)
+    private String steps;
+
+    @Column(name = "tool", nullable = false, length = 500)
+    private String tool;
 
     public Long getId() {
         return id;
@@ -50,6 +64,22 @@ public class Food {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getSteps() {
+        return steps;
+    }
+
+    public void setSteps(String steps) {
+        this.steps = steps;
+    }
+
+    public String getTool() {
+        return tool;
+    }
+
+    public void setTool(String tool) {
+        this.tool = tool;
     }
 
 }

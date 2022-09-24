@@ -9,13 +9,13 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
-public class FriendId implements Serializable {
-    private static final long serialVersionUID = 6203432439783187794L;
+public class FollowId implements Serializable {
+    private static final long serialVersionUID = -1028307781119142171L;
     @Column(name = "member_id", nullable = false)
     private Long memberId;
 
-    @Column(name = "frend_id", nullable = false)
-    private Long frendId;
+    @Column(name = "follower_id", nullable = false)
+    private Long followerId;
 
     public Long getMemberId() {
         return memberId;
@@ -25,26 +25,26 @@ public class FriendId implements Serializable {
         this.memberId = memberId;
     }
 
-    public Long getFrendId() {
-        return frendId;
+    public Long getFollowerId() {
+        return followerId;
     }
 
-    public void setFrendId(Long frendId) {
-        this.frendId = frendId;
+    public void setFollowerId(Long followerId) {
+        this.followerId = followerId;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        FriendId entity = (FriendId) o;
-        return Objects.equals(this.frendId, entity.frendId) &&
+        FollowId entity = (FollowId) o;
+        return Objects.equals(this.followerId, entity.followerId) &&
                 Objects.equals(this.memberId, entity.memberId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(frendId, memberId);
+        return Objects.hash(followerId, memberId);
     }
 
 }

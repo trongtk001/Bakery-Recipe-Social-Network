@@ -1,16 +1,22 @@
 package com.example.bakeryrecipe.entity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
-public class Material {
+@Table(name = "Ingredients")
+public class Ingredient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "material_id", nullable = false)
+    @Column(name = "ingredients_id", nullable = false)
     private Long id;
 
-    @Column(name = "material_name", nullable = false, length = 50)
-    private String materialName;
+    @Column(name = "ingredients", nullable = false, length = 50)
+    private String ingredients;
 
     @Column(name = "description", nullable = false, length = 500)
     private String description;
@@ -26,12 +32,12 @@ public class Material {
         this.id = id;
     }
 
-    public String getMaterialName() {
-        return materialName;
+    public String getIngredients() {
+        return ingredients;
     }
 
-    public void setMaterialName(String materialName) {
-        this.materialName = materialName;
+    public void setIngredients(String ingredients) {
+        this.ingredients = ingredients;
     }
 
     public String getDescription() {
