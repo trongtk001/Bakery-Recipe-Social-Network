@@ -1,7 +1,5 @@
 package com.example.bakeryrecipe.dto;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
 import java.time.LocalDate;
 import java.util.List;
 

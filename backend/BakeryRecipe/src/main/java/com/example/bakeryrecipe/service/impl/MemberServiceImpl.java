@@ -49,6 +49,7 @@ public class MemberServiceImpl implements MemberService {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found this user");
             }
         }
+        MemberDTO memberDTO = new MemberDTO();
         return mapper.toDTO(entity);
     }
 
