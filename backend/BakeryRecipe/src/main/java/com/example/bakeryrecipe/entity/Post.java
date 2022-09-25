@@ -3,15 +3,9 @@ package com.example.bakeryrecipe.entity;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.time.Instant;
+import java.util.List;
 
 @Entity
 public class Post {
@@ -31,10 +25,15 @@ public class Post {
     @Column(name = "post_body", nullable = false, length = 3000)
     private String postBody;
 
-    @CreatedBy
-    @Column(name = "create_by", nullable = false, length = 50)
-    private String createBy;
+//    @CreatedBy
+//    @Column(name = "create_by", nullable = false, length = 50)
+//    private String createBy;
 
+    @OneToMany(mappedBy = "post")
+    private List<PostImage> postImages;
+
+    @OneToMany(mappedBy = "post")
+    private List<PostVideo> postVideos;
     public Long getId() {
         return id;
     }
@@ -67,11 +66,11 @@ public class Post {
         this.postBody = postBody;
     }
 
-    public String getCreateBy() {
-        return createBy;
-    }
-
-    public void setCreateBy(String createBy) {
-        this.createBy = createBy;
-    }
+//    public String getCreateBy() {
+//        return createBy;
+//    }
+//
+//    public void setCreateBy(String createBy) {
+//        this.createBy = createBy;
+//    }
 }
