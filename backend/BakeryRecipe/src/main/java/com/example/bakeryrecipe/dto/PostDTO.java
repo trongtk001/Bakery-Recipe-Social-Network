@@ -1,24 +1,16 @@
 package com.example.bakeryrecipe.dto;
 
-import java.io.Serializable;
 import java.time.Instant;
-import java.util.Objects;
 
-public class PostDTO implements Serializable {
-    private  Long id;
-    private  MemberDTO member;
-    private  Instant createDate;
-    private  String postBody;
+public class PostDTO {
+    private Long id;
+//    private String createBy;
+//    private Instant createDate;
+    private String postBody;
 
-    public PostDTO() {
-    }
+    private String image;
 
-    public PostDTO(Long id, MemberDTO member, Instant createDate, String postBody) {
-        this.id = id;
-        this.member = member;
-        this.createDate = createDate;
-        this.postBody = postBody;
-    }
+    private String video;
 
     public Long getId() {
         return id;
@@ -28,20 +20,36 @@ public class PostDTO implements Serializable {
         this.id = id;
     }
 
-    public MemberDTO getMember() {
-        return member;
+//    public String getCreateBy() {
+//        return createBy;
+//    }
+//
+//    public void setCreateBy(String createBy) {
+//        this.createBy = createBy;
+//    }
+//
+//    public Instant getCreateDate() {
+//        return createDate;
+//    }
+//
+//    public void setCreateDate(Instant createDate) {
+//        this.createDate = createDate;
+//    }
+
+    public String getImage() {
+        return image;
     }
 
-    public void setMember(MemberDTO member) {
-        this.member = member;
+    public void setImage(String image) {
+        this.image = image;
     }
 
-    public Instant getCreateDate() {
-        return createDate;
+    public String getVideo() {
+        return video;
     }
 
-    public void setCreateDate(Instant createDate) {
-        this.createDate = createDate;
+    public void setVideo(String video) {
+        this.video = video;
     }
 
     public String getPostBody() {
@@ -50,30 +58,5 @@ public class PostDTO implements Serializable {
 
     public void setPostBody(String postBody) {
         this.postBody = postBody;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        PostDTO entity = (PostDTO) o;
-        return Objects.equals(this.id, entity.id) &&
-                Objects.equals(this.member, entity.member) &&
-                Objects.equals(this.createDate, entity.createDate) &&
-                Objects.equals(this.postBody, entity.postBody);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, member, createDate, postBody);
-    }
-
-    @Override
-    public String toString() {
-        return getClass().getSimpleName() + "(" +
-                "id = " + id + ", " +
-                "member = " + member + ", " +
-                "createDate = " + createDate + ", " +
-                "postBody = " + postBody + ")";
     }
 }
