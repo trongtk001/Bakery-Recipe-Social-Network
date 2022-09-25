@@ -35,7 +35,7 @@ public class PostServiceImpl implements PostService {
     public PostDTO edit(PostDTO dto) {
         Post oldPost = postRepository.findPostByMemberId(dto.getId());
         Post entity = mapper.toEntity(dto,oldPost);
-        entity = postRepository.save(entity);
+        postRepository.save(entity);
         return mapper.toDTO(entity);
     }
 
