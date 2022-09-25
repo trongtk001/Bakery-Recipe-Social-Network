@@ -59,6 +59,11 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    public MemberDTO edit(MemberDTO dto) {
+        return null;
+    }
+
+    @Override
     public MemberDTO search(Long id) {
         return null;
     }

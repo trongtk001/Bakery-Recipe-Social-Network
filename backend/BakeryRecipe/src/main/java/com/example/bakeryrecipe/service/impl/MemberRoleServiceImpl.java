@@ -27,6 +27,11 @@ public class MemberRoleServiceImpl implements MemberRoleService {
     }
 
     @Override
+    public MemberRole edit(MemberRole dto) {
+        return null;
+    }
+
+    @Override
     public MemberRole delete(long id) {
         return null;
     }
