@@ -1,7 +1,5 @@
 package com.example.bakeryrecipe.entity;
 
-import org.springframework.data.annotation.CreatedBy;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -28,10 +26,6 @@ public class Post {
 
     @Column(name = "post_body", nullable = false, length = 3000)
     private String postBody;
-
-    @CreatedBy
-    @Column(name = "username", nullable = false, length = 50)
-    private String createBy;
 
     public Long getId() {
         return id;
@@ -65,11 +59,4 @@ public class Post {
         this.postBody = postBody;
     }
 
-    public String getCreateBy() {
-        return createBy;
-    }
-
-    public void setCreateBy(String createBy) {
-        this.createBy = createBy;
-    }
 }
