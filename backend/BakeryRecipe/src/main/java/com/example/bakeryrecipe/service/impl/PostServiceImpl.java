@@ -2,13 +2,14 @@ package com.example.bakeryrecipe.service.impl;
 
 
 import com.example.bakeryrecipe.dto.PostDTO;
+import com.example.bakeryrecipe.entity.Member;
 import com.example.bakeryrecipe.entity.Post;
 import com.example.bakeryrecipe.mapper.PostMapper;
+import com.example.bakeryrecipe.repository.MemberRepository;
 import com.example.bakeryrecipe.repository.PostRepository;
 import com.example.bakeryrecipe.service.PostService;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -46,6 +47,12 @@ public class PostServiceImpl implements PostService {
     public List<PostDTO> findAll() {
         List<Post> entities = postRepository.findAll();
         return mapper.toDTOList(entities);
+    }
+
+    @Override
+    public List<PostDTO> findAllByMemberId(long id) {
+       List<Post> list = postRepository.findAllByMemberId(id);
+        return mapper.toDTOList(list);
     }
 
     @Override

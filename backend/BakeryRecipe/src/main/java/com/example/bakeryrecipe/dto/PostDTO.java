@@ -1,23 +1,27 @@
 package com.example.bakeryrecipe.dto;
 
-import com.example.bakeryrecipe.entity.Member;
-import com.example.bakeryrecipe.entity.PostImage;
-import com.example.bakeryrecipe.entity.PostVideo;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
-import javax.persistence.*;
+import java.io.Serializable;
 import java.time.Instant;
-import java.util.List;
+import java.util.Objects;
 
-public class PostDTO {
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class PostDTO implements Serializable {
+    private  Long id;
+    private  MemberDTO member;
+    private  Instant createDate;
+    private  String postBody;
 
-    private Long id;
-    private Member member;
-    private Instant createDate;
-    private String postBody;
-    private List<PostImage> postImages;
-    private List<PostVideo> postVideos;
+    public PostDTO() {
+    }
+
+    public PostDTO(Long id, MemberDTO member, Instant createDate, String postBody) {
+        this.id = id;
+        this.member = member;
+        this.createDate = createDate;
+        this.postBody = postBody;
+    }
 
     public Long getId() {
         return id;
@@ -27,11 +31,11 @@ public class PostDTO {
         this.id = id;
     }
 
-    public Member getMember() {
+    public MemberDTO getMember() {
         return member;
     }
 
-    public void setMember(Member member) {
+    public void setMember(MemberDTO member) {
         this.member = member;
     }
 
@@ -51,19 +55,28 @@ public class PostDTO {
         this.postBody = postBody;
     }
 
-    public List<PostImage> getPostImages() {
-        return postImages;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PostDTO entity = (PostDTO) o;
+        return Objects.equals(this.id, entity.id) &&
+                Objects.equals(this.member, entity.member) &&
+                Objects.equals(this.createDate, entity.createDate) &&
+                Objects.equals(this.postBody, entity.postBody);
     }
 
-    public void setPostImages(List<PostImage> postImages) {
-        this.postImages = postImages;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, member, createDate, postBody);
     }
 
-    public List<PostVideo> getPostVideos() {
-        return postVideos;
-    }
-
-    public void setPostVideos(List<PostVideo> postVideos) {
-        this.postVideos = postVideos;
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + "(" +
+                "id = " + id + ", " +
+                "member = " + member + ", " +
+                "createDate = " + createDate + ", " +
+                "postBody = " + postBody + ")";
     }
 }
