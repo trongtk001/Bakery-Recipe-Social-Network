@@ -1,9 +1,12 @@
 package com.example.bakeryrecipe.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class PostDTO implements Serializable {
     private  Long id;
     private  MemberDTO member;

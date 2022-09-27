@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface PostService extends Service<PostDTO>{
     List<PostDTO> findAll();
+    List<PostDTO> findAllByMemberId(long id);
 }

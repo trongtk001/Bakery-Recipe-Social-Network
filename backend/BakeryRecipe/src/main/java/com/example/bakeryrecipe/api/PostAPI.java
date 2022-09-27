@@ -25,4 +25,10 @@ public class PostAPI {
     public List<PostDTO> listPost(){
         return postService.findAll();
     }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/{id}")
+    public List<PostDTO> listPostUser(@PathVariable("id") long id){
+        return postService.findAllByMemberId(id);
+    }
 }

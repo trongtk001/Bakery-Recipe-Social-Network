@@ -1,8 +1,11 @@
 package com.example.bakeryrecipe.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.time.LocalDate;
 import java.util.List;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class MemberDTO {
     private Long id;
     private String name;
