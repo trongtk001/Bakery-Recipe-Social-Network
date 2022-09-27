@@ -42,7 +42,6 @@ public class Post {
 
     @OneToMany(mappedBy = "post")
     private List<PostVideo> postVideos;
-
     public Long getId() {
         return id;
     }
@@ -74,4 +73,12 @@ public class Post {
     public void setPostBody(String postBody) {
         this.postBody = postBody;
     }
+
+//    public String getCreateBy() {
+//        return createBy;
+//    }
+//
+//    public void setCreateBy(String createBy) {
+//        this.createBy = createBy;
+//    }
 }
