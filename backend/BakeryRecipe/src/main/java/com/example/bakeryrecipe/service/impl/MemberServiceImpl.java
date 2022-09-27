@@ -39,6 +39,8 @@ public class MemberServiceImpl implements MemberService {
                 entity.setPassword(passwordEncoder.encode(dto.getPassword()));
                 memberRepository.save(entity);
                 memberRoleService.save(entity, dto.getRoles());
+            } else {
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "User with the same identity already exists");
             }
         } else {
             //edit member info
