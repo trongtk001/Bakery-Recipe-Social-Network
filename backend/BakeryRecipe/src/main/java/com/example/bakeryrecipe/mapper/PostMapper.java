@@ -1,8 +1,6 @@
 package com.example.bakeryrecipe.mapper;
 
-import com.example.bakeryrecipe.dto.MemberDTO;
 import com.example.bakeryrecipe.dto.PostDTO;
-import com.example.bakeryrecipe.entity.Member;
 import com.example.bakeryrecipe.entity.Post;
 import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
@@ -39,7 +37,9 @@ public class PostMapper implements Mapper<Post, PostDTO>{
 
     @Override
     public PostDTO toDTO(Post entity, PostDTO dto) {
-        return null;
+        modelMapper.getConfiguration().setPropertyCondition(Conditions.isNotNull());
+        modelMapper.map(entity, dto);
+        return dto;
     }
 
     @Override
