@@ -8,6 +8,9 @@ import com.example.bakeryrecipe.repository.PostRepository;
 import com.example.bakeryrecipe.service.PostService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class PostServiceImpl implements PostService {
 
@@ -37,6 +40,12 @@ public class PostServiceImpl implements PostService {
         Post entity = mapper.toEntity(dto,oldPost);
         entity = postRepository.save(entity);
         return mapper.toDTO(entity);
+    }
+
+    @Override
+    public List<PostDTO> findAll() {
+        List<Post> entities = postRepository.findAll();
+        return mapper.toDTOList(entities);
     }
 
     @Override
