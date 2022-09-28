@@ -3,6 +3,7 @@ package com.example.bakeryrecipe.api;
 import com.example.bakeryrecipe.entity.Role;
 import com.example.bakeryrecipe.repository.MemberRoleRepository;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,7 +22,6 @@ public class Test {
     }
 
     @PostMapping("")
-    public List<Role> test() {
-        return memberRoleRepository.findAllByMemberId(3L).stream().map(memberRole -> memberRole.getRole()).collect(Collectors.toList());
+    public void test() {
     }
 }
