@@ -3,6 +3,7 @@ package com.example.bakeryrecipe.api;
 import com.example.bakeryrecipe.dto.PostDTO;
 import com.example.bakeryrecipe.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,10 +22,24 @@ public class PostAPI {
         return postService.save(postDTO);
     }
 
+    @PreAuthorize("isAuthenticated()")
+    @PutMapping("/{id}")
+    public PostDTO updatePost(@RequestBody PostDTO postDTO,@PathVariable("id") Long id){
+        postDTO.setId(id);
+        return postService.update(postDTO);
+    }
+
+    @PostAuthorize("#returnObject.member.id.equals(authentication.principal.id)")
+    @DeleteMapping("/{id}")
+    public PostDTO deletePost(@PathVariable("id") Long id){
+        return postService.delete(id);
+    }
+
     @GetMapping
     public List<PostDTO> listPost(){
         return postService.findAll();
     }
+
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/{id}")
