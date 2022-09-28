@@ -1,6 +1,7 @@
 package com.example.bakeryrecipe.service.impl;
 
 
+import com.example.bakeryrecipe.authentication.UserDetailsImpl;
 import com.example.bakeryrecipe.dto.PostDTO;
 import com.example.bakeryrecipe.entity.Member;
 import com.example.bakeryrecipe.entity.Post;
@@ -9,7 +10,10 @@ import com.example.bakeryrecipe.repository.MemberRepository;
 import com.example.bakeryrecipe.repository.PostRepository;
 import com.example.bakeryrecipe.service.PostService;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -57,10 +61,16 @@ public class PostServiceImpl implements PostService {
     public PostDTO delete(long id) {
         Post entity = postRepository.findPostsById(id);
         if(entity != null){
-            postRepository.delete(entity);
-            return mapper.toDTO(entity);
+            UserDetailsImpl userDetails = (UserDetailsImpl)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            if (entity.getMember().getId().equals(userDetails.getId())) {
+                postRepository.delete(entity);
+                return mapper.toDTO(entity);
+            } else {
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Not post owner");
+            }
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"not found post");
         }
-       return null;
     }
 
     @Override

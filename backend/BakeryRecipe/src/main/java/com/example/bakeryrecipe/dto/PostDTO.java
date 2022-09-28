@@ -18,7 +18,7 @@ public class PostDTO implements Serializable {
 
     public PostDTO(Long id, MemberDTO member, Instant createDate, String postBody) {
         this.id = id;
-        this.member = new MemberDTO(member.getId());
+        this.member = member;
         this.createDate = createDate;
         this.postBody = postBody;
     }
@@ -36,7 +36,7 @@ public class PostDTO implements Serializable {
     }
 
     public void setMember(MemberDTO member) {
-        this.member = member;
+        this.member = new MemberDTO(member.getId());
     }
 
     public Instant getCreateDate() {

@@ -25,8 +25,4 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Query("select p from Post p")
     List<Post> findAll();
 
-    @Query("delete from Post p where p.id = ?1")
-    @Modifying
-    @Transactional
-    Post deletePostById(long id);
 }

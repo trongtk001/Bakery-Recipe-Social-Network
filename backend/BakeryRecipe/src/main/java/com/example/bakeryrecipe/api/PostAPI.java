@@ -31,13 +31,9 @@ public class PostAPI {
         return postService.update(postDTO);
     }
 
-    @PostAuthorize("#returnObject.member.id.equals(authentication.principal.id)")
+    @PreAuthorize("isAuthenticated()")
     @DeleteMapping("/{id}")
     public PostDTO deletePost(@PathVariable("id") Long id){
-        PostDTO postDTO = postService.delete(id);
-        if(postDTO != null){
-            return new ResponseStatusException(HttpStatus.NOT_FOUND,"not found post");
-        }
         return postService.delete(id);
     }
 
