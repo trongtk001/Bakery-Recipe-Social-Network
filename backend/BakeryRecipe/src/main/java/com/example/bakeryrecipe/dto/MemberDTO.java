@@ -13,6 +13,13 @@ public class MemberDTO {
     private String avatar;
     private List<String> roles;
 
+    public MemberDTO() {
+    }
+
+    public MemberDTO(Long id) {
+        this.id = id;
+    }
+
     public Long getId() {
         return id;
     }
