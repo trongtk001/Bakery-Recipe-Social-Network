@@ -16,6 +16,12 @@ public class MemberDTO {
     private String avatar;
     private List<String> roles;
 
+    public MemberDTO(Long id) {
+    }
+
+    public MemberDTO() {
+    }
+
     public Long getId() {
         return id;
     }
