@@ -18,7 +18,7 @@ public class PostAPI {
     @Autowired
     PostService postService;
 
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("#postDTO.member.id.equals(authentication.principal.id)")
     @PostMapping("")
     public PostDTO createPost(@RequestBody PostDTO postDTO){
         return postService.save(postDTO);

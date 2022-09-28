@@ -71,6 +71,14 @@ public class UserDetailsImpl implements UserDetails {
         return true;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public void setUsername(String username) {
         this.username = username;
     }
@@ -89,5 +97,16 @@ public class UserDetailsImpl implements UserDetails {
 
     public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
         this.authorities = authorities;
+    }
+
+    @Override
+    public String toString() {
+        return "UserDetailsImpl{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", status=" + status +
+                ", authorities=" + authorities +
+                '}';
     }
 }
