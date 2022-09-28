@@ -17,6 +17,7 @@ public class MemberDTO {
     private List<String> roles;
 
     public MemberDTO(Long id) {
+        this.id = id;
     }
 
     public MemberDTO() {
