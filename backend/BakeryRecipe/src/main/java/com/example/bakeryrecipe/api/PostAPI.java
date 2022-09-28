@@ -3,12 +3,14 @@ package com.example.bakeryrecipe.api;
 import com.example.bakeryrecipe.dto.PostDTO;
 import com.example.bakeryrecipe.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:3000/", maxAge = (3600), allowCredentials = "true")
 @RestController
 @RequestMapping("api/post")
 @PreAuthorize("permitAll()")
@@ -19,8 +21,7 @@ public class PostAPI {
     @PreAuthorize("isAuthenticated()")
     @PostMapping("")
     public PostDTO createPost(@RequestBody PostDTO postDTO){
-        postService.save(postDTO);
-        return postDTO;
+        return postService.save(postDTO);
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -30,9 +31,13 @@ public class PostAPI {
         return postService.update(postDTO);
     }
 
-    @PreAuthorize("isAuthenticated()")
+    @PostAuthorize("#returnObject.member.id.equals(authentication.principal.id)")
     @DeleteMapping("/{id}")
     public PostDTO deletePost(@PathVariable("id") Long id){
+        PostDTO postDTO = postService.delete(id);
+        if(postDTO == null){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"not found post");
+        }
         return postService.delete(id);
     }
 

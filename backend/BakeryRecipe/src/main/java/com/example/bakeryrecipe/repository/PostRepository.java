@@ -14,15 +14,15 @@ import java.util.Optional;
 
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
-    @Query("select p from Post p where p.member.id = ?1")
     Post findPostByMemberId(Long id);
 
-    @Query("select p from Post p where p.id = ?1")
     Post findPostsById(Long id);
 
-    @Query("select p from Post p where p.member.id = ?1")
     List<Post> findAllByMemberId(Long id);
-    @Query("select p from Post p")
+
     List<Post> findAll();
 
+    @Modifying
+    @Transactional
+    Post deletePostById(long id);
 }
