@@ -21,9 +21,8 @@ public class Test {
         this.s3Service = s3Service;
     }
 
-    @PreAuthorize("isAuthenticated()")
-    @PostMapping("")
-    public String test(@RequestPart(value = "file")MultipartFile file) {
-        return s3Service.uploadFile(file);
+    @GetMapping("")
+    public String test() {
+        return "Welcome";
     }
 }
