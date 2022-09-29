@@ -1,11 +1,11 @@
 package com.example.bakeryrecipe.api;
 
 import com.example.bakeryrecipe.api.input.LoginInput;
+import com.example.bakeryrecipe.api.output.LoginOutput;
 import com.example.bakeryrecipe.authentication.JwtUtils;
 import com.example.bakeryrecipe.dto.MemberDTO;
 import com.example.bakeryrecipe.service.MemberService;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -40,7 +40,8 @@ public class AuthenticationAPI {
         String password = loginInput.getPassword();
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtUtils.generateJwtCookie(username).toString()).build();
+        long id = memberService.searchMemberByUsername(username).getId();
+        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtUtils.generateJwtCookie(username).toString()).body(new LoginOutput(id));
     }
 
     @PostMapping("/register")

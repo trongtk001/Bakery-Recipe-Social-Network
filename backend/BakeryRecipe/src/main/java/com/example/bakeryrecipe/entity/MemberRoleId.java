@@ -17,6 +17,14 @@ public class MemberRoleId implements Serializable {
     @Column(name = "role_id", nullable = false)
     private Integer roleId;
 
+    public MemberRoleId() {
+    }
+
+    public MemberRoleId(Long memberId, Integer roleId) {
+        this.memberId = memberId;
+        this.roleId = roleId;
+    }
+
     public Long getMemberId() {
         return memberId;
     }

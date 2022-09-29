@@ -7,6 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Role implements GrantedAuthority {
@@ -17,6 +20,9 @@ public class Role implements GrantedAuthority {
 
     @Column(name = "role_name", nullable = false, length = 50)
     private String roleName;
+
+    @OneToMany(mappedBy = "role")
+    private List<MemberRole> memberRoles = new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -32,6 +38,14 @@ public class Role implements GrantedAuthority {
 
     public void setRoleName(String roleName) {
         this.roleName = roleName;
+    }
+
+    public List<MemberRole> getMemberRoles() {
+        return memberRoles;
+    }
+
+    public void setMemberRoles(List<MemberRole> memberRoles) {
+        this.memberRoles = memberRoles;
     }
 
     @Override
