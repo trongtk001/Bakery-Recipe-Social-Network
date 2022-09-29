@@ -28,6 +28,7 @@ public class MemberRole {
     }
 
     public MemberRole(Member member, Role role) {
+        this.id = new MemberRoleId(member.getId(), role.getId());
         this.member = member;
         this.role = role;
     }

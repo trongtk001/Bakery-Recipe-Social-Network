@@ -3,11 +3,8 @@ package com.example.bakeryrecipe.api;
 import com.example.bakeryrecipe.dto.PostDTO;
 import com.example.bakeryrecipe.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -18,7 +15,7 @@ public class PostAPI {
     @Autowired
     PostService postService;
 
-    @PreAuthorize("#postDTO.member.id.equals(authentication.principal.id)")
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("")
     public PostDTO createPost(@RequestBody PostDTO postDTO){
         postService.save(postDTO);

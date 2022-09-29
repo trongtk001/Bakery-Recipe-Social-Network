@@ -1,6 +1,6 @@
 package com.example.bakeryrecipe.service;
 
-public interface Service<T> {
+public interface BaseService<T> {
 
     T save(T dto);
 
