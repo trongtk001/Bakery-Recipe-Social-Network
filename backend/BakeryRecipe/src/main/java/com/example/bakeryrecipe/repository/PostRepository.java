@@ -16,6 +16,7 @@ import java.util.Optional;
 public interface PostRepository extends JpaRepository<Post, Long> {
     Post findPostByMemberId(Long id);
 
+    @Query("select p from Post p where p.id = ?1")
     Post findPostsById(Long id);
 
     List<Post> findAllByMemberId(Long id);
