@@ -16,7 +16,6 @@ import java.util.Optional;
 public interface PostRepository extends JpaRepository<Post, Long> {
     Post findPostByMemberId(Long id);
 
-    @Query("select p from Post p where p.id = ?1")
     Post findPostsById(Long id);
 
     List<Post> findAllByMemberId(Long id);
@@ -26,4 +25,8 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Modifying
     @Transactional
     Post deletePostById(long id);
+
+
+    @Query("select p from Post p where p.postBody LIKE CONCAT('%',:name,'%') or p.member.name LIKE CONCAT('%',:name,'%')")
+    List<Post> findAllByPostBodyOrMember_Name(String name);
 }

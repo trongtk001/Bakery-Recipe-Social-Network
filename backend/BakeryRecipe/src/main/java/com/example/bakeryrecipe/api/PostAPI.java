@@ -49,4 +49,9 @@ public class PostAPI {
     public List<PostDTO> listPostUser(@PathVariable("id") long id){
         return postService.findAllByMemberId(id);
     }
+
+    @GetMapping("/search")
+    public List<PostDTO> searchPostByName(@RequestParam("name") String name){
+        return postService.searchPostByName(name);
+    }
 }

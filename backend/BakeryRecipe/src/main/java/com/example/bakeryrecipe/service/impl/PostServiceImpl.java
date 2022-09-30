@@ -9,7 +9,6 @@ import com.example.bakeryrecipe.mapper.PostMapper;
 import com.example.bakeryrecipe.repository.MemberRepository;
 import com.example.bakeryrecipe.repository.PostRepository;
 import com.example.bakeryrecipe.service.PostService;
-import org.apache.catalina.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -62,14 +61,14 @@ public class PostServiceImpl implements PostService {
         Post entity = postRepository.findPostsById(id);
         if(entity != null){
             UserDetailsImpl userDetails = (UserDetailsImpl)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            if(entity.getMember().getId().equals(userDetails.getId())){
+            if (entity.getMember().getId().equals(userDetails.getId())) {
                 postRepository.delete(entity);
                 return mapper.toDTO(entity);
-            }else{
-                throw new ResponseStatusException(HttpStatus.FORBIDDEN,"not post owner");
+            } else {
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Not post owner");
             }
-        }else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"not found");
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"not found post");
         }
     }
 
@@ -77,4 +76,11 @@ public class PostServiceImpl implements PostService {
     public PostDTO search(Long id) {
         return null;
     }
+
+    @Override
+    public List<PostDTO> searchPostByName(String name){
+        List<Post> list = postRepository.findAllByPostBodyOrMember_Name(name);
+        return mapper.toDTOList(list);
+    }
+
 }
