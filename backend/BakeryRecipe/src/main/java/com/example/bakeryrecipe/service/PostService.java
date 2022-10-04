@@ -7,6 +7,9 @@ import com.example.bakeryrecipe.entity.Post;
 import com.example.bakeryrecipe.mapper.PostMapper;
 import com.example.bakeryrecipe.repository.PostRepository;
 import com.example.bakeryrecipe.service.BaseService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -41,9 +44,10 @@ public class PostService implements BaseService<PostDTO> {
         return mapper.toDTO(entity);
     }
 
-    public List<PostDTO> findAll() {
-        List<Post> entities = postRepository.findAll();
-        return mapper.toDTOList(entities);
+    public Page<PostDTO> findAll(Pageable pageable) {
+        Page<Post> entities = postRepository.findAll(pageable);
+        Page<PostDTO> postDTOS = new PageImpl<>(mapper.toDTOList(entities.getContent()),pageable,entities.getTotalElements());
+        return postDTOS;
     }
 
     public List<PostDTO> findAllByMemberId(long id) {

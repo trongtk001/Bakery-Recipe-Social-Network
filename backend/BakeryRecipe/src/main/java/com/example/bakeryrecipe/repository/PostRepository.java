@@ -3,6 +3,8 @@ package com.example.bakeryrecipe.repository;
 import com.example.bakeryrecipe.entity.Post;
 import com.example.bakeryrecipe.entity.PostImage;
 import com.example.bakeryrecipe.entity.Recipe;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -20,7 +22,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     List<Post> findAllByMemberId(Long id);
 
-    List<Post> findAll();
+    Page<Post> findAll(Pageable pageable);
 
     @Modifying
     @Transactional

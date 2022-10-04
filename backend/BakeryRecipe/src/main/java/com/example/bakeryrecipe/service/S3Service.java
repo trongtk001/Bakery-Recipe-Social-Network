@@ -59,7 +59,6 @@ public class S3Service {
             String fileName = generateFileName(multipartFile);
             fileUrl = endpointUrl + "/" + fileName;
             uploadToS3(fileName, multipartFile);
-
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Can't up load file");
         }

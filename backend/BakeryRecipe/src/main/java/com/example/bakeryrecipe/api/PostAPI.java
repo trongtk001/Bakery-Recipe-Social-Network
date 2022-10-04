@@ -1,8 +1,12 @@
 package com.example.bakeryrecipe.api;
 
+import com.example.bakeryrecipe.dto.MemberDTO;
 import com.example.bakeryrecipe.dto.PostDTO;
 import com.example.bakeryrecipe.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -38,9 +42,15 @@ public class PostAPI {
     }
 
     @GetMapping
-    public List<PostDTO> listPost(){
-        return postService.findAll();
+    public Page<PostDTO> listPost(@RequestParam("page") int page, @RequestParam("size") int size){
+        Pageable pageable = PageRequest.of(page - 1, size);
+        return postService.findAll(pageable);
     }
+
+//    public Page<MemberDTO> searchMember(@RequestParam("q") String q, @RequestParam("page") int page, @RequestParam("size") int size) {
+//        Pageable pageable = PageRequest.of(page - 1, size);
+//        return memberService.searchMemberByName(q, pageable);
+//    }
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/{id}")

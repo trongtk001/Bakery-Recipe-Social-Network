@@ -39,7 +39,6 @@ public class MemberAPI {
     @GetMapping("")
     public Page<MemberDTO> searchMember(@RequestParam("q") String q, @RequestParam("page") int page, @RequestParam("size") int size) {
         Pageable pageable = PageRequest.of(page - 1, size);
-
         return memberService.searchMemberByName(q, pageable);
     }
 }
