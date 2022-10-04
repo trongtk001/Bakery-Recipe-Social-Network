@@ -15,7 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 
-@CrossOrigin(allowCredentials = "true")
+@CrossOrigin()
 @RestController
 @RequestMapping("api/authentication")
 @PreAuthorize("permitAll()")

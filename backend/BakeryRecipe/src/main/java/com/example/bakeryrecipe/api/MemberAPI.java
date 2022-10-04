@@ -1,5 +1,6 @@
 package com.example.bakeryrecipe.api;
 
+import com.example.bakeryrecipe.api.output.ListMemberOutput;
 import com.example.bakeryrecipe.dto.MemberDTO;
 import com.example.bakeryrecipe.service.MemberService;
 import org.springframework.data.domain.Page;
@@ -37,8 +38,9 @@ public class MemberAPI {
     }
 
     @GetMapping("")
-    public Page<MemberDTO> searchMember(@RequestParam("q") String q, @RequestParam("page") int page, @RequestParam("size") int size) {
+    public ListMemberOutput searchMember(@RequestParam("q") String q, @RequestParam("page") int page, @RequestParam("size") int size) {
         Pageable pageable = PageRequest.of(page - 1, size);
-        return memberService.searchMemberByName(q, pageable);
+        Page<MemberDTO> memberDTOS = memberService.searchMemberByName(q, pageable);
+        return new ListMemberOutput(page, size, memberDTOS.getTotalPages(), memberDTOS.getContent());
     }
 }
