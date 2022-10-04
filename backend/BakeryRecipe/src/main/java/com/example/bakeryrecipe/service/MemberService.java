@@ -4,6 +4,9 @@ import com.example.bakeryrecipe.dto.MemberDTO;
 import com.example.bakeryrecipe.entity.Member;
 import com.example.bakeryrecipe.mapper.MemberMapper;
 import com.example.bakeryrecipe.repository.MemberRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -61,11 +64,13 @@ public class MemberService implements BaseService<MemberDTO> {
 
     @Override
     public MemberDTO search(Long id) {
-        return null;
+        return mapper.toDTO(memberRepository.findById(id).orElse(null));
     }
 
-    public MemberDTO searchMemberByID(Long id) {
-        return null;
+    public Page<MemberDTO> searchMemberByName(String q, Pageable pageable) {
+        Page<Member> members = memberRepository.findAllByName(q, pageable);
+        Page<MemberDTO> memberDTOS = new PageImpl<>(mapper.toDTOList(members.getContent()), pageable, members.getTotalElements());
+        return memberDTOS;
     }
 
     public MemberDTO searchMemberByUsername(String username) {

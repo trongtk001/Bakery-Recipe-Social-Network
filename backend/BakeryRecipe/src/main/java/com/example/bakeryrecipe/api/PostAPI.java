@@ -37,12 +37,10 @@ public class PostAPI {
         return postService.delete(id);
     }
 
-
     @GetMapping
     public List<PostDTO> listPost(){
         return postService.findAll();
     }
-
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/{id}")

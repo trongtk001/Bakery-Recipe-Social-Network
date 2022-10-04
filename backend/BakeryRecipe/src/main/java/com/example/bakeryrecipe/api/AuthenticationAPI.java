@@ -15,7 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 
-@CrossOrigin(origins = "http://localhost:3000/", maxAge = (3600), allowCredentials = "true")
+@CrossOrigin(allowCredentials = "true")
 @RestController
 @RequestMapping("api/authentication")
 @PreAuthorize("permitAll()")

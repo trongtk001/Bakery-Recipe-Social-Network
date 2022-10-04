@@ -6,7 +6,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-@CrossOrigin(origins = "http://localhost:3000/", maxAge = (3600), allowCredentials = "true")
+@CrossOrigin()
 @RestController
 @RequestMapping("api/test")
 @PreAuthorize("permitAll()")
@@ -22,7 +22,7 @@ public class Test {
     }
 
     @GetMapping("")
-    public String test() {
-        return "Welcome";
+    public String test(@RequestPart(value = "file") MultipartFile file) {
+        return s3Service.uploadFile(file);
     }
 }
