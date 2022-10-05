@@ -25,6 +25,7 @@ public class PostImage {
     @Column(name = "image", nullable = false, length = 50)
     private String image;
 
+
     public Long getId() {
         return id;
     }

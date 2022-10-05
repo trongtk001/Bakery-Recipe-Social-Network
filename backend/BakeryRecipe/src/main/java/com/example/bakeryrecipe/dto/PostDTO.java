@@ -1,9 +1,11 @@
 package com.example.bakeryrecipe.dto;
 
+import com.example.bakeryrecipe.entity.Recipe;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.List;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -12,15 +14,19 @@ public class PostDTO implements Serializable {
     private  MemberDTO member;
     private  Instant createDate;
     private  String postBody;
-
+    private RecipeDTO recipe;
+    private List<PostImageDTO> postImages;
+    private List<PostVideoDTO> postVideos;
     public PostDTO() {
     }
 
-    public PostDTO(Long id, MemberDTO member, Instant createDate, String postBody) {
+    public PostDTO(Long id, MemberDTO member, Instant createDate, String postBody, RecipeDTO recipe) {
         this.id = id;
         this.member = member;
         this.createDate = createDate;
         this.postBody = postBody;
+        this.recipe = recipe;
+
     }
 
     public Long getId() {
@@ -39,6 +45,14 @@ public class PostDTO implements Serializable {
         this.member = new MemberDTO(member.getId());
     }
 
+    public RecipeDTO getRecipe() {
+        return recipe;
+    }
+
+    public void setRecipe(RecipeDTO recipe) {
+        this.recipe = recipe;
+    }
+
     public Instant getCreateDate() {
         return createDate;
     }
@@ -53,6 +67,22 @@ public class PostDTO implements Serializable {
 
     public void setPostBody(String postBody) {
         this.postBody = postBody;
+    }
+
+    public List<PostImageDTO> getPostImages() {
+        return postImages;
+    }
+
+    public void setPostImages(List<PostImageDTO> postImages) {
+        this.postImages = postImages;
+    }
+
+    public List<PostVideoDTO> getPostVideos() {
+        return postVideos;
+    }
+
+    public void setPostVideos(List<PostVideoDTO> postVideos) {
+        this.postVideos = postVideos;
     }
 
     @Override
