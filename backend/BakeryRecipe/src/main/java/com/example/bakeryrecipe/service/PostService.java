@@ -40,9 +40,10 @@ public class PostService implements BaseService<PostDTO> {
     public PostDTO save(PostDTO dto) {
         Post entity = mapper.toEntity(dto);
         entity = postRepository.save(entity);
-        recipeService.save(dto.getRecipe());
+        recipeService.saves(dto.getRecipe());
         for(PostImageDTO dtos : dto.getPostImages()){
-            postImageService.save(dtos);
+            System.out.println("postImage" + dtos);
+            postImageService.saves(dtos);
         }
         return mapper.toDTO(entity);
     }

@@ -18,11 +18,13 @@ public class PostImageService implements BaseService<PostImageDTO>{
         this.mapper = mapper;
     }
 
-    @Override
-    public PostImageDTO save(PostImageDTO dto) {
+    public void saves(PostImageDTO dto){
         PostImage postImage = mapper.toEntity(dto);
         postImage = postImageRepository.save(postImage);
-        return mapper.toDTO(postImage);
+    }
+    @Override
+    public PostImageDTO save(PostImageDTO dto) {
+        return null;
     }
 
     @Override
