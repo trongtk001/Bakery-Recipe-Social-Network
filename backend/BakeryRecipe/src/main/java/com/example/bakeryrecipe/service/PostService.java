@@ -3,8 +3,12 @@ package com.example.bakeryrecipe.service;
 
 import com.example.bakeryrecipe.authentication.UserDetailsImpl;
 import com.example.bakeryrecipe.dto.PostDTO;
+import com.example.bakeryrecipe.dto.PostImageDTO;
 import com.example.bakeryrecipe.entity.Post;
+import com.example.bakeryrecipe.entity.Recipe;
 import com.example.bakeryrecipe.mapper.PostMapper;
+import com.example.bakeryrecipe.mapper.RecipeMapper;
+import com.example.bakeryrecipe.repository.PostImageRepository;
 import com.example.bakeryrecipe.repository.PostRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -20,18 +24,27 @@ import java.util.List;
 public class PostService implements BaseService<PostDTO> {
 
     private final PostMapper mapper;
+    private final RecipeService recipeService;
     private final PostRepository postRepository;
-
-
-    public PostService(PostMapper mapper, PostRepository postRepository) {
+    private final PostImageService postImageService;
+    private final PostImageRepository postImageRepository;
+    public PostService(PostMapper mapper, RecipeService recipeService, PostRepository postRepository, PostImageService postImageService, PostImageRepository postImageRepository) {
         this.mapper = mapper;
+        this.recipeService = recipeService;
         this.postRepository = postRepository;
+        this.postImageService = postImageService;
+        this.postImageRepository = postImageRepository;
     }
 
     @Override
     public PostDTO save(PostDTO dto) {
         Post entity = mapper.toEntity(dto);
         entity = postRepository.save(entity);
+        recipeService.saves(dto.getRecipe());
+        for(PostImageDTO dtos : dto.getPostImages()){
+            System.out.println("postImage" + dtos);
+            postImageService.saves(dtos);
+        }
         return mapper.toDTO(entity);
     }
 
