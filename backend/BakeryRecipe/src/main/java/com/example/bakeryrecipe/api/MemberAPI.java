@@ -34,6 +34,8 @@ public class MemberAPI {
     @PutMapping("/{id}")
     public MemberDTO editMemberInfo(@PathVariable("id") long id, @RequestBody MemberDTO memberDTO) {
         memberDTO.setId(id);
+        memberDTO.setUsername(null);
+        memberDTO.setPassword(null);
         return memberService.save(memberDTO);
     }
 

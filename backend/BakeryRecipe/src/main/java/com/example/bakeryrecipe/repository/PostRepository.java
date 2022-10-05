@@ -31,4 +31,8 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     @Query("select p from Post p where p.postBody LIKE CONCAT('%',:name,'%') or p.member.name LIKE CONCAT('%',:name,'%')")
     List<Post> findAllByPostBodyOrMember_Name(String name);
+
+
+    @Query("select p from Post p where p.postBody LIKE CONCAT('%',:q,'%') or p.member.name LIKE CONCAT('%',:q,'%')")
+    Page<Post> findAllByPostBodyOrMember_Name(String q, Pageable pageable);
 }

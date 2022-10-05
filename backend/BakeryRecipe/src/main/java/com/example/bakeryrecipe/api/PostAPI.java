@@ -61,7 +61,11 @@ public class PostAPI {
     }
 
     @GetMapping("/search")
-    public List<PostDTO> searchPostByName(@RequestParam("name") String name){
-        return postService.searchPostByName(name);
+    public ListPostOutput searchPostByName(@RequestParam("q") String q, @RequestParam("page") int page, @RequestParam("size") int size){
+        Pageable pageable = PageRequest.of(page - 1, size);
+
+        Page<PostDTO> postDTOS = postService.searchPostByName(q, pageable);
+
+        return new ListPostOutput(page, size, postDTOS.getTotalPages(), postDTOS.getContent());
     }
 }

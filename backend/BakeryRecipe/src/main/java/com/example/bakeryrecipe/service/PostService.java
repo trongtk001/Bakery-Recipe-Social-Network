@@ -7,6 +7,7 @@ import com.example.bakeryrecipe.entity.Post;
 import com.example.bakeryrecipe.mapper.PostMapper;
 import com.example.bakeryrecipe.repository.PostRepository;
 import com.example.bakeryrecipe.service.BaseService;
+import javafx.geometry.Pos;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -76,10 +77,10 @@ public class PostService implements BaseService<PostDTO> {
         return null;
     }
 
-    public List<PostDTO> searchPostByName(String name){
-        List<Post> list = postRepository.findAllByPostBodyOrMember_Name(name);
-        if(list != null){
-            return mapper.toDTOList(list);
+    public Page<PostDTO> searchPostByName(String q, Pageable pageable){
+        Page<Post> posts = postRepository.findAllByPostBodyOrMember_Name(q, pageable);
+        if(posts != null){
+            return new PageImpl<>(mapper.toDTOList(posts.getContent()), pageable, posts.getTotalElements());
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND,"not found");
     }
