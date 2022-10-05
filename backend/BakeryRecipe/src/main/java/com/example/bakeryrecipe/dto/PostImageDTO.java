@@ -5,15 +5,14 @@ import com.example.bakeryrecipe.entity.Post;
 
 public class PostImageDTO {
     private Long id;
-    private Post post;
     private String image;
 
-    public Post getPost() {
-        return post;
+    public Long getId() {
+        return id;
     }
 
-    public void setPost(Post post) {
-        this.post = post;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getImage() {

@@ -20,6 +20,9 @@ public class RecipeDTO {
 
     private String tool;
 
+    public RecipeDTO() {
+    }
+
     public RecipeDTO(Long id, Post post, String name, String description, String steps, String tool) {
         this.id = id;
         this.post = post;
@@ -76,4 +79,5 @@ public class RecipeDTO {
     public void setTool(String tool) {
         this.tool = tool;
     }
+
 }

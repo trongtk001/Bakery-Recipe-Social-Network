@@ -32,7 +32,7 @@ public class Post {
     private List<PostImage> postImages = new ArrayList<>();
 
     @OneToMany(mappedBy = "post")
-    private List<PostVideo> postVideos;
+    private List<PostVideo> postVideos = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -74,5 +74,11 @@ public class Post {
         this.postImages = postImages;
     }
 
+    public List<PostVideo> getPostVideos() {
+        return postVideos;
+    }
 
+    public void setPostVideos(List<PostVideo> postVideos) {
+        this.postVideos = postVideos;
+    }
 }

@@ -7,8 +7,6 @@ import com.example.bakeryrecipe.entity.Post;
 public class PostVideoDTO {
     private Long id;
 
-    private Post post;
-
     private String video;
 
     public Long getId() {
@@ -17,14 +15,6 @@ public class PostVideoDTO {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Post getPost() {
-        return post;
-    }
-
-    public void setPost(Post post) {
-        this.post = post;
     }
 
     public String getVideo() {
