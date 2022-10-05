@@ -6,10 +6,12 @@ import com.example.bakeryrecipe.entity.PostImage;
 import com.example.bakeryrecipe.entity.PostVideo;
 import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Component
 public class PostVideoMapper implements Mapper<PostVideo, PostVideoDTO>{
     private final ModelMapper modelMapper;
 
