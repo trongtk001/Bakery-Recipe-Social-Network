@@ -24,6 +24,12 @@ public class MemberDTO {
         this.id = id;
     }
 
+    public MemberDTO(Long id, String name, String avatar) {
+        this.id = id;
+        this.name = name;
+        this.avatar = avatar;
+    }
+
     public Long getId() {
         return id;
     }
