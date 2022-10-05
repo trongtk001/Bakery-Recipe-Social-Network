@@ -15,6 +15,7 @@ public class MemberDTO {
     private String password;
     private String avatar;
     private List<String> roles;
+    private String token;
 
     public MemberDTO() {
     }
@@ -85,5 +86,13 @@ public class MemberDTO {
 
     public void setRoles(List<String> roles) {
         this.roles = roles;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

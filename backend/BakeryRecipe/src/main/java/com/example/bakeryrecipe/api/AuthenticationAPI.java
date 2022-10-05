@@ -1,7 +1,6 @@
 package com.example.bakeryrecipe.api;
 
 import com.example.bakeryrecipe.api.input.LoginInput;
-import com.example.bakeryrecipe.api.output.LoginOutput;
 import com.example.bakeryrecipe.authentication.JwtUtils;
 import com.example.bakeryrecipe.dto.MemberDTO;
 import com.example.bakeryrecipe.service.MemberService;
@@ -35,13 +34,17 @@ public class AuthenticationAPI {
     }
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody LoginInput loginInput) {
+    public MemberDTO login(@RequestBody LoginInput loginInput) {
         String username = loginInput.getUsername();
         String password = loginInput.getPassword();
+
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        long id = memberService.searchMemberByUsername(username).getId();
-        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtUtils.generateJwtCookie(username).toString()).body(new LoginOutput(id));
+
+        MemberDTO memberDTO = memberService.searchMemberByUsername(username);
+        memberDTO.setToken(jwtUtils.generateTokenFromUsername(username));
+
+        return memberDTO;
     }
 
     @PostMapping("/register")

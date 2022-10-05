@@ -25,29 +25,25 @@ public class JwtUtils {
     private String jwtSecret;
     @Value("${app.jwtExpirationTime}")
     private int jwtExpirationTime;
-    @Value("${app.jwtCookieName}")
-    private String jwtCookie;
+    @Value("${app.jwtKey}")
+    private String jwtKey;
 
     private Algorithm getAlgorithm() {
         return Algorithm.HMAC512(jwtSecret);
     }
 
-    public String getJwtFromCookies(HttpServletRequest request){
-        Cookie cookie = WebUtils.getCookie(request, jwtCookie);
-        if (cookie != null) {
-            return cookie.getValue();
-        } else {
-            return null;
-        }
+    public String getToken(HttpServletRequest request){
+        return request.getHeader(jwtKey);
     }
+
     public ResponseCookie generateJwtCookie(String username) {
         String jwt = generateTokenFromUsername(username);
-        ResponseCookie cookie = ResponseCookie.from(jwtCookie, jwt).path("/").maxAge(60 * 60).httpOnly(true).build();
+        ResponseCookie cookie = ResponseCookie.from(jwtKey, jwt).path("/").maxAge(60 * 60).httpOnly(true).build();
         return cookie;
     }
 
     public ResponseCookie getCleanJwtCookie() {
-        ResponseCookie cookie = ResponseCookie.from(jwtCookie, null).path("/").build();
+        ResponseCookie cookie = ResponseCookie.from(jwtKey, null).path("/").build();
         return cookie;
     }
 
@@ -75,7 +71,7 @@ public class JwtUtils {
         return false;
     }
 
-    private String generateTokenFromUsername(String username) {
+    public String generateTokenFromUsername(String username) {
 
         Date expireTime = new Date(System.currentTimeMillis() + jwtExpirationTime);
 
