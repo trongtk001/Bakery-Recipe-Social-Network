@@ -75,6 +75,10 @@ public class PostService implements BaseService<PostDTO> {
         return null;
     }
 
+    public Post searchEntity(Long id) {
+        return postRepository.findById(id).orElse(null);
+    }
+
     public Page<PostDTO> searchPostByName(String q, Pageable pageable){
         Page<Post> posts = postRepository.findAllByPostBodyOrMember_Name(q, pageable);
         if(posts != null){

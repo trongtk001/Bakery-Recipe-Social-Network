@@ -17,20 +17,20 @@ public class Comment {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "member_id", nullable = false)
+    @JoinColumn(name = "member_id", nullable = false, updatable = false)
     private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "post_id", nullable = false)
+    @JoinColumn(name = "post_id", nullable = false, updatable = false)
     private Post post;
 
     @Column(name = "comment_detail", nullable = false, length = 500)
     private String commentDetail;
 
-    @Column(name = "image", length = 50)
+    @Column(name = "image", length = 150)
     private String image;
 
-    @Column(name = "video", length = 50)
+    @Column(name = "video", length = 150)
     private String video;
 
     public Long getId() {

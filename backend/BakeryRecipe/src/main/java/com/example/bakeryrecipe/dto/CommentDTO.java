@@ -3,7 +3,6 @@ package com.example.bakeryrecipe.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -12,55 +11,66 @@ public class CommentDTO implements Serializable {
     private String commentDetail;
     private String image;
     private String video;
+    private Long memberID;
+    private Long postID;
 
     public CommentDTO() {
     }
 
-    public CommentDTO(Long id, String commentDetail, String image, String video) {
+    public CommentDTO(Long id, String commentDetail, String image, String video, Long memberID, Long postID) {
         this.id = id;
         this.commentDetail = commentDetail;
         this.image = image;
         this.video = video;
+        this.memberID = memberID;
+        this.postID = postID;
     }
 
     public Long getId() {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getCommentDetail() {
         return commentDetail;
+    }
+
+    public void setCommentDetail(String commentDetail) {
+        this.commentDetail = commentDetail;
     }
 
     public String getImage() {
         return image;
     }
 
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     public String getVideo() {
         return video;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        CommentDTO entity = (CommentDTO) o;
-        return Objects.equals(this.id, entity.id) &&
-                Objects.equals(this.commentDetail, entity.commentDetail) &&
-                Objects.equals(this.image, entity.image) &&
-                Objects.equals(this.video, entity.video);
+    public void setVideo(String video) {
+        this.video = video;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, commentDetail, image, video);
+    public Long getMemberID() {
+        return memberID;
     }
 
-    @Override
-    public String toString() {
-        return getClass().getSimpleName() + "(" +
-                "id = " + id + ", " +
-                "commentDetail = " + commentDetail + ", " +
-                "image = " + image + ", " +
-                "video = " + video + ")";
+    public void setMemberID(Long memberID) {
+        this.memberID = memberID;
+    }
+
+    public Long getPostID() {
+        return postID;
+    }
+
+    public void setPostID(Long postID) {
+        this.postID = postID;
     }
 }

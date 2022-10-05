@@ -67,6 +67,10 @@ public class MemberService implements BaseService<MemberDTO> {
         return mapper.toDTO(memberRepository.findById(id).orElse(null));
     }
 
+    protected Member searchEntity(Long id) {
+        return memberRepository.findById(id).orElse(null);
+    }
+
     public Page<MemberDTO> searchMemberByName(String q, Pageable pageable) {
         Page<Member> members = memberRepository.findAllByName(q, pageable);
         Page<MemberDTO> memberDTOS = new PageImpl<>(mapper.toDTOList(members.getContent()), pageable, members.getTotalElements());

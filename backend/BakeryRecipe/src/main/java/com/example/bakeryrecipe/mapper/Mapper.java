@@ -15,6 +15,6 @@ public interface Mapper<T, K> {
 
     public List<T> toEntityList(List<K> dtos);
 
-    public List<K> toDTOList(List<T> entity);
+    public List<K> toDTOList(List<T> entities);
 
 }

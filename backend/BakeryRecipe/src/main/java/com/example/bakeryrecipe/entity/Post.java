@@ -42,6 +42,7 @@ public class Post {
 
     @OneToMany(mappedBy = "post")
     private List<PostVideo> postVideos;
+
     public Long getId() {
         return id;
     }

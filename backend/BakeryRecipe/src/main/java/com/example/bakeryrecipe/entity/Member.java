@@ -26,7 +26,7 @@ public class Member {
     @Column(name = "DOB", nullable = false)
     private LocalDate dob;
 
-    @Column(name = "username", nullable = false, length = 50)
+    @Column(name = "username", nullable = false, length = 50, updatable = false)
     private String username;
 
     @Column(name = "password", nullable = false, length = 100)
