@@ -7,6 +7,8 @@ import com.example.bakeryrecipe.repository.PostImageRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class PostImageService implements BaseService<PostImageDTO>{
 
@@ -18,9 +20,11 @@ public class PostImageService implements BaseService<PostImageDTO>{
         this.mapper = mapper;
     }
 
-    public void saves(PostImageDTO dto){
-        PostImage postImage = mapper.toEntity(dto);
-        postImage = postImageRepository.save(postImage);
+    public List<PostImageDTO> saves(Post post){
+        return post.getPostImages().stream().map(postImage -> {
+            postImage.setPost(post);
+            return mapper.toDTO(postImageRepository.save(postImage));
+        }).collect(Collectors.toList());
     }
     @Override
     public PostImageDTO save(PostImageDTO dto) {
