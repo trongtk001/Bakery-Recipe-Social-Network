@@ -6,8 +6,6 @@ import com.example.bakeryrecipe.dto.PostDTO;
 import com.example.bakeryrecipe.entity.Post;
 import com.example.bakeryrecipe.mapper.PostMapper;
 import com.example.bakeryrecipe.repository.PostRepository;
-import com.example.bakeryrecipe.service.BaseService;
-import javafx.geometry.Pos;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
