@@ -9,9 +9,6 @@ import javax.persistence.*;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class RecipeDTO {
     private Long id;
-
-    private Post post;
-
     private String name;
 
     private String description;
@@ -23,9 +20,8 @@ public class RecipeDTO {
     public RecipeDTO() {
     }
 
-    public RecipeDTO(Long id, Post post, String name, String description, String steps, String tool) {
+    public RecipeDTO(Long id, String name, String description, String steps, String tool) {
         this.id = id;
-        this.post = post;
         this.name = name;
         this.description = description;
         this.steps = steps;
@@ -38,14 +34,6 @@ public class RecipeDTO {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Post getPost() {
-        return post;
-    }
-
-    public void setPost(Post post) {
-        this.post = post;
     }
 
     public String getName() {

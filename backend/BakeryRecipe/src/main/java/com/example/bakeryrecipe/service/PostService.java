@@ -39,6 +39,7 @@ public class PostService implements BaseService<PostDTO> {
     @Override
     public PostDTO save(PostDTO dto) {
         Post entity = mapper.toEntity(dto);
+
         entity = postRepository.save(entity);
         return mapper.toDTO(entity);
     }

@@ -16,13 +16,11 @@ public class RecipeService implements BaseService<RecipeDTO>{
         this.recipeRepository = recipeRepository;
     }
 
-    public void saves(RecipeDTO dto){
-        Recipe recipe = mapper.toEntity(dto);
-        recipeRepository.save(recipe);
-    }
     @Override
     public RecipeDTO save(RecipeDTO dto) {
-        return null;
+        Recipe recipe = mapper.toEntity(dto);
+        recipeRepository.save(recipe);
+        return mapper.toDTO(recipe);
     }
 
     @Override
