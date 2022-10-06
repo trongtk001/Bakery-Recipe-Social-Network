@@ -12,6 +12,8 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     Optional<Member> findOneByUsername(String username);
 
+    Optional<Member> findOneByEmail(String email);
+
     @Query("select m from Member m where m.name = ?1")
     Page<Member> findAllByName(String name, Pageable pageable);
 }

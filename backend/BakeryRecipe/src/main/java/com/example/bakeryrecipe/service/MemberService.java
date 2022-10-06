@@ -37,10 +37,15 @@ public class MemberService implements BaseService<MemberDTO> {
             //create new member
             memberEntity = memberRepository.findOneByUsername(dto.getUsername()).orElse(null);
             if (null == memberEntity) {
-                memberEntity = mapper.toEntity(dto);
-                memberEntity.setPassword(passwordEncoder.encode(dto.getPassword()));
-                memberRepository.save(memberEntity);
-                memberRoleService.save(memberEntity, dto.getRoles());
+                memberEntity = memberRepository.findOneByEmail(dto.getEmail()).orElse(null);
+                if (null == memberEntity) {
+                    memberEntity = mapper.toEntity(dto);
+                    memberEntity.setPassword(passwordEncoder.encode(dto.getPassword()));
+                    memberRepository.save(memberEntity);
+                    memberRoleService.save(memberEntity, dto.getRoles());
+                } else {
+                    throw new ResponseStatusException(HttpStatus.CONFLICT, "This email already exists");
+                }
             } else {
                 throw new ResponseStatusException(HttpStatus.CONFLICT, "User with the same identity already exists");
             }
@@ -49,11 +54,11 @@ public class MemberService implements BaseService<MemberDTO> {
             memberEntity = memberRepository.findById(dto.getId()).orElse(null);
             if (null != memberEntity) {
                 memberEntity = mapper.toEntity(dto, memberEntity);
+                memberEntity = memberRepository.save(memberEntity);
             } else {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found this user");
             }
         }
-        MemberDTO memberDTO = new MemberDTO();
         return mapper.toDTO(memberEntity);
     }
 
