@@ -26,6 +26,8 @@ public class PostImage {
     private String image;
 
 
+
+
     public Long getId() {
         return id;
     }
