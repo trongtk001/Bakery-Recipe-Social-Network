@@ -87,6 +87,10 @@ public class MemberService implements BaseService<MemberDTO> {
     }
 
     public MemberDTO searchMemberByUsername(String username) {
-        return mapper.toDTO(memberRepository.findOneByUsername(username).orElse(null));
+        Member member = memberRepository.findOneByUsername(username).orElse(null);
+        if (member == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "not found this user");
+        }
+        return mapper.toDTO(member);
     }
 }
