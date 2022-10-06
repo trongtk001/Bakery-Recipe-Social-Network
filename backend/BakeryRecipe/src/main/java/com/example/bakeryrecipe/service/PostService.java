@@ -29,6 +29,7 @@ public class PostService implements BaseService<PostDTO> {
     private final PostImageService postImageService;
     private final PostImageRepository postImageRepository;
     private final PostVideoService postVideoService;
+
     public PostService(PostMapper mapper, RecipeService recipeService, PostRepository postRepository, PostImageService postImageService, PostImageRepository postImageRepository, PostVideoService postVideoService) {
         this.mapper = mapper;
         this.recipeService = recipeService;
