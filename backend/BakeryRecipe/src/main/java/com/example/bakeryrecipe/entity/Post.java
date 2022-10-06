@@ -81,4 +81,5 @@ public class Post {
     public void setPostVideos(List<PostVideo> postVideos) {
         this.postVideos = postVideos;
     }
+
 }
