@@ -29,7 +29,7 @@ public class Order {
     @Column(name = "status", nullable = false)
     private Integer status;
 
-    @Column(name = "note", nullable = false, length = 500)
+    @Column(name = "note", columnDefinition = "nvarchar(50)", nullable = false, length = 500)
     private String note;
 
     public Long getId() {

@@ -17,7 +17,7 @@ public class Member {
     @Column(name = "member_id", nullable = false)
     private Long id;
 
-    @Column(name = "name", nullable = false, length = 50)
+    @Column(name = "name", columnDefinition = "nvarchar(50)", nullable = false, length = 50)
     private String name;
 
     @Column(name = "email", nullable = false, length = 50)

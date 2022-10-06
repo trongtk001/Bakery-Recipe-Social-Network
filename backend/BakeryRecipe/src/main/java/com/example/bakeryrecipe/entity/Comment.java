@@ -24,7 +24,7 @@ public class Comment {
     @JoinColumn(name = "post_id", nullable = false, updatable = false)
     private Post post;
 
-    @Column(name = "comment_detail", nullable = false, length = 500)
+    @Column(name = "comment_detail", columnDefinition = "nvarchar(500)", nullable = false, length = 500)
     private String commentDetail;
 
     @Column(name = "image", length = 150)

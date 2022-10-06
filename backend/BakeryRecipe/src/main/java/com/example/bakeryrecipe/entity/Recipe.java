@@ -22,16 +22,16 @@ public class Recipe {
     @JoinColumn(name = "post_id", nullable = false)
     private Post post;
 
-    @Column(name = "name", nullable = false, length = 50)
+    @Column(name = "name", columnDefinition = "nvarchar(50)",nullable = false, length = 50)
     private String name;
 
-    @Column(name = "description", nullable = false, length = 500)
+    @Column(name = "description", columnDefinition = "nvarchar(500)",nullable = false, length = 500)
     private String description;
 
-    @Column(name = "steps", nullable = false, length = 3000)
+    @Column(name = "steps", columnDefinition = "nvarchar(3000)", nullable = false, length = 3000)
     private String steps;
 
-    @Column(name = "tool", nullable = false, length = 500)
+    @Column(name = "tool", columnDefinition = "nvarchar(50)", nullable = false, length = 500)
     private String tool;
 
     public Long getId() {

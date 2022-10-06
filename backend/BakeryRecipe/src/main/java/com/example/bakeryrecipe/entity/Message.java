@@ -25,7 +25,7 @@ public class Message {
     @JoinColumn(name = "member_receiver_id", nullable = false)
     private Member memberReceiver;
 
-    @Column(name = "massage_body", nullable = false, length = 500)
+    @Column(name = "massage_body", columnDefinition = "nvarchar(500)", nullable = false, length = 500)
     private String massageBody;
 
     @Column(name = "mss_create_date", nullable = false)

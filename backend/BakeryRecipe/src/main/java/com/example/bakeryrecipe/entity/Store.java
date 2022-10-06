@@ -20,7 +20,7 @@ public class Store {
     @JoinColumn(name = "member_id", nullable = false)
     private Member member;
 
-    @Column(name = "store_name", nullable = false, length = 50)
+    @Column(name = "store_name", columnDefinition = "nvarchar(50)", nullable = false, length = 50)
     private String storeName;
 
     @Column(name = "address", nullable = false, length = 500)

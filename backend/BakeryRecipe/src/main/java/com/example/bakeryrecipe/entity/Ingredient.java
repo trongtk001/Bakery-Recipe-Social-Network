@@ -15,13 +15,13 @@ public class Ingredient {
     @Column(name = "ingredients_id", nullable = false)
     private Long id;
 
-    @Column(name = "ingredients", nullable = false, length = 50)
+    @Column(name = "ingredients", columnDefinition = "nvarchar(50)", nullable = false)
     private String ingredients;
 
-    @Column(name = "description", nullable = false, length = 500)
+    @Column(name = "description", columnDefinition = "nvarchar(500)", nullable = false, length = 500)
     private String description;
 
-    @Column(name = "Unit", nullable = false, length = 50)
+    @Column(name = "Unit", columnDefinition = "nvarchar(50)",nullable = false, length = 50)
     private String unit;
 
     public Long getId() {
