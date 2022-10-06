@@ -77,7 +77,7 @@ public class MemberService implements BaseService<MemberDTO> {
     }
 
     public Page<MemberDTO> searchMemberByName(String q, Pageable pageable) {
-        Page<Member> members = memberRepository.findAllByName(q, pageable);
+        Page<Member> members = memberRepository.findAllByNameContaining(q, pageable);
         Page<MemberDTO> memberDTOS = new PageImpl<>(mapper.toDTOList(members.getContent()), pageable, members.getTotalElements());
         return memberDTOS;
     }

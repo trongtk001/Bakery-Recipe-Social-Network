@@ -14,6 +14,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     Optional<Member> findOneByEmail(String email);
 
-    @Query("select m from Member m where m.name = ?1")
-    Page<Member> findAllByName(String name, Pageable pageable);
+    @Query("select m from Member m where m.name like concat('%', ?1, '%')")
+    Page<Member> findAllByNameContaining(String name, Pageable pageable);
 }
