@@ -22,7 +22,7 @@ public class PostImage {
     @JoinColumn(name = "post_id", nullable = false)
     private Post post;
 
-    @Column(name = "image", nullable = false, length = 150)
+    @Column(name = "image", nullable = false, length = 250)
     private String image;
 
 

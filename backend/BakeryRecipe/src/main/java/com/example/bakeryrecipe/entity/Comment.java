@@ -27,10 +27,10 @@ public class Comment {
     @Column(name = "comment_detail", columnDefinition = "nvarchar(500)", nullable = false, length = 500)
     private String commentDetail;
 
-    @Column(name = "image", length = 150)
+    @Column(name = "image", length = 250)
     private String image;
 
-    @Column(name = "video", length = 150)
+    @Column(name = "video", length = 250)
     private String video;
 
     public Long getId() {

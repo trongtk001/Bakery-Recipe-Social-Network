@@ -22,7 +22,7 @@ public class PostVideo {
     @JoinColumn(name = "post_id", nullable = false)
     private Post post;
 
-    @Column(name = "video", nullable = false, length = 150)
+    @Column(name = "video", nullable = false, length = 250)
     private String video;
 
     public Long getId() {

@@ -32,7 +32,7 @@ public class Member {
     @Column(name = "password", nullable = false, length = 100)
     private String password;
 
-    @Column(name = "avatar", length = 150)
+    @Column(name = "avatar", length = 250)
     private String avatar;
 
     @OneToMany(mappedBy = "member")
