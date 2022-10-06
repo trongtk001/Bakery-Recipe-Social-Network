@@ -31,7 +31,7 @@ public class JwtUtils {
     }
 
     public String getToken(HttpServletRequest request){
-        return request.getHeader(jwtKey);
+        return request.getHeader("Authorization");
     }
 
     public ResponseCookie generateJwtCookie(String username) {
