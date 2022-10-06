@@ -42,12 +42,10 @@ public class PostService implements BaseService<PostDTO> {
     @Override
     public PostDTO save(PostDTO dto) {
         Post entity = mapper.toEntity(dto);
-
         Recipe recipe = entity.getRecipe();
         entity.setRecipe(null);
 
         entity = postRepository.save(entity);
-
         PostDTO postDTO = mapper.toDTO(entity);
         postDTO.setPostImages(postImageService.saves(entity));
         postDTO.setPostVideos(postVideoService.saves(entity));
@@ -69,9 +67,10 @@ public class PostService implements BaseService<PostDTO> {
         return postDTOS;
     }
 
-    public List<PostDTO> findAllByMemberId(long id) {
-       List<Post> list = postRepository.findAllByMemberId(id);
-        return mapper.toDTOList(list);
+    public Page<PostDTO> findAllByMemberId(long id,Pageable pageable) {
+       Page<Post> list = postRepository.findAllByMemberId(id,pageable);
+        Page<PostDTO> postDTOS = new PageImpl<>(mapper.toDTOList(list.getContent()),pageable,list.getTotalElements());
+        return postDTOS;
     }
 
     @Override

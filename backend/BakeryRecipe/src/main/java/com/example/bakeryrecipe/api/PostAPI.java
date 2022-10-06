@@ -52,14 +52,15 @@ public class PostAPI {
     public ListPostOutput listPost(@RequestParam("page") int page, @RequestParam("size") int size){
         Pageable pageable = PageRequest.of(page - 1, size);
         Page<PostDTO> postDTOS = postService.findAll(pageable);
-
         return new ListPostOutput(page, size, postDTOS.getTotalPages(), postDTOS.getContent());
     }
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/{id}")
-    public List<PostDTO> listPostUser(@PathVariable("id") long id){
-        return postService.findAllByMemberId(id);
+    public ListPostOutput listPostUser(@PathVariable("id") Long id,@RequestParam("page") int page, @RequestParam("size") int size){
+        Pageable pageable = PageRequest.of(page - 1, size);
+        Page<PostDTO> postDTOS = postService.findAllByMemberId(id,pageable);
+        return new ListPostOutput(page, size, postDTOS.getTotalPages(), postDTOS.getContent());
     }
 
     @GetMapping("/search")
