@@ -1,6 +1,7 @@
 package com.example.bakeryrecipe.entity;
 
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.LazyToOne;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -34,6 +35,9 @@ public class Post {
 
     @OneToMany(mappedBy = "post")
     private List<PostVideo> postVideos = new ArrayList<>();
+
+    @OneToOne(mappedBy = "post")
+    private Recipe recipe;
 
     public Long getId() {
         return id;
@@ -83,4 +87,11 @@ public class Post {
         this.postVideos = postVideos;
     }
 
+    public Recipe getRecipe() {
+        return recipe;
+    }
+
+    public void setRecipe(Recipe recipe) {
+        this.recipe = recipe;
+    }
 }

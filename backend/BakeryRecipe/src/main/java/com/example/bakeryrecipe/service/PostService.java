@@ -5,6 +5,8 @@ import com.example.bakeryrecipe.authentication.UserDetailsImpl;
 import com.example.bakeryrecipe.dto.PostDTO;
 import com.example.bakeryrecipe.dto.RecipeDTO;
 import com.example.bakeryrecipe.entity.Post;
+import com.example.bakeryrecipe.entity.PostImage;
+import com.example.bakeryrecipe.entity.Recipe;
 import com.example.bakeryrecipe.mapper.PostMapper;
 import com.example.bakeryrecipe.repository.PostImageRepository;
 import com.example.bakeryrecipe.repository.PostRepository;
@@ -39,14 +41,17 @@ public class PostService implements BaseService<PostDTO> {
     @Override
     public PostDTO save(PostDTO dto) {
         Post entity = mapper.toEntity(dto);
+
+        Recipe recipe = entity.getRecipe();
+        entity.setRecipe(null);
+
         entity = postRepository.save(entity);
+
         PostDTO postDTO = mapper.toDTO(entity);
-        postDTO.setRecipe(dto.getRecipe());
         postDTO.setPostImages(postImageService.saves(entity));
         postDTO.setPostVideos(postVideoService.saves(entity));
-        RecipeDTO recipeDTO = postDTO.getRecipe();
-        postDTO.setRecipe(recipeService.saves(recipeDTO,entity));
-        return mapper.toDTO(entity);
+        postDTO.setRecipe(recipeService.saves(entity, recipe));
+        return postDTO;
     }
 
     public PostDTO update(PostDTO dto) {

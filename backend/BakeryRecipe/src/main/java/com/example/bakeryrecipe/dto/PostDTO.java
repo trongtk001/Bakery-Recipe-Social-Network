@@ -1,12 +1,10 @@
 package com.example.bakeryrecipe.dto;
 
-import com.example.bakeryrecipe.entity.Recipe;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.List;
-import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class PostDTO implements Serializable {
@@ -17,6 +15,7 @@ public class PostDTO implements Serializable {
     private RecipeDTO recipe;
     private List<PostImageDTO> postImages;
     private List<PostVideoDTO> postVideos;
+
     public PostDTO() {
     }
 
@@ -45,14 +44,6 @@ public class PostDTO implements Serializable {
         this.member = new MemberDTO(member.getId(), member.getName(), member.getAvatar());
     }
 
-    public RecipeDTO getRecipe() {
-        return recipe;
-    }
-
-    public void setRecipe(RecipeDTO recipe) {
-        this.recipe = recipe;
-    }
-
     public Instant getCreateDate() {
         return createDate;
     }
@@ -69,6 +60,14 @@ public class PostDTO implements Serializable {
         this.postBody = postBody;
     }
 
+    public RecipeDTO getRecipe() {
+        return recipe;
+    }
+
+    public void setRecipe(RecipeDTO recipe) {
+        this.recipe = recipe;
+    }
+
     public List<PostImageDTO> getPostImages() {
         return postImages;
     }
@@ -83,30 +82,5 @@ public class PostDTO implements Serializable {
 
     public void setPostVideos(List<PostVideoDTO> postVideos) {
         this.postVideos = postVideos;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        PostDTO entity = (PostDTO) o;
-        return Objects.equals(this.id, entity.id) &&
-                Objects.equals(this.member, entity.member) &&
-                Objects.equals(this.createDate, entity.createDate) &&
-                Objects.equals(this.postBody, entity.postBody);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, member, createDate, postBody);
-    }
-
-    @Override
-    public String toString() {
-        return getClass().getSimpleName() + "(" +
-                "id = " + id + ", " +
-                "member = " + member + ", " +
-                "createDate = " + createDate + ", " +
-                "postBody = " + postBody + ")";
     }
 }
