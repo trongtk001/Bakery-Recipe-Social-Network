@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 import javax.persistence.*;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class RecipeDTO {
     private Long id;
     private String name;
