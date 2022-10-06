@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.Objects;
+import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class PostDTO implements Serializable {
@@ -12,15 +12,20 @@ public class PostDTO implements Serializable {
     private  MemberDTO member;
     private  Instant createDate;
     private  String postBody;
+    private RecipeDTO recipe;
+    private List<PostImageDTO> postImages;
+    private List<PostVideoDTO> postVideos;
 
     public PostDTO() {
     }
 
-    public PostDTO(Long id, MemberDTO member, Instant createDate, String postBody) {
+    public PostDTO(Long id, MemberDTO member, Instant createDate, String postBody, RecipeDTO recipe) {
         this.id = id;
         this.member = member;
         this.createDate = createDate;
         this.postBody = postBody;
+        this.recipe = recipe;
+
     }
 
     public Long getId() {
@@ -55,28 +60,27 @@ public class PostDTO implements Serializable {
         this.postBody = postBody;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        PostDTO entity = (PostDTO) o;
-        return Objects.equals(this.id, entity.id) &&
-                Objects.equals(this.member, entity.member) &&
-                Objects.equals(this.createDate, entity.createDate) &&
-                Objects.equals(this.postBody, entity.postBody);
+    public RecipeDTO getRecipe() {
+        return recipe;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, member, createDate, postBody);
+    public void setRecipe(RecipeDTO recipe) {
+        this.recipe = recipe;
     }
 
-    @Override
-    public String toString() {
-        return getClass().getSimpleName() + "(" +
-                "id = " + id + ", " +
-                "member = " + member + ", " +
-                "createDate = " + createDate + ", " +
-                "postBody = " + postBody + ")";
+    public List<PostImageDTO> getPostImages() {
+        return postImages;
+    }
+
+    public void setPostImages(List<PostImageDTO> postImages) {
+        this.postImages = postImages;
+    }
+
+    public List<PostVideoDTO> getPostVideos() {
+        return postVideos;
+    }
+
+    public void setPostVideos(List<PostVideoDTO> postVideos) {
+        this.postVideos = postVideos;
     }
 }
