@@ -69,7 +69,11 @@ public class MemberService implements BaseService<MemberDTO> {
 
     @Override
     public MemberDTO search(Long id) {
-        return mapper.toDTO(memberRepository.findById(id).orElse(null));
+        Member member = memberRepository.findById(id).orElse(null);
+        if (member == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "not found this user");
+        }
+        return mapper.toDTO(member);
     }
 
     protected Member searchEntity(Long id) {

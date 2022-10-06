@@ -6,6 +6,7 @@ import com.example.bakeryrecipe.service.MemberService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin
 @RestController
 @RequestMapping("api/member")
+@PreAuthorize("permitAll()")
 public class MemberAPI {
 
     private MemberService memberService;
@@ -32,7 +34,8 @@ public class MemberAPI {
     }
 
     @PutMapping("/{id}")
-    public MemberDTO editMemberInfo(@PathVariable("id") long id, @RequestBody MemberDTO memberDTO) {
+    @PreAuthorize("#id.equals(authentication.principal.id)")
+    public MemberDTO editMemberInfo(@PathVariable("id") Long id, @RequestBody MemberDTO memberDTO) {
         memberDTO.setId(id);
         memberDTO.setUsername(null);
         return memberService.save(memberDTO);
