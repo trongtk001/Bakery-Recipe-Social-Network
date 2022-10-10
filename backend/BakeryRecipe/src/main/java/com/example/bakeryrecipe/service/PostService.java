@@ -67,10 +67,10 @@ public class PostService implements BaseService<PostDTO> {
         return postDTOS;
     }
 
-    public Page<PostDTO> findAllByMemberId(long id,Pageable pageable) {
-       Page<Post> list = postRepository.findAllByMemberId(id,pageable);
-        Page<PostDTO> postDTOS = new PageImpl<>(mapper.toDTOList(list.getContent()),pageable,list.getTotalElements());
-        return postDTOS;
+    public Page<PostDTO> findAllByMemberId(long id, Pageable pageable) {
+       Page<Post> list = postRepository.findAllByMemberId(id, pageable);
+       Page<PostDTO> postDTOS = new PageImpl<>(mapper.toDTOList(list.getContent()),pageable,list.getTotalElements());
+       return postDTOS;
     }
 
     @Override

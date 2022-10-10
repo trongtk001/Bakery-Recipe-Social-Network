@@ -56,7 +56,7 @@ public class PostAPI {
     }
 
     @PreAuthorize("isAuthenticated()")
-    @GetMapping("/{id}")
+    @GetMapping("/user/{id}")
     public ListPostOutput listPostUser(@PathVariable("id") Long id,@RequestParam("page") int page, @RequestParam("size") int size){
         Pageable pageable = PageRequest.of(page - 1, size);
         Page<PostDTO> postDTOS = postService.findAllByMemberId(id,pageable);
