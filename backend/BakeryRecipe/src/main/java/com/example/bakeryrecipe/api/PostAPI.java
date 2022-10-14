@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -50,7 +51,7 @@ public class PostAPI {
 
     @GetMapping
     public ListPostOutput listPost(@RequestParam("page") int page, @RequestParam("size") int size){
-        Pageable pageable = PageRequest.of(page - 1, size);
+        Pageable pageable = PageRequest.of(page - 1, size, Sort.by(Sort.Direction.DESC, "createDate"));
         Page<PostDTO> postDTOS = postService.findAll(pageable);
         return new ListPostOutput(page, size, postDTOS.getTotalPages(), postDTOS.getContent());
     }
@@ -58,14 +59,14 @@ public class PostAPI {
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/user/{id}")
     public ListPostOutput listPostUser(@PathVariable("id") Long id,@RequestParam("page") int page, @RequestParam("size") int size){
-        Pageable pageable = PageRequest.of(page - 1, size);
+        Pageable pageable = PageRequest.of(page - 1, size, Sort.by(Sort.Direction.DESC, "createDate"));
         Page<PostDTO> postDTOS = postService.findAllByMemberId(id,pageable);
         return new ListPostOutput(page, size, postDTOS.getTotalPages(), postDTOS.getContent());
     }
 
     @GetMapping("/search")
     public ListPostOutput searchPostByName(@RequestParam("q") String q, @RequestParam("page") int page, @RequestParam("size") int size){
-        Pageable pageable = PageRequest.of(page - 1, size);
+        Pageable pageable = PageRequest.of(page - 1, size, Sort.by(Sort.Direction.DESC, "createDate"));
         Page<PostDTO> postDTOS = postService.searchPostByName(q, pageable);
         return new ListPostOutput(page, size, postDTOS.getTotalPages(), postDTOS.getContent());
     }

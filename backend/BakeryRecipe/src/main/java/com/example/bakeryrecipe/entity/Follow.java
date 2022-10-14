@@ -4,21 +4,24 @@ import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 
 @Entity
 public class Follow {
-    @EmbeddedId
-    private FollowId id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "follow_id", nullable = false)
+    private Long id;
 
-    @MapsId("memberId")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "member_id", nullable = false)
     private Member member;
 
-    @MapsId("followerId")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "follower_id", nullable = false)
     private Member follower;
@@ -26,11 +29,11 @@ public class Follow {
     @Column(name = "status", nullable = false)
     private Integer status;
 
-    public FollowId getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(FollowId id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
