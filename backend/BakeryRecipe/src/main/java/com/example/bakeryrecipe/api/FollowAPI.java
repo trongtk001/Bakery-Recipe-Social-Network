@@ -21,8 +21,13 @@ public class FollowAPI {
         return followService.save(followDTO);
     }
 
-    @GetMapping("/{id}")
-    public List<FollowDTO> listFriend(@PathVariable("id") Long id){
+    @GetMapping("friends/{id}")
+    public List<FollowDTO> listFriends(@PathVariable("id") Long id){
         return followService.findAllFriend(id);
+    }
+
+    @GetMapping("follows/{id}")
+    public List<FollowDTO> listFollowers(@PathVariable("id") Long id){
+        return followService.findAllFollower(id);
     }
 }

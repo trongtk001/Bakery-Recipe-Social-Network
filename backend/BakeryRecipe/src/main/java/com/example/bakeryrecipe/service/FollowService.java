@@ -35,8 +35,13 @@ public class FollowService implements BaseService<FollowDTO>{
     }
 
     public List<FollowDTO> findAllFriend(Long id){
-        List<Follow> listFriend = followRepository.findFollowByMember_Id(id);
+        List<Follow> listFriend = followRepository.findAllByFollower_Id(id);
         return mapper.toDTOList(listFriend);
+    }
+
+    public List<FollowDTO> findAllFollower(Long id) {
+        List<Follow> followList = followRepository.findAllByMember_Id(id);
+        return mapper.toDTOList(followList);
     }
 
     @Override
