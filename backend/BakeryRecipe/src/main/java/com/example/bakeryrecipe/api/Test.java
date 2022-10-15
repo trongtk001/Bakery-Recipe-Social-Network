@@ -22,7 +22,7 @@ public class Test {
     }
 
     @GetMapping("")
-    public String test(@RequestPart(value = "file") MultipartFile file) {
-        return s3Service.uploadFile(file);
+    public String test() {
+        return "hahahaha";
     }
 }
