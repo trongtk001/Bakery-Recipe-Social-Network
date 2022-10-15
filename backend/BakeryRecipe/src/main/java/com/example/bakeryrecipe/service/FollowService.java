@@ -5,7 +5,11 @@ import com.example.bakeryrecipe.entity.Follow;
 import com.example.bakeryrecipe.mapper.FollowMapper;
 import com.example.bakeryrecipe.repository.FollowRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
 
 @Service
 public class FollowService implements BaseService<FollowDTO>{
@@ -20,11 +24,19 @@ public class FollowService implements BaseService<FollowDTO>{
 
     @Override
     public FollowDTO save(FollowDTO dto) {
-        Follow entity = mapper.toEntity(dto);
-        entity.setMember(memberService.searchEntity(dto.getMemberId()));
-        entity.setFollower(memberService.searchEntity(dto.getFollowerId()));
-        entity = followRepository.save(entity);
-        return mapper.toDTO(entity);
+        Follow entity;
+        entity = followRepository.findFollowByMember_IdAndFollower_Id(dto.getMember().getId(), dto.getFollower().getId());
+        if(entity == null){
+            entity = mapper.toEntity(dto);
+            entity = followRepository.save(entity);
+            return mapper.toDTO(entity);
+        }
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"only follow 1 person at a time");
+    }
+
+    public List<FollowDTO> findAllFriend(Long id){
+        List<Follow> listFriend = followRepository.findFollowByMember_Id(id);
+        return mapper.toDTOList(listFriend);
     }
 
     @Override

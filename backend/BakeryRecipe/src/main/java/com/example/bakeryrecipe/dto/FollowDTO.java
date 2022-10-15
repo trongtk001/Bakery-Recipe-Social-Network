@@ -2,20 +2,22 @@ package com.example.bakeryrecipe.dto;
 
 import com.example.bakeryrecipe.entity.Member;
 
-public class FollowDTO {
+import java.io.Serializable;
+
+public class FollowDTO implements Serializable {
 
     private Long id;
-    private Long memberId;
-    private Long followerId;
+    private MemberDTO member;
+    private MemberDTO follower;
     private Integer status;
 
     public FollowDTO() {
     }
 
-    public FollowDTO(Long id, Long memberId, Long followerId, Integer status) {
+    public FollowDTO(Long id, MemberDTO member, MemberDTO follower, Integer status) {
         this.id = id;
-        this.memberId = memberId;
-        this.followerId = followerId;
+        this.member = member;
+        this.follower = follower;
         this.status = status;
     }
 
@@ -27,20 +29,20 @@ public class FollowDTO {
         this.id = id;
     }
 
-    public Long getMemberId() {
-        return memberId;
+    public MemberDTO getMember() {
+        return member;
     }
 
-    public void setMemberId(Long memberId) {
-        this.memberId = memberId;
+    public void setMember(MemberDTO member) {
+        this.member = member;
     }
 
-    public Long getFollowerId() {
-        return followerId;
+    public MemberDTO getFollower() {
+        return follower;
     }
 
-    public void setFollowerId(Long followerId) {
-        this.followerId = followerId;
+    public void setFollower(MemberDTO follower) {
+        this.follower = follower;
     }
 
     public Integer getStatus() {
