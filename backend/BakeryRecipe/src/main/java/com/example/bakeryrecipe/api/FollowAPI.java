@@ -1,6 +1,7 @@
 package com.example.bakeryrecipe.api;
 
 import com.example.bakeryrecipe.dto.FollowDTO;
+import com.example.bakeryrecipe.dto.MemberDTO;
 import com.example.bakeryrecipe.service.FollowService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -13,8 +14,12 @@ import java.util.List;
 @RequestMapping("api/follow")
 @PreAuthorize("permitAll()")
 public class FollowAPI {
-    @Autowired
-    FollowService followService;
+
+    private final FollowService followService;
+
+    public FollowAPI(FollowService followService) {
+        this.followService = followService;
+    }
 
     @PostMapping("")
     public FollowDTO createNewFollow(@RequestBody FollowDTO followDTO){
@@ -22,12 +27,12 @@ public class FollowAPI {
     }
 
     @GetMapping("friends/{id}")
-    public List<FollowDTO> listFriends(@PathVariable("id") Long id){
+    public List<MemberDTO> listFriends(@PathVariable("id") long id){
         return followService.findAllFriend(id);
     }
 
-    @GetMapping("follows/{id}")
-    public List<FollowDTO> listFollowers(@PathVariable("id") Long id){
+    @GetMapping("followers/{id}")
+    public List<MemberDTO> listFollowers(@PathVariable("id") long id){
         return followService.findAllFollower(id);
     }
 }

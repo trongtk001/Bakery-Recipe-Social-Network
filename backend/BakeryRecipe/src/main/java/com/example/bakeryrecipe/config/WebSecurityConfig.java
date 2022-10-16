@@ -1,5 +1,9 @@
-package com.example.bakeryrecipe.authentication;
+package com.example.bakeryrecipe.config;
 
+import com.example.bakeryrecipe.authentication.AuthEntryPointJwt;
+import com.example.bakeryrecipe.authentication.AuthTokenFilter;
+import com.example.bakeryrecipe.authentication.JwtUtils;
+import com.example.bakeryrecipe.authentication.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
