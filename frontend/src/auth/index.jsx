@@ -13,19 +13,24 @@ export const signUp = (user) => {
     .catch((err) => console.log(err));
 };
 
-export const signIn = (user) => {
+export const signIn = (email, password) => {
   return fetch(`${process.env.REACT_APP_API_URL}/signIn`, {
     method: "POST",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(user),
+    body: {
+      email,
+      password,
+    },
   })
     .then((response) => {
       return response.json();
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 export const authenticate = (jwt, next) => {
@@ -58,22 +63,14 @@ export const isAuthenticated = () => {
   if (typeof window == "undefined") {
     return false;
   }
-  if (localStorage.getItem("jwt")) {
-    return JSON.parse(localStorage.getItem("jwt"));
+
+  if (localStorage.getItem("userLogin")) {
+    return JSON.parse(localStorage.getItem("userLogin"));
   } else {
     return false;
   }
 };
-export const isLogin = () => {
-  if (typeof window == "undefined") {
-    return false;
-  }
-  if (localStorage.getItem("jwt")) {
-    return true;
-  } else {
-    return false;
-  }
-};
+
 export const forgotPassword = (email) => {
   console.log("email: ", email);
   return fetch(`${process.env.REACT_APP_API_URL}/forgot-password/`, {

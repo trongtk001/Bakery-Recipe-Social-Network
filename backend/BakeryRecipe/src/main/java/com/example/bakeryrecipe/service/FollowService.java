@@ -55,7 +55,7 @@ public class FollowService implements BaseService<FollowDTO>{
             entity = followRepository.save(entity);
             return mapper.toDTO(entity);
         }
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"only follow 1 person at a time");
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Only follow 1 person at a time");
     }
 
     public List<FollowDTO> findAllFollowByFollower(long id){

@@ -71,7 +71,7 @@ public class MemberService implements BaseService<MemberDTO> {
     public MemberDTO search(Long id) {
         Member member = memberRepository.findById(id).orElse(null);
         if (member == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "not found this user");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found this user");
         }
         return mapper.toDTO(member);
     }
@@ -89,7 +89,7 @@ public class MemberService implements BaseService<MemberDTO> {
     public MemberDTO searchMemberByUsername(String username) {
         Member member = memberRepository.findOneByUsername(username).orElse(null);
         if (member == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "not found this user");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found this user");
         }
         return mapper.toDTO(member);
     }

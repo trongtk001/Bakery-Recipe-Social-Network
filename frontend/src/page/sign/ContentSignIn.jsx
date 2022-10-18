@@ -1,115 +1,90 @@
-import React, { Component } from "react";
-import { Link, Redirect } from "react-router-dom";
-import { signIn, authenticate } from "../../auth";
+import React from "react";
+import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import { NotificationContainer } from "react-notifications";
+import "react-notifications/lib/notifications.css";
+import Load from "../../components/load";
+import Validation from "../../components/validation";
+import { validateLogin } from "../../components/validation/validateInput";
+import useForm from "../../hooks/useForm";
+import { useIsLogin } from "../../hooks/useIsLogin";
+import { postLogin } from "../../store/actions/user.action";
 
-class ContentSignIn extends Component {
-  constructor() {
-    super();
-    this.state = {
-      email: "",
-      password: "",
-      error: "",
-      redirectToReferer: false,
-      loading: false,
-    };
+function ContentSignIn() {
+  const dispatch = useDispatch();
+  const { loading } = useIsLogin();
+
+  function clickSubmit() {
+    dispatch(postLogin(values.email, values.password));
   }
 
-  handleChange = (name) => (event) => {
-    this.setState({ error: "" });
-    this.setState({ [name]: event.target.value });
-  };
-
-  clickSubmit = (event) => {
-    event.preventDefault();
-    this.setState({ loading: true });
-    const { email, password } = this.state;
-    const user = {
-      email,
-      password,
-    };
-    signIn(user).then((data) => {
-      if (data.error) {
-        this.setState({ error: data.error, loading: false });
-      } else {
-        authenticate(data, () => {
-          this.setState({ redirectToReferer: true });
-        });
-      }
-    });
-  };
-
-  signInForm = (email, password) => (
-    <form action>
-      <input
-        onChange={this.handleChange("email")}
-        type="email"
-        value={email}
-        placeholder="example@mydomain.com"
-        className="bg-gray-200 mb-2 shadow-none dark:bg-gray-800"
-        style={{ border: "1px solid #d3d5d8 !important" }}
-      />
-      <input
-        onChange={this.handleChange("password")}
-        type="password"
-        value={password}
-        placeholder="***********"
-        className="bg-gray-200 mb-2 shadow-none dark:bg-gray-800"
-        style={{ border: "1px solid #d3d5d8 !important" }}
-      />
-      <div className="flex justify-between my-4">
-        <div className="checkbox">
-          <input type="checkbox" id="chekcbox1" defaultChecked />
-          <label htmlFor="chekcbox1">
-            <span className="checkbox-icon" />
-            Remember Me
-          </label>
-        </div>
-        <Link to="/forgot-password">Forgot Your Password?</Link>
-      </div>
-      <button
-        onClick={this.clickSubmit}
-        type="submit"
-        className="bg-gradient-to-br from-pink-500 py-3 rounded-md text-white text-xl to-red-400 w-full"
-      >
-        Login
-      </button>
-      <div className="text-center mt-5 space-x-2">
-        <p className="text-base">
-          Not registered?
-          <Link to="/SignUp">Create a account</Link>
-        </p>
-      </div>
-    </form>
+  const { values, errors, handleChange, handleSubmit } = useForm(
+    clickSubmit,
+    validateLogin
   );
-
-  render() {
-    const { email, password, error, redirectToReferer, loading } = this.state;
-    if (redirectToReferer) {
-      return <Redirect to="/" />;
-    }
-    return (
-      <div className="lg:p-12 max-w-md max-w-xl lg:my-0 my-12 mx-auto p-6 space-y-">
-        <div
-          className="items-center leading-8 space-x-2 text-red-500 font-medium"
-          style={{ display: error ? "" : "none" }}
-        >
-          {error}
+  return (
+    <div className="lg:p-12 max-w-md max-w-xl lg:my-0 my-12 mx-auto p-6 space-y-">
+      <h1 className="lg:text-3xl text-xl font-semibold  mb-6"> Log in</h1>
+      <p className="mb-2 text-black text-lg"> userName </p>
+      <form onSubmit={handleSubmit} noValidate>
+        <div>
+          <input
+            onChange={handleChange}
+            type="email"
+            name="email"
+            value={values.email || ""}
+            placeholder="userName"
+            className="bg-gray-200 mb-2 shadow-none dark:bg-gray-800"
+            style={{ border: "1px solid #d3d5d8 !important" }}
+          />
+          <Validation errors={errors.email} />
+        </div>
+        <div>
+          <input
+            onChange={handleChange}
+            type="password"
+            name="password"
+            value={values.password || ""}
+            placeholder="***********"
+            className="bg-gray-200 mb-2 shadow-none dark:bg-gray-800"
+            style={{ border: "1px solid #d3d5d8 !important" }}
+          />
+          <Validation errors={errors.password} />
+        </div>
+        <div className="flex justify-between my-4">
+          <div className="checkbox">
+            <input type="checkbox" id="chekcbox1" defaultChecked />
+            <label htmlFor="chekcbox1">
+              <span className="checkbox-icon" />
+              Remember Me
+            </label>
+          </div>
+          <Link to="/forgot-password">Forgot Your Password?</Link>
         </div>
         {loading ? (
-          <div className="loadingio-spinner-rolling-l694aggo5r8">
-            <div className="ldio-2jzvx09mle4">
-              <div />
-            </div>
-          </div>
+          <button
+            className="bg-gradient-to-br from-pink-500 items-center justify-center rounded-md text-white text-xl to-red-400 w-full"
+            disabled
+            style={{ opacity: ".4", display: "inline-flex" }}
+          >
+            Login
+            <Load isSmall={true} />
+          </button>
         ) : (
-          ""
+          <button className="bg-gradient-to-br from-pink-500 py-3 rounded-md text-white text-xl to-red-400 w-full">
+            Login
+          </button>
         )}
-        <h1 className="lg:text-3xl text-xl font-semibold  mb-6"> Log in</h1>
-        <p className="mb-2 text-black text-lg"> Email or Username</p>
-        {this.signInForm(email, password)}
-      </div>
-    );
-  }
+        <div className="text-center mt-5 space-x-2">
+          <p className="text-base">
+            Not registered?
+            <Link to="/SignUp">Create a account</Link>
+          </p>
+        </div>
+      </form>
+      <NotificationContainer />
+    </div>
+  );
 }
 
 export default ContentSignIn;

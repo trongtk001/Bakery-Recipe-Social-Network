@@ -85,7 +85,7 @@ public class PostService implements BaseService<PostDTO> {
                 throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Not post owner");
             }
         } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"not found post");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Not found post");
         }
     }
 
@@ -103,6 +103,6 @@ public class PostService implements BaseService<PostDTO> {
         if(posts != null){
             return new PageImpl<>(mapper.toDTOList(posts.getContent()), pageable, posts.getTotalElements());
         }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND,"not found");
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Not found");
     }
 }

@@ -1,5 +1,6 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Route, Redirect } from "react-router-dom";
+import { useIsLogin } from "../../hooks/useIsLogin";
 import FooterSign from "../../page/sign/FooterSign";
 import HeaderSign from "../../page/sign/HeaderSign";
 
@@ -14,12 +15,25 @@ function SignTemplate(props) {
 }
 
 const RouterSignTemplate = ({ path, exact, Component }) => {
+  const { isLogin } = useIsLogin();
   return (
-    <Route path={path} exact={exact}>
-      <SignTemplate>
-        <Component />
-      </SignTemplate>
-    </Route>
+    <Route
+      path={path}
+      exact={exact}
+      render={() =>
+        !isLogin ? (
+          <SignTemplate>
+            <Component />
+          </SignTemplate>
+        ) : (
+          <Redirect
+            to={{
+              pathname: "/",
+            }}
+          />
+        )
+      }
+    />
   );
 };
 

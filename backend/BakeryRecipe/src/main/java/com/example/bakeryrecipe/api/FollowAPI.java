@@ -21,6 +21,7 @@ public class FollowAPI {
         this.followService = followService;
     }
 
+    @PreAuthorize("isAuthenticated() && #followDTO.follower.id.equals(authentication.principal.id)")
     @PostMapping("")
     public FollowDTO createNewFollow(@RequestBody FollowDTO followDTO){
         return followService.save(followDTO);

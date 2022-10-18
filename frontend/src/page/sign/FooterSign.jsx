@@ -11,7 +11,7 @@ const FooterSign = () => (
         <Link to="#"> Terms</Link>
         <Link to="#"> Privacy</Link>
       </div>
-      <p className="capitalize"> © copyright 2022 by BAKERY</p>
+      <p className="capitalize"> © copyright 2022 by Bakery</p>
     </div>
   </div>
 );

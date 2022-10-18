@@ -1,0 +1,20 @@
+.header {
+  position: relative;
+  background: #9999;
+  position: relative;
+  background-image: url(https://firebasestorage.googleapis.com/v0/b/bakery-9a92d.appspot.com/o/zyro-image.png?alt=media&token=813d0490-2a4b-491a-b885-e2ce62ac781e);
+  background-repeat: no-repeat;
+  background-size: cover;
+  /* background-origin: 100%; */
+}
+
+.header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(2px);
+}
