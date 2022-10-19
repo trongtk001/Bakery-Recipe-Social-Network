@@ -1,10 +1,7 @@
 package com.example.bakeryrecipe.dto;
 
 
-import com.example.bakeryrecipe.entity.Post;
-import com.fasterxml.jackson.annotation.JsonInclude;
-
-import javax.persistence.*;
+import java.util.List;
 
 public class RecipeDTO {
     private Long id;
@@ -16,15 +13,18 @@ public class RecipeDTO {
 
     private String tool;
 
+    private List<IngredientDTO> ingredients;
+
     public RecipeDTO() {
     }
 
-    public RecipeDTO(Long id, String name, String description, String steps, String tool) {
+    public RecipeDTO(Long id, String name, String description, String steps, String tool, List<IngredientDTO> ingredients) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.steps = steps;
         this.tool = tool;
+        this.ingredients = ingredients;
     }
 
     public Long getId() {
@@ -67,4 +67,11 @@ public class RecipeDTO {
         this.tool = tool;
     }
 
+    public List<IngredientDTO> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(List<IngredientDTO> ingredients) {
+        this.ingredients = ingredients;
+    }
 }

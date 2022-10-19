@@ -30,6 +30,7 @@ public class Post {
 
     @Column(name = "post_body", columnDefinition = "nvarchar(50)",nullable = false, length = 3000)
     private String postBody;
+
     @OneToMany(mappedBy = "post")
     private List<PostImage> postImages = new ArrayList<>();
 

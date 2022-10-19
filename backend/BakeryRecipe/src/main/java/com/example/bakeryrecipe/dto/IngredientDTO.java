@@ -8,15 +8,17 @@ public class IngredientDTO implements Serializable {
     private String ingredients;
     private String description;
     private String unit;
+    private int quantity;
 
     public IngredientDTO() {
     }
 
-    public IngredientDTO(Long id, String ingredients, String description, String unit) {
+    public IngredientDTO(Long id, String ingredients, String description, String unit, int quantity) {
         this.id = id;
         this.ingredients = ingredients;
         this.description = description;
         this.unit = unit;
+        this.quantity = quantity;
     }
 
     public Long getId() {
@@ -49,5 +51,13 @@ public class IngredientDTO implements Serializable {
 
     public void setUnit(String unit) {
         this.unit = unit;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }

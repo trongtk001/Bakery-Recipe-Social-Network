@@ -3,9 +3,10 @@ package com.example.bakeryrecipe.service;
 
 import com.example.bakeryrecipe.authentication.UserDetailsImpl;
 import com.example.bakeryrecipe.dto.PostDTO;
+import com.example.bakeryrecipe.dto.PostImageDTO;
+import com.example.bakeryrecipe.dto.PostVideoDTO;
 import com.example.bakeryrecipe.dto.RecipeDTO;
 import com.example.bakeryrecipe.entity.Post;
-import com.example.bakeryrecipe.entity.PostImage;
 import com.example.bakeryrecipe.entity.Recipe;
 import com.example.bakeryrecipe.mapper.PostMapper;
 import com.example.bakeryrecipe.repository.PostImageRepository;
@@ -27,15 +28,13 @@ public class PostService implements BaseService<PostDTO> {
     private final RecipeService recipeService;
     private final PostRepository postRepository;
     private final PostImageService postImageService;
-    private final PostImageRepository postImageRepository;
     private final PostVideoService postVideoService;
 
-    public PostService(PostMapper mapper, RecipeService recipeService, PostRepository postRepository, PostImageService postImageService, PostImageRepository postImageRepository, PostVideoService postVideoService) {
+    public PostService(PostMapper mapper, RecipeService recipeService, PostRepository postRepository, PostImageService postImageService, PostVideoService postVideoService) {
         this.mapper = mapper;
         this.recipeService = recipeService;
         this.postRepository = postRepository;
         this.postImageService = postImageService;
-        this.postImageRepository = postImageRepository;
         this.postVideoService = postVideoService;
     }
 
@@ -46,19 +45,28 @@ public class PostService implements BaseService<PostDTO> {
         entity.setRecipe(null);
 
         entity = postRepository.save(entity);
+
+        List<PostImageDTO> postImageDTOS = postImageService.saves(entity);
+        List<PostVideoDTO> postVideoDTOS = postVideoService.saves(entity);
+        RecipeDTO recipeDTO = recipeService.save(entity, dto.getRecipe());
+
         PostDTO postDTO = mapper.toDTO(entity);
-        postDTO.setPostImages(postImageService.saves(entity));
-        postDTO.setPostVideos(postVideoService.saves(entity));
-        postDTO.setRecipe(recipeService.saves(entity, recipe));
+        postDTO.setPostImages(postImageDTOS);
+        postDTO.setPostVideos(postVideoDTOS);
+        postDTO.setRecipe(recipeDTO);
         return postDTO;
     }
 
     public PostDTO update(PostDTO dto) {
         Post entity;
         Post oldEntity = postRepository.findPostsById(dto.getId());
+        if (oldEntity != null) {
             entity = mapper.toEntity(dto, oldEntity);
             entity = postRepository.save(entity);
-        return mapper.toDTO(entity);
+            return mapper.toDTO(entity);
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found this post");
+        }
     }
 
     public Page<PostDTO> findAll(Pageable pageable) {
@@ -85,7 +93,7 @@ public class PostService implements BaseService<PostDTO> {
                 throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Not post owner");
             }
         } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Not found post");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Not found this post");
         }
     }
 

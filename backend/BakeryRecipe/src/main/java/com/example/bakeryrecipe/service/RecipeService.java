@@ -11,23 +11,35 @@ import org.springframework.stereotype.Service;
 public class RecipeService implements BaseService<RecipeDTO>{
 
     private final RecipeMapper mapper;
+
     private final RecipeRepository recipeRepository;
-    public RecipeService(RecipeMapper mapper, RecipeRepository recipeRepository) {
+
+    private final RecipeIngredientService recipeIngredientService;
+
+    public RecipeService(RecipeMapper mapper, RecipeRepository recipeRepository, RecipeIngredientService recipeIngredientService) {
         this.mapper = mapper;
         this.recipeRepository = recipeRepository;
+        this.recipeIngredientService = recipeIngredientService;
     }
 
-    public RecipeDTO saves(Post post, Recipe recipe){
+    public RecipeDTO save(Post post, RecipeDTO recipeDTO){
+        Recipe recipe = mapper.toEntity(recipeDTO);
         recipe.setPost(post);
         recipe = recipeRepository.save(recipe);
-        return mapper.toDTO(recipe);
+
+        RecipeDTO newRecipeDTO = mapper.toDTO(recipe);
+        newRecipeDTO.setIngredients(recipeIngredientService.save(recipe, recipeDTO.getIngredients()));
+        return newRecipeDTO;
     }
 
     @Override
     public RecipeDTO save(RecipeDTO dto) {
         Recipe recipe = mapper.toEntity(dto);
         recipe = recipeRepository.save(recipe);
-        return mapper.toDTO(recipe);
+
+        RecipeDTO recipeDTO = mapper.toDTO(recipe);
+        recipeDTO.setIngredients(recipeIngredientService.save(recipe, dto.getIngredients()));
+        return recipeDTO;
     }
 
     @Override

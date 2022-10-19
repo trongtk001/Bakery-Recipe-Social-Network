@@ -28,6 +28,16 @@ public class RecipeIngredient {
     @Column(name = "quantity", nullable = false)
     private Integer quantity;
 
+    public RecipeIngredient() {
+    }
+
+    public RecipeIngredient(Ingredient ingredients, Recipe post, Integer quantity) {
+        this.id = new RecipeIngredientId(ingredients.getId(), post.getId());
+        this.ingredients = ingredients;
+        this.post = post;
+        this.quantity = quantity;
+    }
+
     public RecipeIngredientId getId() {
         return id;
     }

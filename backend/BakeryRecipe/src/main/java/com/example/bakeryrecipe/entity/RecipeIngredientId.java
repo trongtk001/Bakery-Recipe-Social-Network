@@ -17,6 +17,14 @@ public class RecipeIngredientId implements Serializable {
     @Column(name = "post_id", nullable = false)
     private Long postId;
 
+    public RecipeIngredientId() {
+    }
+
+    public RecipeIngredientId(Long ingredientsId, Long postId) {
+        this.ingredientsId = ingredientsId;
+        this.postId = postId;
+    }
+
     public Long getIngredientsId() {
         return ingredientsId;
     }
