@@ -1,7 +1,9 @@
 package com.example.bakeryrecipe.dto;
 
 
-public class EmojiDTO {
+import java.io.Serializable;
+
+public class EmojiDTO implements Serializable {
 
     private Long id;
 

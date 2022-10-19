@@ -1,9 +1,12 @@
 package com.example.bakeryrecipe.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "Emoji")
+
 public class Emoji {
 
     @Id

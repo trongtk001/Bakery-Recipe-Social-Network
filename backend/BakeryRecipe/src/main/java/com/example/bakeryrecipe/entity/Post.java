@@ -39,6 +39,7 @@ public class Post {
     @OneToOne(mappedBy = "post")
     private Recipe recipe;
 
+
     public Long getId() {
         return id;
     }
@@ -94,4 +95,5 @@ public class Post {
     public void setRecipe(Recipe recipe) {
         this.recipe = recipe;
     }
+
 }

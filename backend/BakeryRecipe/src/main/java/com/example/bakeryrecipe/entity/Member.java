@@ -38,6 +38,7 @@ public class Member {
     @OneToMany(mappedBy = "member")
     private List<MemberRole> memberRoles = new ArrayList<>();
 
+
     public Long getId() {
         return id;
     }
@@ -101,4 +102,5 @@ public class Member {
     public void setMemberRoles(List<MemberRole> memberRoles) {
         this.memberRoles = memberRoles;
     }
+
 }
