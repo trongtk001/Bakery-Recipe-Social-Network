@@ -2,6 +2,7 @@ package com.example.bakeryrecipe.service;
 
 import com.example.bakeryrecipe.dto.CommentDTO;
 import com.example.bakeryrecipe.entity.Comment;
+import com.example.bakeryrecipe.entity.Post;
 import com.example.bakeryrecipe.mapper.CommentMapper;
 import com.example.bakeryrecipe.repository.CommentRepository;
 import org.springframework.data.domain.Page;
@@ -33,13 +34,16 @@ public class CommentService implements BaseService<CommentDTO> {
     public CommentDTO save(CommentDTO dto) {
         Comment commentEntity;
         if (dto.getId() == null) {
-            commentEntity = mapper.toEntity(dto);
-            if(commentEntity.getMember() == null) {
+
+            if(memberService.searchEntity(dto.getMember().getId()) == null) {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found this member");
             }
-            if(commentEntity.getPost() == null) {
+            Post post = postService.searchEntity(dto.getPostID());
+            if(post == null) {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found this post");
             }
+            commentEntity = mapper.toEntity(dto);
+            commentEntity.setPost(post);
             commentEntity = commentRepository.save(commentEntity);
         } else {
             commentEntity = commentRepository.findById(dto.getId()).orElse(null);

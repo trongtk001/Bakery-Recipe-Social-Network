@@ -10,19 +10,19 @@ public class CommentDTO implements Serializable {
     private String commentDetail;
     private String image;
     private String video;
-    private MemberDTO memberDTO;
-    private PostDTO postDTO;
+    private MemberDTO member;
+    private Long postID;
 
     public CommentDTO() {
     }
 
-    public CommentDTO(Long id, String commentDetail, String image, String video, MemberDTO memberDTO, PostDTO postDTO) {
+    public CommentDTO(Long id, String commentDetail, String image, String video, MemberDTO member, Long postID) {
         this.id = id;
         this.commentDetail = commentDetail;
         this.image = image;
         this.video = video;
-        this.memberDTO = memberDTO;
-        this.postDTO = postDTO;
+        this.member = member;
+        this.postID = postID;
     }
 
     public Long getId() {
@@ -57,19 +57,19 @@ public class CommentDTO implements Serializable {
         this.video = video;
     }
 
-    public MemberDTO getMemberDTO() {
-        return memberDTO;
+    public MemberDTO getMember() {
+        return member;
     }
 
-    public void setMemberDTO(MemberDTO memberDTO) {
-        this.memberDTO = memberDTO;
+    public void setMember(MemberDTO member) {
+        this.member = member;
     }
 
-    public PostDTO getPostDTO() {
-        return postDTO;
+    public Long getPostID() {
+        return postID;
     }
 
-    public void setPostDTO(PostDTO postDTO) {
-        this.postDTO = postDTO;
+    public void setPostID(Long postID) {
+        this.postID = postID;
     }
 }
