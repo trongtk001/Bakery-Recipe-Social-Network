@@ -72,4 +72,9 @@ public class PostAPI {
         return new ListPostOutput(page, size, postDTOS.getTotalPages(), postDTOS.getContent());
     }
 
+    @GetMapping("{id}")
+    public PostDTO getPost(@PathVariable("id") long id) {
+        return postService.search(id);
+    }
+
 }

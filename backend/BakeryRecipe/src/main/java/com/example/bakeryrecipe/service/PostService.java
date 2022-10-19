@@ -99,7 +99,11 @@ public class PostService implements BaseService<PostDTO> {
 
     @Override
     public PostDTO search(Long id) {
-        return null;
+        Post post = postRepository.findById(id).orElse(null);
+        if (post == null) {
+            new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found this post");
+        }
+        return mapper.toDTO(post);
     }
 
     public Post searchEntity(Long id) {
