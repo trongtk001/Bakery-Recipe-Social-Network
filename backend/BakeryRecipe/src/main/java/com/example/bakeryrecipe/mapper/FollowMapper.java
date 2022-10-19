@@ -41,7 +41,6 @@ public class FollowMapper implements Mapper<Follow, FollowDTO>{
         modelMapper.getConfiguration().setPropertyCondition(Conditions.isNotNull());
         modelMapper.map(entity, dto);
         return dto;
-
     }
 
     @Override
