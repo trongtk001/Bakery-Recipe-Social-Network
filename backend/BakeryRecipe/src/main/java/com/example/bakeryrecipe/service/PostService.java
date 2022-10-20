@@ -28,7 +28,6 @@ public class PostService implements BaseService<PostDTO> {
     private final PostRepository postRepository;
     private final PostImageService postImageService;
     private final PostVideoService postVideoService;
-
     private final EmojiService emojiService;
 
     public PostService(PostMapper mapper, RecipeService recipeService, PostRepository postRepository, PostImageService postImageService, PostVideoService postVideoService, EmojiService emojiService) {
@@ -75,9 +74,7 @@ public class PostService implements BaseService<PostDTO> {
         Page<Post> entities = postRepository.findAll(pageable);
 
         Page<PostDTO> postDTOS = new PageImpl<>(mapper.toDTOList(entities.getContent()),pageable,entities.getTotalElements());
-        for(PostDTO a : postDTOS){
-            a.setNumberLike(emojiService.findNumberByPost(a.getId()));
-        }
+
         return postDTOS;
     }
 

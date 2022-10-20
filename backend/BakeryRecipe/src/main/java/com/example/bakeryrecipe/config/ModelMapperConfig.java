@@ -1,13 +1,7 @@
 package com.example.bakeryrecipe.config;
 
-import com.example.bakeryrecipe.dto.CommentDTO;
-import com.example.bakeryrecipe.dto.IngredientDTO;
-import com.example.bakeryrecipe.dto.MemberDTO;
-import com.example.bakeryrecipe.dto.RecipeDTO;
-import com.example.bakeryrecipe.entity.Comment;
-import com.example.bakeryrecipe.entity.Member;
-import com.example.bakeryrecipe.entity.Recipe;
-import com.example.bakeryrecipe.entity.RecipeIngredient;
+import com.example.bakeryrecipe.dto.*;
+import com.example.bakeryrecipe.entity.*;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 import org.modelmapper.convention.MatchingStrategies;
@@ -22,17 +16,18 @@ public class ModelMapperConfig {
     public ModelMapper modelMapper() {
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-        modelMapper.addMappings(recipePropertyMap.entityToDTOPropertyMap);
-        modelMapper.addMappings(recipePropertyMap.dtoToEntityPropertyMap);
-        modelMapper.addMappings(memberPropertyMap.entityToDTOPropertyMap);
-        modelMapper.addMappings(memberPropertyMap.dtoToEntityPropertyMap);
-        modelMapper.addMappings(ingredientPropertyMap.entityToDTOPropertyMap);
-        modelMapper.addMappings(commentPropertyMap.entityToDTOPropertyMap);
+        modelMapper.addMappings(RecipePropertyMap.entityToDTOPropertyMap);
+        modelMapper.addMappings(RecipePropertyMap.dtoToEntityPropertyMap);
+        modelMapper.addMappings(MemberPropertyMap.entityToDTOPropertyMap);
+        modelMapper.addMappings(MemberPropertyMap.dtoToEntityPropertyMap);
+        modelMapper.addMappings(IngredientPropertyMap.entityToDTOPropertyMap);
+        modelMapper.addMappings(CommentPropertyMap.entityToDTOPropertyMap);
+        modelMapper.addMappings(EmojiPropertyMap.entityToDTOPropertyMap);
         return modelMapper;
     }
 }
 
-class recipePropertyMap {
+class RecipePropertyMap {
     static PropertyMap<Recipe, RecipeDTO> entityToDTOPropertyMap = new PropertyMap<Recipe, RecipeDTO>() {
         @Override
         protected void configure() {
@@ -50,7 +45,7 @@ class recipePropertyMap {
     };
 }
 
-class memberPropertyMap {
+class MemberPropertyMap {
     static PropertyMap<Member, MemberDTO> entityToDTOPropertyMap = new PropertyMap<Member, MemberDTO>() {
         @Override
         protected void configure() {
@@ -66,7 +61,7 @@ class memberPropertyMap {
     };
 }
 
-class ingredientPropertyMap {
+class IngredientPropertyMap {
     static PropertyMap<RecipeIngredient, IngredientDTO> entityToDTOPropertyMap = new PropertyMap<RecipeIngredient, IngredientDTO>() {
         @Override
         protected void configure() {
@@ -84,8 +79,17 @@ class ingredientPropertyMap {
     };
 }
 
-class commentPropertyMap {
+class CommentPropertyMap {
     static PropertyMap<Comment, CommentDTO> entityToDTOPropertyMap = new PropertyMap<Comment, CommentDTO>() {
+        @Override
+        protected void configure() {
+            skip(destination.getPost());
+        }
+    };
+}
+
+class EmojiPropertyMap {
+    static PropertyMap<Emoji, EmojiDTO> entityToDTOPropertyMap = new PropertyMap<Emoji, EmojiDTO>() {
         @Override
         protected void configure() {
             skip(destination.getPost());
