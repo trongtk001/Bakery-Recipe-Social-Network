@@ -3,6 +3,7 @@ package com.example.bakeryrecipe.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.io.Serializable;
+import java.time.Instant;
 
 
 public class CommentDTO implements Serializable {
@@ -12,6 +13,7 @@ public class CommentDTO implements Serializable {
     private String video;
     private MemberDTO member;
     private PostDTO post;
+    private Instant createDate;
 
     public CommentDTO() {
     }
@@ -62,5 +64,13 @@ public class CommentDTO implements Serializable {
 
     public void setPost(PostDTO post) {
         this.post = post;
+    }
+
+    public Instant getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Instant createDate) {
+        this.createDate = createDate;
     }
 }
