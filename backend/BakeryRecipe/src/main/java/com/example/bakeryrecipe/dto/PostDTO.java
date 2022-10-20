@@ -14,17 +14,18 @@ public class PostDTO implements Serializable {
     private RecipeDTO recipe;
     private List<PostImageDTO> postImages;
     private List<PostVideoDTO> postVideos;
-
+    private List<EmojiDTO> emojis;
     public PostDTO() {
     }
 
-    public PostDTO(Long id, MemberDTO member, Instant createDate, String postBody, RecipeDTO recipe) {
+    public PostDTO(Long id, MemberDTO member, Instant createDate, String postBody, RecipeDTO recipe, List<PostImageDTO> postImages, List<PostVideoDTO> postVideos) {
         this.id = id;
         this.member = member;
         this.createDate = createDate;
         this.postBody = postBody;
         this.recipe = recipe;
-
+        this.postImages = postImages;
+        this.postVideos = postVideos;
     }
 
     public Long getId() {
@@ -40,7 +41,7 @@ public class PostDTO implements Serializable {
     }
 
     public void setMember(MemberDTO member) {
-        this.member = new MemberDTO(member.getId(), member.getName(), member.getAvatar());
+        this.member = member;
     }
 
     public Instant getCreateDate() {
@@ -81,5 +82,13 @@ public class PostDTO implements Serializable {
 
     public void setPostVideos(List<PostVideoDTO> postVideos) {
         this.postVideos = postVideos;
+    }
+
+    public List<EmojiDTO> getEmojis() {
+        return emojis;
+    }
+
+    public void setEmojis(List<EmojiDTO> emojis) {
+        this.emojis = emojis;
     }
 }
