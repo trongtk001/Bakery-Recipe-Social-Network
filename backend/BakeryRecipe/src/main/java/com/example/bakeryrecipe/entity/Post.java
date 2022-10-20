@@ -36,10 +36,11 @@ public class Post {
 
     @OneToMany(mappedBy = "post")
     private List<PostVideo> postVideos = new ArrayList<>();
-
     @OneToOne(mappedBy = "post")
     private Recipe recipe;
 
+    @OneToMany(mappedBy = "post")
+    private List<Emoji> emojis = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -97,4 +98,11 @@ public class Post {
         this.recipe = recipe;
     }
 
+    public List<Emoji> getEmojis() {
+        return emojis;
+    }
+
+    public void setEmojis(List<Emoji> emojis) {
+        this.emojis = emojis;
+    }
 }

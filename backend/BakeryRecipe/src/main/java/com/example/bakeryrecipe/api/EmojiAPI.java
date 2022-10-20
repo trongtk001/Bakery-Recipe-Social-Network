@@ -25,4 +25,5 @@ public class EmojiAPI {
     public List<EmojiDTO> getEmojiByPost(@RequestParam("id") Long id){
         return emojiService.findAllByPost(id);
     }
+
 }
