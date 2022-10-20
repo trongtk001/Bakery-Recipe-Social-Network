@@ -1,8 +1,10 @@
 package com.example.bakeryrecipe.config;
 
+import com.example.bakeryrecipe.dto.CommentDTO;
 import com.example.bakeryrecipe.dto.IngredientDTO;
 import com.example.bakeryrecipe.dto.MemberDTO;
 import com.example.bakeryrecipe.dto.RecipeDTO;
+import com.example.bakeryrecipe.entity.Comment;
 import com.example.bakeryrecipe.entity.Member;
 import com.example.bakeryrecipe.entity.Recipe;
 import com.example.bakeryrecipe.entity.RecipeIngredient;
@@ -25,6 +27,7 @@ public class ModelMapperConfig {
         modelMapper.addMappings(memberPropertyMap.entityToDTOPropertyMap);
         modelMapper.addMappings(memberPropertyMap.dtoToEntityPropertyMap);
         modelMapper.addMappings(ingredientPropertyMap.entityToDTOPropertyMap);
+        modelMapper.addMappings(commentPropertyMap.entityToDTOPropertyMap);
         return modelMapper;
     }
 }
@@ -77,6 +80,15 @@ class ingredientPropertyMap {
     static PropertyMap<IngredientDTO, RecipeIngredient> dtoToEntityPropertyMap = new PropertyMap<IngredientDTO, RecipeIngredient>() {
         @Override
         protected void configure() {
+        }
+    };
+}
+
+class commentPropertyMap {
+    static PropertyMap<Comment, CommentDTO> entityToDTOPropertyMap = new PropertyMap<Comment, CommentDTO>() {
+        @Override
+        protected void configure() {
+            skip(destination.getPost());
         }
     };
 }

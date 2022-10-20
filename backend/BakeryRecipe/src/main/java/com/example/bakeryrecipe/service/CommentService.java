@@ -38,12 +38,10 @@ public class CommentService implements BaseService<CommentDTO> {
             if(memberService.searchEntity(dto.getMember().getId()) == null) {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found this member");
             }
-            Post post = postService.searchEntity(dto.getPostID());
-            if(post == null) {
+            if(postService.searchEntity(dto.getPost().getId()) == null) {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found this post");
             }
             commentEntity = mapper.toEntity(dto);
-            commentEntity.setPost(post);
             commentEntity = commentRepository.save(commentEntity);
         } else {
             commentEntity = commentRepository.findById(dto.getId()).orElse(null);
