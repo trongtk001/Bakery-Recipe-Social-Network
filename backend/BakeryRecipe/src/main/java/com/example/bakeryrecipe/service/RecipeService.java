@@ -1,11 +1,14 @@
 package com.example.bakeryrecipe.service;
 
+import com.example.bakeryrecipe.dto.IngredientDTO;
 import com.example.bakeryrecipe.dto.RecipeDTO;
 import com.example.bakeryrecipe.entity.Post;
 import com.example.bakeryrecipe.entity.Recipe;
 import com.example.bakeryrecipe.mapper.RecipeMapper;
 import com.example.bakeryrecipe.repository.RecipeRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class RecipeService implements BaseService<RecipeDTO>{
@@ -28,7 +31,8 @@ public class RecipeService implements BaseService<RecipeDTO>{
         recipe = recipeRepository.save(recipe);
 
         RecipeDTO newRecipeDTO = mapper.toDTO(recipe);
-        newRecipeDTO.setIngredients(recipeIngredientService.save(recipe, recipeDTO.getIngredients()));
+        List<IngredientDTO> ingredientDTOS = recipeDTO.getIngredients() != null ? recipeIngredientService.save(recipe, recipeDTO.getIngredients()) : null;
+        newRecipeDTO.setIngredients(ingredientDTOS);
         return newRecipeDTO;
     }
 

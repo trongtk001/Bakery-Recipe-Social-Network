@@ -46,9 +46,9 @@ public class PostService implements BaseService<PostDTO> {
 
         entity = postRepository.save(entity);
 
-        List<PostImageDTO> postImageDTOS = entity.getPostImages() == null ? postImageService.saves(entity) : null;
-        List<PostVideoDTO> postVideoDTOS = entity.getPostVideos() == null ? postVideoService.saves(entity) : null;
-        RecipeDTO recipeDTO = entity.getRecipe() == null ? recipeService.save(entity, dto.getRecipe()) : null;
+        List<PostImageDTO> postImageDTOS = entity.getPostImages() != null ? postImageService.saves(entity) : null;
+        List<PostVideoDTO> postVideoDTOS = entity.getPostVideos() != null ? postVideoService.saves(entity) : null;
+        RecipeDTO recipeDTO = dto.getRecipe() != null ? recipeService.save(entity, dto.getRecipe()) : null;
 
         PostDTO postDTO = mapper.toDTO(entity);
         postDTO.setPostImages(postImageDTOS);
