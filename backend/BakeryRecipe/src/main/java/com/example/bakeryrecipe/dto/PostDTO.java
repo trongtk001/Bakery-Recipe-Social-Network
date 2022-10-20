@@ -14,7 +14,8 @@ public class PostDTO implements Serializable {
     private RecipeDTO recipe;
     private List<PostImageDTO> postImages;
     private List<PostVideoDTO> postVideos;
-    private List<EmojiDTO> emojis;
+
+    private long numberLike;
     public PostDTO() {
     }
 
@@ -84,11 +85,11 @@ public class PostDTO implements Serializable {
         this.postVideos = postVideos;
     }
 
-    public List<EmojiDTO> getEmojis() {
-        return emojis;
+    public long getNumberLike() {
+        return numberLike;
     }
 
-    public void setEmojis(List<EmojiDTO> emojis) {
-        this.emojis = emojis;
+    public void setNumberLike(long numberLike) {
+        this.numberLike = numberLike;
     }
 }

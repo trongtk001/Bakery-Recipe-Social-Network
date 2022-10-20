@@ -9,7 +9,6 @@ import com.example.bakeryrecipe.dto.RecipeDTO;
 import com.example.bakeryrecipe.entity.Post;
 import com.example.bakeryrecipe.entity.Recipe;
 import com.example.bakeryrecipe.mapper.PostMapper;
-import com.example.bakeryrecipe.repository.PostImageRepository;
 import com.example.bakeryrecipe.repository.PostRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -30,12 +29,15 @@ public class PostService implements BaseService<PostDTO> {
     private final PostImageService postImageService;
     private final PostVideoService postVideoService;
 
-    public PostService(PostMapper mapper, RecipeService recipeService, PostRepository postRepository, PostImageService postImageService, PostVideoService postVideoService) {
+    private final EmojiService emojiService;
+
+    public PostService(PostMapper mapper, RecipeService recipeService, PostRepository postRepository, PostImageService postImageService, PostVideoService postVideoService, EmojiService emojiService) {
         this.mapper = mapper;
         this.recipeService = recipeService;
         this.postRepository = postRepository;
         this.postImageService = postImageService;
         this.postVideoService = postVideoService;
+        this.emojiService = emojiService;
     }
 
     @Override
@@ -71,7 +73,11 @@ public class PostService implements BaseService<PostDTO> {
 
     public Page<PostDTO> findAll(Pageable pageable) {
         Page<Post> entities = postRepository.findAll(pageable);
+
         Page<PostDTO> postDTOS = new PageImpl<>(mapper.toDTOList(entities.getContent()),pageable,entities.getTotalElements());
+        for(PostDTO a : postDTOS){
+            a.setNumberLike(emojiService.findNumberByPost(a.getId()));
+        }
         return postDTOS;
     }
 

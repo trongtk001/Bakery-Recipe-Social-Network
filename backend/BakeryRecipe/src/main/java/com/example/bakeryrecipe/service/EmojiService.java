@@ -36,6 +36,15 @@ public class EmojiService implements BaseService<EmojiDTO>{
         List<Emoji> list = emojiRepository.findAllByPost_Id(id);
         return mapper.toDTOList(list);
     }
+
+    public long findNumberByPost(Long id){
+        List<Emoji> list = emojiRepository.findAllByPost_Id(id);
+        long i = 0;
+        for(Emoji a : list){
+             i++;
+        }
+        return i;
+    }
     @Override
     public EmojiDTO delete(long id) {
         return null;
