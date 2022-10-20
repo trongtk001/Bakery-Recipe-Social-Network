@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @Table(name = "Recipe_Ingredient")
 public class RecipeIngredient {
     @EmbeddedId
-    private RecipeIngredientId id;
+    private RecipeIngredientId recipeIngredientId;
 
     @MapsId("ingredientsId")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -32,18 +32,18 @@ public class RecipeIngredient {
     }
 
     public RecipeIngredient(Ingredient ingredients, Recipe post, Integer quantity) {
-        this.id = new RecipeIngredientId(ingredients.getId(), post.getId());
+        this.recipeIngredientId = new RecipeIngredientId(ingredients.getId(), post.getId());
         this.ingredients = ingredients;
         this.post = post;
         this.quantity = quantity;
     }
 
-    public RecipeIngredientId getId() {
-        return id;
+    public RecipeIngredientId getRecipeIngredientId() {
+        return recipeIngredientId;
     }
 
-    public void setId(RecipeIngredientId id) {
-        this.id = id;
+    public void setRecipeIngredientId(RecipeIngredientId recipeIngredientId) {
+        this.recipeIngredientId = recipeIngredientId;
     }
 
     public Ingredient getIngredients() {

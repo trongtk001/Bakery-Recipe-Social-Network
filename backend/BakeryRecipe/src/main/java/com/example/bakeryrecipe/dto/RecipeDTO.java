@@ -5,26 +5,18 @@ import java.util.List;
 
 public class RecipeDTO {
     private Long id;
+
     private String name;
 
     private String description;
 
-    private String steps;
+    private List<String> steps;
 
-    private String tool;
+    private List<String> tool;
 
     private List<IngredientDTO> ingredients;
 
     public RecipeDTO() {
-    }
-
-    public RecipeDTO(Long id, String name, String description, String steps, String tool, List<IngredientDTO> ingredients) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.steps = steps;
-        this.tool = tool;
-        this.ingredients = ingredients;
     }
 
     public Long getId() {
@@ -51,19 +43,19 @@ public class RecipeDTO {
         this.description = description;
     }
 
-    public String getSteps() {
+    public List<String> getSteps() {
         return steps;
     }
 
-    public void setSteps(String steps) {
+    public void setSteps(List<String> steps) {
         this.steps = steps;
     }
 
-    public String getTool() {
+    public List<String> getTool() {
         return tool;
     }
 
-    public void setTool(String tool) {
+    public void setTool(List<String> tool) {
         this.tool = tool;
     }
 
@@ -73,5 +65,13 @@ public class RecipeDTO {
 
     public void setIngredients(List<IngredientDTO> ingredients) {
         this.ingredients = ingredients;
+    }
+
+    public String stepsToString() {
+        return String.join("/n", this.steps);
+    }
+
+    public String toolToString() {
+        return String.join("/n", this.tool);
     }
 }
