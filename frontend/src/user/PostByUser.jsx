@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import DefaultPost from "../images/defaultPost.png";
 
 class PostByUser extends Component {
   render() {
@@ -52,36 +51,43 @@ class PostByUser extends Component {
           </div>
         </div>
         <div className="my-6 grid lg:grid-cols-4 grid-cols-2 gap-1.5 hover:text-yellow-700 uk-link-reset">
-          {posts.map((post, i) => (
-            <Link to={`/post/${post._id}`} key={i}>
-              <div
-                className="bg-red-500 max-w-full lg:h-64 h-40 rounded-md relative overflow-hidden uk-transition-toggle"
-                tabIndex={0}
-              >
-                <img
-                  src={`${process.env.REACT_APP_API_URL}/post/photo/${post._id}`}
-                  alt={post.title}
-                  onError={(i) => (i.target.src = `${DefaultPost}`)}
-                  className="w-full h-full absolute object-cover inset-0"
-                />
-                <div className="absolute bg-black bg-opacity-40 bottom-0 flex h-full items-center justify-center space-x-5 text-lg text-white uk-transition-scale-up w-full">
-                  {post.likes.length}
-                  <ion-icon
-                    name="heart"
-                    className="mr-1 md hydrated"
-                    role="img"
-                    aria-label="heart"
-                  />
-                  <ion-icon
-                    name="chatbubble-ellipses"
-                    className="mr-1 md hydrated"
-                    role="img"
-                    aria-label="chatbubble ellipses"
-                  />
-                </div>
-              </div>
-            </Link>
-          ))}
+          {posts.list.length > 0
+            ? posts.list.map((post, i) => (
+                <Link to={`/post/${post.id}`} key={i}>
+                  <div
+                    className="bg-red-500 max-w-full lg:h-64 h-40 rounded-md relative overflow-hidden uk-transition-toggle"
+                    tabIndex={0}
+                  >
+                    {post.postImages[0] !== undefined && (
+                      <img
+                        src={post.postImages[0].image}
+                        alt=""
+                        onError={(i) =>
+                          (i.target.src = `https://source.unsplash.com/random/?bakery,bake,${post.postBody}`)
+                        }
+                        className="w-full h-full absolute object-cover inset-0"
+                      />
+                    )}
+
+                    <div className="absolute bg-black bg-opacity-40 bottom-0 flex h-full items-center justify-center space-x-5 text-lg text-white uk-transition-scale-up w-full">
+                      1 {/* {post.likes.length} */}
+                      <ion-icon
+                        name="heart"
+                        className="mr-1 md hydrated"
+                        role="img"
+                        aria-label="heart"
+                      />
+                      <ion-icon
+                        name="chatbubble-ellipses"
+                        className="mr-1 md hydrated"
+                        role="img"
+                        aria-label="chatbubble ellipses"
+                      />
+                    </div>
+                  </div>
+                </Link>
+              ))
+            : "not found"}
         </div>
       </>
     );

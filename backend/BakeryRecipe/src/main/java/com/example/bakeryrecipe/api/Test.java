@@ -1,6 +1,5 @@
 package com.example.bakeryrecipe.api;
 
-import com.example.bakeryrecipe.dto.PostDTO;
 import com.example.bakeryrecipe.repository.MemberRoleRepository;
 import com.example.bakeryrecipe.service.PostService;
 import com.example.bakeryrecipe.service.S3Service;
@@ -27,4 +26,8 @@ public class Test {
         this.s3Service = s3Service;
     }
 
+    @GetMapping("")
+    public String test() {
+        return "hahahaha";
+    }
 }

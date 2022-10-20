@@ -3,6 +3,7 @@ package com.example.bakeryrecipe.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.io.Serializable;
+import java.time.Instant;
 
 
 public class CommentDTO implements Serializable {
@@ -10,19 +11,11 @@ public class CommentDTO implements Serializable {
     private String commentDetail;
     private String image;
     private String video;
-    private Long memberID;
-    private Long postID;
+    private MemberDTO member;
+    private PostDTO post;
+    private Instant createDate;
 
     public CommentDTO() {
-    }
-
-    public CommentDTO(Long id, String commentDetail, String image, String video, Long memberID, Long postID) {
-        this.id = id;
-        this.commentDetail = commentDetail;
-        this.image = image;
-        this.video = video;
-        this.memberID = memberID;
-        this.postID = postID;
     }
 
     public Long getId() {
@@ -57,19 +50,27 @@ public class CommentDTO implements Serializable {
         this.video = video;
     }
 
-    public Long getMemberID() {
-        return memberID;
+    public MemberDTO getMember() {
+        return member;
     }
 
-    public void setMemberID(Long memberID) {
-        this.memberID = memberID;
+    public void setMember(MemberDTO member) {
+        this.member = member;
     }
 
-    public Long getPostID() {
-        return postID;
+    public PostDTO getPost() {
+        return post;
     }
 
-    public void setPostID(Long postID) {
-        this.postID = postID;
+    public void setPost(PostDTO post) {
+        this.post = post;
+    }
+
+    public Instant getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Instant createDate) {
+        this.createDate = createDate;
     }
 }

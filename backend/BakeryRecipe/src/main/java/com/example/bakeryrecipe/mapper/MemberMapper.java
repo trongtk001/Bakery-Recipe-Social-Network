@@ -18,23 +18,7 @@ public class MemberMapper implements Mapper<Member, MemberDTO> {
 
     public MemberMapper(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
-        modelMapper.addMappings(entityToDTOPropertyMap);
-        modelMapper.addMappings(dtoToEntityPropertyMap);
     }
-
-    PropertyMap<Member, MemberDTO> entityToDTOPropertyMap = new PropertyMap<Member, MemberDTO>() {
-        @Override
-        protected void configure() {
-            skip(destination.getPassword());
-        }
-    };
-
-    PropertyMap<MemberDTO, Member> dtoToEntityPropertyMap = new PropertyMap<MemberDTO, Member>() {
-        @Override
-        protected void configure() {
-            skip(destination.getPassword());
-        }
-    };
 
     @Override
     public Member toEntity(MemberDTO dto) {

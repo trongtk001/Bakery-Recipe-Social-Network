@@ -7,6 +7,7 @@ import com.example.bakeryrecipe.service.CommentService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,7 +44,7 @@ public class CommentAPI {
 
     @GetMapping("")
     public ListCommentOutput getCommentByPost(@RequestParam("id") long id, @RequestParam("page") int page, @RequestParam("size") int size) {
-        Pageable pageable = PageRequest.of(page - 1, size);
+        Pageable pageable = PageRequest.of(page - 1, size, Sort.by(Sort.Direction.DESC, "createDate"));
         Page<CommentDTO> commentDTOS = commentService.searchByPost(id, pageable);
         return new ListCommentOutput(page, size, commentDTOS.getTotalPages(), commentDTOS.getContent());
     }

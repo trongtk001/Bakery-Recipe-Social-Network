@@ -4,10 +4,15 @@ import ResetPassword from "./../user/ResetPassword";
 import ForgotPassword from "./../user/ForgotPassword";
 import Users from "./../user/Users";
 import NewPost from "./../post/NewPost";
+import SinglePost from "./../post/SinglePost";
+import EditPost from "./../post/EditPost";
+import EditProfile from "./../user/EditProfile";
 import FindPeople from "./../user/FindPeople";
+import Profile from "./../user/Profile";
 import ContentSignIn from "../page/sign/ContentSignIn";
 import ContentSignUp from "../page/sign/ContentSignUp";
 import { ErrPage } from "../page/err";
+import LandingPage from "./../page/landing/index";
 
 export const mainRouter = [
   {
@@ -17,18 +22,38 @@ export const mainRouter = [
   },
   {
     path: "/users",
-    exact: true,
+    exact: false,
     Component: Users,
   },
   {
     path: "/post/create",
-    exact: true,
+    exact: false,
     Component: NewPost,
   },
   {
+    path: "/post/:postId",
+    exact: false,
+    Component: SinglePost,
+  },
+  {
+    path: "/post/edit/:postId",
+    exact: false,
+    Component: EditPost,
+  },
+  {
+    path: "/setting",
+    exact: false,
+    Component: EditProfile,
+  },
+  {
     path: "/findPeople",
-    exact: true,
+    exact: false,
     Component: FindPeople,
+  },
+  {
+    path: "/user/:userId",
+    exact: false,
+    Component: Profile,
   },
 ];
 
@@ -41,6 +66,11 @@ export const adminRouter = [
 ];
 
 export const signRouter = [
+  {
+    path: "/landing",
+    exact: false,
+    Component: LandingPage,
+  },
   {
     path: "/signIn",
     exact: false,

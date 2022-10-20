@@ -33,7 +33,7 @@ public class IngredientService implements BaseService<IngredientDTO> {
                 ingredient = mapper.toEntity(dto);
                 ingredient = ingredientRepository.save(ingredient);
             } else {
-                throw new ResponseStatusException(HttpStatus.CONFLICT, "already have this ingredient");
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "Already have this ingredient");
             }
         } else {
             ingredient = ingredientRepository.findById(dto.getId()).orElse(null);

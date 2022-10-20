@@ -1,10 +1,16 @@
 package com.example.bakeryrecipe.api;
 
 import com.example.bakeryrecipe.dto.FollowDTO;
+import com.example.bakeryrecipe.dto.MemberDTO;
 import com.example.bakeryrecipe.service.FollowService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -13,21 +19,26 @@ import java.util.List;
 @RequestMapping("api/follow")
 @PreAuthorize("permitAll()")
 public class FollowAPI {
-    @Autowired
-    FollowService followService;
 
+    private final FollowService followService;
+
+    public FollowAPI(FollowService followService) {
+        this.followService = followService;
+    }
+
+    @PreAuthorize("isAuthenticated() && #followDTO.follower.id.equals(authentication.principal.id)")
     @PostMapping("")
     public FollowDTO createNewFollow(@RequestBody FollowDTO followDTO){
         return followService.save(followDTO);
     }
 
     @GetMapping("friends/{id}")
-    public List<FollowDTO> listFriends(@PathVariable("id") Long id){
+    public List<MemberDTO> listFriends(@PathVariable("id") long id){
         return followService.findAllFriend(id);
     }
 
-    @GetMapping("follows/{id}")
-    public List<FollowDTO> listFollowers(@PathVariable("id") Long id){
+    @GetMapping("followers/{id}")
+    public List<MemberDTO> listFollowers(@PathVariable("id") long id){
         return followService.findAllFollower(id);
     }
 }
