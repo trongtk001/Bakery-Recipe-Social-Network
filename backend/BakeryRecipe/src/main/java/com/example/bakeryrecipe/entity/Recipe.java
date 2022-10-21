@@ -35,7 +35,7 @@ public class Recipe {
     @Column(name = "steps", columnDefinition = "nvarchar(3000)", nullable = false, length = 3000)
     private String steps;
 
-    @Column(name = "tool", columnDefinition = "nvarchar(50)", nullable = false, length = 500)
+    @Column(name = "tool", columnDefinition = "nvarchar(500)", nullable = false, length = 500)
     private String tool;
 
     @OneToMany(mappedBy = "post")
