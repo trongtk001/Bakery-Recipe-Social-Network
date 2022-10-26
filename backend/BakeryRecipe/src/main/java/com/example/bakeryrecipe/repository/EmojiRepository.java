@@ -12,4 +12,7 @@ public interface EmojiRepository extends JpaRepository<Emoji, Long> {
 
     @Query("select e from Emoji e where e.post.id = ?1")
     List<Emoji> findAllByPost_Id(Long id);
+
+    @Query("select e from Emoji e where e.id = ?1")
+    Emoji findEmojiById(Long id);
 }

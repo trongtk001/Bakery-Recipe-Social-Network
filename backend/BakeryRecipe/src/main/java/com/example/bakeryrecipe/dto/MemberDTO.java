@@ -16,6 +16,8 @@ public class MemberDTO {
     private List<String> roles;
     private String token;
 
+    private Boolean is_active;
+
     public MemberDTO() {
     }
 
@@ -99,5 +101,13 @@ public class MemberDTO {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public Boolean getIs_active() {
+        return is_active;
+    }
+
+    public void setIs_active(Boolean is_active) {
+        this.is_active = is_active;
     }
 }

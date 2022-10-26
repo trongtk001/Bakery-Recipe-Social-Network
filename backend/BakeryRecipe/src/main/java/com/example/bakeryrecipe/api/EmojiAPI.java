@@ -1,6 +1,7 @@
 package com.example.bakeryrecipe.api;
 
 import com.example.bakeryrecipe.dto.EmojiDTO;
+import com.example.bakeryrecipe.dto.PostDTO;
 import com.example.bakeryrecipe.service.EmojiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;

@@ -1,0 +1,34 @@
+<!DOCTYPE html >
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <!-- Bootstrap CSS -->
+<!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>-->
+<!--    <link rel="stylesheet" href="/index.css" type="text/css">-->
+</head>
+
+<body >
+    <div class="download" style="background-image: url(https://get.pxhere.com/photo/technology-controller-gadget-gamer-screenshot-xbox-game-controller-gamepad-computer-wallpaper-electronic-device-1392316.jpg);
+    height: 100vh;" >
+        <div class="container" style="@font-face {
+            font-family: Roboto,Serif,Serif;
+        }" >
+            <h1 class="first text-center" style="margin-bottom: 0;color: white;padding-top: 180px;text-align: center;font-size: 70px;
+    font-weight: bold;"></h1>
+            <h1 class="second text-center" style="margin-top: 0;color: #ffae11;text-align: center;font-size: 70px;
+    font-weight: bold;">Welcome to BakeryRecipe</h1>
+            <p class="third text-center" style="margin-top: 30px;color: white;text-align: center;font-size: 25px;" th:text="${'Hello, ' + name}" ></p>
+            <p class="fourth text-center" style="margin-top: 0;color: white;text-align: center;font-size: 25px;">Please click the button below to verify your account!!</p>
+            <div class="row" style="display: flex;justify-content: center;align-items: center;" >
+                <button class="col-2" style="margin-top: 20px;margin-left: auto;margin-right:auto;text-align:center;background-color: #f50049;color: white;border-radius: 30px;height: 60px;font-size: 25px;"><a class="now" style="color: white;text-decoration: none;" th:href="@{http://localhost:8080/api/authentication/register/verify(code=${code})}">VERIFY LINK</a></button>
+            </div>
+
+            <p class="fifth text-center" style="margin-top: 30px;color: white;text-align: center;font-size: 25px;">Want to learn about BakeryRecipe?<a class="touch" style="color: red;font-size: 25px;" href="#">Get in touch</a></p>
+        </div>
+    </div>
+</body>
+</html>
