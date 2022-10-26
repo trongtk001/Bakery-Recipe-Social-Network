@@ -2526,3 +2526,8 @@ body {
 @media (min-width: 1280px) {}
 
 @media (min-width: 1536px) {}
+
+
+.w-600{
+    max-width: 600px;
+}

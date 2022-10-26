@@ -72,6 +72,7 @@ export const getComment = (id, setListComment) => {
       data: null,
     })
       .then((res) => {
+        console.log(res.data.list);
         setListComment(res.data.list);
       })
       .catch((err) => {});
@@ -97,8 +98,12 @@ export const postComment = (
       data: {
         commentDetail,
         image,
-        memberID,
-        postID: id,
+        member:{
+          id: memberID,
+        },
+        post: {
+          id: id
+        },
       },
     })
       .then((res) => {

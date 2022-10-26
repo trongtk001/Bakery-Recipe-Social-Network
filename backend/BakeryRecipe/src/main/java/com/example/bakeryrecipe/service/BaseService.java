@@ -4,8 +4,7 @@ public interface BaseService<T> {
 
     T save(T dto);
 
-    T delete(long id);
+    T update(T dto);
 
-    T search(Long id);
-
+    T delete(T dto);
 }

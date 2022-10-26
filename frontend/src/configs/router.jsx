@@ -13,6 +13,7 @@ import ContentSignIn from "../page/sign/ContentSignIn";
 import ContentSignUp from "../page/sign/ContentSignUp";
 import { ErrPage } from "../page/err";
 import LandingPage from "./../page/landing/index";
+import Trending from "../trending";
 
 export const mainRouter = [
   {
@@ -24,6 +25,11 @@ export const mainRouter = [
     path: "/users",
     exact: false,
     Component: Users,
+  },
+  {
+    path: "/trending",
+    exact: false,
+    Component: Trending,
   },
   {
     path: "/post/create",

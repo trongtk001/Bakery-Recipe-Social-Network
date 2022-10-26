@@ -1,7 +1,5 @@
 package com.example.bakeryrecipe.dto;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-
 import java.time.LocalDate;
 import java.util.List;
 

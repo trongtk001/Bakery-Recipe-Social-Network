@@ -9,20 +9,20 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
-public class RecipeIngredientId implements Serializable {
+public class StepIngredientId implements Serializable {
     private static final long serialVersionUID = 1683237921962086574L;
     @Column(name = "ingredients_id", nullable = false)
     private Long ingredientsId;
 
-    @Column(name = "post_id", nullable = false)
-    private Long postId;
+    @Column(name = "step_id", nullable = false)
+    private Long stepId;
 
-    public RecipeIngredientId() {
+    public StepIngredientId() {
     }
 
-    public RecipeIngredientId(Long ingredientsId, Long postId) {
+    public StepIngredientId(Long ingredientsId, Long stepId) {
         this.ingredientsId = ingredientsId;
-        this.postId = postId;
+        this.stepId = stepId;
     }
 
     public Long getIngredientsId() {
@@ -33,26 +33,26 @@ public class RecipeIngredientId implements Serializable {
         this.ingredientsId = ingredientsId;
     }
 
-    public Long getPostId() {
-        return postId;
+    public Long getStepId() {
+        return stepId;
     }
 
-    public void setPostId(Long postId) {
-        this.postId = postId;
+    public void setStepId(Long stepId) {
+        this.stepId = stepId;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        RecipeIngredientId entity = (RecipeIngredientId) o;
+        StepIngredientId entity = (StepIngredientId) o;
         return Objects.equals(this.ingredientsId, entity.ingredientsId) &&
-                Objects.equals(this.postId, entity.postId);
+                Objects.equals(this.stepId, entity.stepId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(ingredientsId, postId);
+        return Objects.hash(ingredientsId, stepId);
     }
 
 }

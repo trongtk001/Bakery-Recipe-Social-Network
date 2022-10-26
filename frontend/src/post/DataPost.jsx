@@ -4,7 +4,7 @@ import { useIsHidden } from "../hooks/useIsHidden";
 import Comment from "./Comment";
 
 function DataPost({ post }) {
-  const { hidden, handleClick } = useIsHidden();
+
 
   return (
     <div className="bg-white shadow rounded-md dark:bg-gray-900 -mx-2 lg:mx-0">
@@ -22,15 +22,15 @@ function DataPost({ post }) {
               />
             </div>
           </Link>
-          <span className="block capitalize font-semibold dark:text-gray-100">
-            <button>{post.member.name} </button> on
+          <span className="block capitalize font-semibold text-gray-500 dark:text-gray-100">
+            <p className="font-bold">{post.member.name} </p> on
             {new Date(post.createDate).toDateString()}
           </span>
         </div>
       </div>
       <div>
         <h5 className="px-4">{post.postBody}</h5>
-        {post.recipe && hidden && (
+        {post.recipe  && (
           <>
             <span className="px-6 block capitalize font-semibold">
               name: {post.recipe.name}
@@ -46,21 +46,7 @@ function DataPost({ post }) {
             </span>
           </>
         )}
-        {hidden ? (
-          <button
-            className="border-gray-200 font-semibold px-4 py-1 rounded-full hover:bg-pink-600 hover:text-white hover:border-pink-600 dark:border-gray-800"
-            onClick={handleClick}
-          >
-            hide recipe..
-          </button>
-        ) : (
-          <button
-            className="border-gray-200 font-semibold px-4 py-1 rounded-full hover:bg-pink-600 hover:text-white hover:border-pink-600 dark:border-gray-800"
-            onClick={handleClick}
-          >
-            show recipe..
-          </button>
-        )}
+        
         <Link to={`/post/${post.id}`}>
           {post.postImages.map((image, index) => (
             <div class="col-span-2" key={index}>

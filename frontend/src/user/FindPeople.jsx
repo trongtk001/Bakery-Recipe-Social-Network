@@ -52,11 +52,11 @@ function FindPeople() {
                         className="bg-gray-200 rounded-full w-10 h-10"
                       />
                     </Link>
-                    <div className="flex flex-col">
-                      <span className="block capitalize font-semibold">
+                    <div className="flex flex-col ">
+                      <span className="block capitalize font-semibold text-gray-500 dark:text-gray-100">
                         {user.name}
                       </span>
-                      <span className="block capitalize text-sm">
+                      <span className="block capitalize text-sm text-gray-500 dark:text-gray-100  ">
                         {user.email}
                       </span>
                     </div>

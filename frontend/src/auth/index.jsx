@@ -34,6 +34,7 @@ export const signIn = (email, password) => {
 };
 
 export const authenticate = (jwt, next) => {
+  console.log(jwt)
   if (typeof window !== "undefined") {
     localStorage.setItem("jwt", JSON.stringify(jwt));
     next();

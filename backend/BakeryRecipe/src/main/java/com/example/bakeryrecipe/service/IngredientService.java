@@ -47,6 +47,15 @@ public class IngredientService implements BaseService<IngredientDTO> {
     }
 
     @Override
+    public IngredientDTO update(IngredientDTO dto) {
+        return null;
+    }
+
+    @Override
+    public IngredientDTO delete(IngredientDTO dto) {
+        return null;
+    }
+
     public IngredientDTO delete(long id) {
         Ingredient ingredient = ingredientRepository.findById(id).orElse(null);
         if (ingredient != null) {
@@ -57,7 +66,6 @@ public class IngredientService implements BaseService<IngredientDTO> {
         return mapper.toDTO(ingredient);
     }
 
-    @Override
     public IngredientDTO search(Long id) {
         return mapper.toDTO(ingredientRepository.findById(id).orElse(null));
     }

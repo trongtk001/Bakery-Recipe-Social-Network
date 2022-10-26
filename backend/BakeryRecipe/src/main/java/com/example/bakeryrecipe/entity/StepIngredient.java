@@ -10,40 +10,40 @@ import javax.persistence.MapsId;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Recipe_Ingredient")
-public class RecipeIngredient {
+@Table(name = "Step_Ingredient")
+public class StepIngredient {
     @EmbeddedId
-    private RecipeIngredientId recipeIngredientId;
+    private StepIngredientId stepIngredientId;
 
     @MapsId("ingredientsId")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "ingredients_id", nullable = false)
     private Ingredient ingredients;
 
-    @MapsId("postId")
+    @MapsId("stepId")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "post_id", nullable = false)
-    private Recipe post;
+    @JoinColumn(name = "step_id", nullable = false)
+    private Step step;
 
     @Column(name = "quantity", nullable = false)
     private Integer quantity;
 
-    public RecipeIngredient() {
+    public StepIngredient() {
     }
 
-    public RecipeIngredient(Ingredient ingredients, Recipe post, Integer quantity) {
-        this.recipeIngredientId = new RecipeIngredientId(ingredients.getId(), post.getId());
+    public StepIngredient(Ingredient ingredients, Step step, Integer quantity) {
+        this.stepIngredientId = new StepIngredientId(ingredients.getId(), step.getId());
         this.ingredients = ingredients;
-        this.post = post;
+        this.step = step;
         this.quantity = quantity;
     }
 
-    public RecipeIngredientId getRecipeIngredientId() {
-        return recipeIngredientId;
+    public StepIngredientId getStepIngredientId() {
+        return stepIngredientId;
     }
 
-    public void setRecipeIngredientId(RecipeIngredientId recipeIngredientId) {
-        this.recipeIngredientId = recipeIngredientId;
+    public void setStepIngredientId(StepIngredientId stepIngredientId) {
+        this.stepIngredientId = stepIngredientId;
     }
 
     public Ingredient getIngredients() {
@@ -54,12 +54,12 @@ public class RecipeIngredient {
         this.ingredients = ingredients;
     }
 
-    public Recipe getPost() {
-        return post;
+    public Step getStep() {
+        return step;
     }
 
-    public void setPost(Recipe post) {
-        this.post = post;
+    public void setStep(Step step) {
+        this.step = step;
     }
 
     public Integer getQuantity() {

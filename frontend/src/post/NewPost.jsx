@@ -17,15 +17,15 @@ function NewPost() {
   const [postBody, setPostBody] = useState("");
   const [postImages, setPostImages] = useState([]);
   const [postVideos, setPostVideos] = useState([]);
-  console.log(
-    "🚀 ~ file: NewPost.jsx ~ line 20 ~ NewPost ~ setPostVideos",
-    setPostVideos
-  );
+  // console.log(
+  //   "🚀 ~ file: NewPost.jsx ~ line 20 ~ NewPost ~ setPostVideos",
+  //   setPostVideos
+  // );
   const [recipe, setRecipe] = useState({
     name: "",
     description: "",
-    steps: "",
-    tool: "",
+    steps: [],
+    tool: [],
   });
   const [selectedFile, setSelectedFile] = useState();
   const [isLoading, setIsLoading] = useState(false);
@@ -62,6 +62,19 @@ function NewPost() {
     setSelectedFile(e.target.files[0]);
   };
 
+  const handleChangeStep = (e)=>{
+    if (e.key === 'Enter') {
+    setRecipe({...recipe,steps:[...recipe.steps,e.target.value]})
+    e.target.value = '';
+    }
+  }
+  const handleChangeTool = (e)=>{
+    if (e.key === 'Enter') {
+    setRecipe({...recipe,tool:[...recipe.tool,e.target.value]})
+    e.target.value = '';
+    }
+  }
+
   const handleChange = (event) => {
     const { value, name } = event.target;
     setRecipe({
@@ -77,15 +90,27 @@ function NewPost() {
   };
   const clickSubmit = (event) => {
     event.preventDefault();
-    dispatch(Post(postBody, postImages, postVideos, recipe, history));
+    if(postBody === '' && recipe.name === '' && recipe.description === '' && recipe.steps.length === 0 && recipe.tool.length === 0){
+      alert('Please fill in the form')
+      return
+    }else{
+      dispatch(Post(postBody, postImages, postVideos, recipe, history));
+    }
   };
+
+  const handleDelItemStep = (index) => {
+    setRecipe({...recipe,steps:recipe.steps.filter((elm,i)=>i!==index)})
+  }
+  const handleDelItemTool = (index) => {
+    setRecipe({...recipe,tool:recipe.tool.filter((elm,i)=>i!==index)})
+  }
 
   return (
     <div className="container m-auto">
       <h1 className="text-2xl leading-none text-gray-900 tracking-tight mt-3">
         Create A New Post
       </h1>
-      <form onSubmit={clickSubmit} noValidate>
+      <div noValidate>
         <div className="grid lg:grid-cols-3 mt-12 gap-8">
           <div>
             <div className="px-4 py-3 -mx-5 -mt-4 mb-5 border-b">
@@ -188,7 +213,7 @@ function NewPost() {
               </div>
               {hidden && (
                 <>
-                  <div>
+                  <div className="col-span-2">
                     <label htmlFor> name</label>
                     <input
                       type="text"
@@ -199,26 +224,52 @@ function NewPost() {
                       value={recipe.name}
                     />
                   </div>
-                  <div>
-                    <label htmlFor> steps</label>
-                    <input
-                      type="text"
-                      name="steps"
-                      placeholder="Your steps.."
-                      className="shadow-none bg-gray-100"
-                      onChange={handleChange}
-                      value={recipe.steps}
-                    />
+                  <label className="block" > Các bước làm : </label>
+
+                  <div className="flex gap-2 flex-wrap col-span-2">
+                    {recipe.steps?.map((item, index) => 
+                          {return <div onClick={(()=> handleDelItemStep(index))} key={index} className="inline-block ">
+                                    <div className="flex gap-2 items-center  px-5 py-1 border rounded-full ">
+                                      <p>Bước {index + 1}:</p>
+                                      <p>{item}</p>
+                                      <div  className="w-3 h-3 pb-4 rounded-full bg-dark-100 hover:opacity-30 !text-dark-400">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z"/></svg>
+                                      </div>
+                                    </div>
+                          </div>
+                          })}
+                    <div className="w-full">
+                      <input
+                        type="text"
+                        name="steps"
+                        placeholder="Your steps.."
+                        className="shadow-none bg-gray-100 w-full mt-2"
+                        onKeyDown={handleChangeStep}
+                        // value=''
+                      />
                   </div>
-                  <div>
-                    <label htmlFor> tool</label>
+                  </div>
+                  <div className="col-span-2">
+                    <label htmlFor> Nguyên liệu</label>
+                    <div className="flex gap-2  flex-wrap">
+                    {recipe.tool?.map((item, index) => 
+                          {return <div onClick={(()=> handleDelItemTool(index))} key={index} className="inline-block ">
+                                    <div className="flex gap-2 items-center  px-5 py-1 border rounded-full ">
+                                      <p>{item}</p>
+                                      <div  className="w-3 h-3 pb-4 rounded-full bg-dark-100 hover:opacity-30 !text-dark-400">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z"/></svg>
+                                      </div>
+                                    </div>
+                          </div>
+                          })}
+                    </div>
                     <input
                       type="text"
                       name="tool"
                       placeholder="Your tool.."
-                      className="shadow-none bg-gray-100"
-                      onChange={handleChange}
-                      value={recipe.tool}
+                      className="shadow-none bg-gray-100 mt-4"
+                      onKeyDown={handleChangeTool}
+                      // value={recipe.tool}
                     />
                   </div>
                   <div className="col-span-2">
@@ -271,12 +322,12 @@ function NewPost() {
                   <Load isSmall={true} />
                 </button>
               ) : (
-                <button className="button bg-blue-700">Create Post</button>
+                <button onClick={clickSubmit} className="button bg-blue-700">Create Post</button>
               )}
             </div>
           </div>
         </div>
-      </form>
+      </div>
       <NotificationContainer />
     </div>
   );

@@ -1,3 +1,5 @@
+import axios from "axios";
+
 export const create = (userId, token, post) => {
   return fetch(`${process.env.REACT_APP_API_URL}/post/new/${userId}`, {
     method: "POST",
@@ -33,6 +35,9 @@ export const list = (page) => {
       return response.json();
     })
     .catch((err) => console.log(err));
+};
+export const listAll = async () => {
+  return await (await axios.get(`${process.env.REACT_APP_API_URL}/post?page=1&size=30`)).data.list;
 };
 
 export const singlePost = (postId) => {

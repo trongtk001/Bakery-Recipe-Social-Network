@@ -3,7 +3,7 @@ import { isAuthenticated } from "../auth";
 import { Link, useParams } from "react-router-dom";
 import DeleteUser from "./DeleteUser";
 import FollowProfileButton from "./FollowProfileButton";
-// import ProfileTabs from "./ProfileTabs";
+// import ProfileTabs from "./ProfileTabs"; 
 import PostByUser from "./PostByUser";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser, getPostByUser } from "../store/actions/user.action";
@@ -33,9 +33,10 @@ const Profile = () => {
   const { loading } = useSelector((state) => state.common);
   const { users, postByUser } = useSelector((state) => state.user);
   const clickFollowButton = (callApi) => {
-    const userId = isAuthenticated().user._id;
+    // console.log(isAuthenticated())
+    const userId = isAuthenticated().id;
     const token = isAuthenticated().token;
-    callApi(userId, token, users._id).then((data) => {
+    callApi(userId, token, users.id).then((data) => {
       setFollowing(!following);
     });
   };

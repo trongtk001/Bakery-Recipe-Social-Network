@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import useQuery from "../hooks/useQuery";
 import Load from "../components/load";
+import axios from "axios";
 
 function Users() {
   const query = useQuery();
@@ -31,6 +32,17 @@ function Users() {
     };
     fetchData();
   }, [text]);
+
+  useEffect( async() => {
+
+    let data = await axios.get(`${process.env.REACT_APP_API_URL}/member?q=&page=1&size=20`)
+    if(data){
+      console.log(data.data)
+    }
+      
+    });
+
+
   return (
     <div className="container pro-container m-auto">
       <h2 className="mt-5 mb-5">Users : {text}</h2>

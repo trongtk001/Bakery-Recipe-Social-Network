@@ -1,10 +1,7 @@
 package com.example.bakeryrecipe.dto;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-
 import java.io.Serializable;
 import java.time.Instant;
-
 
 public class CommentDTO implements Serializable {
     private Long id;
