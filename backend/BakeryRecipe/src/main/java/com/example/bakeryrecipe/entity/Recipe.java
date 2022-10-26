@@ -8,7 +8,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Entity
 public class Recipe {
@@ -31,8 +35,11 @@ public class Recipe {
     @Column(name = "steps", columnDefinition = "nvarchar(3000)", nullable = false, length = 3000)
     private String steps;
 
-    @Column(name = "tool", columnDefinition = "nvarchar(50)", nullable = false, length = 500)
+    @Column(name = "tool", columnDefinition = "nvarchar(500)", nullable = false, length = 500)
     private String tool;
+
+    @OneToMany(mappedBy = "post")
+    private List<RecipeIngredient> ingredients = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -82,4 +89,19 @@ public class Recipe {
         this.tool = tool;
     }
 
+    public List<RecipeIngredient> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(List<RecipeIngredient> ingredients) {
+        this.ingredients = ingredients;
+    }
+
+    public List<String> stepsToList() {
+        return new ArrayList<>(Arrays.asList(steps.split("/n")));
+    }
+
+    public List<String> toolToList() {
+        return new ArrayList<>(Arrays.asList(tool.split("/n")));
+    }
 }

@@ -1,15 +1,21 @@
 package com.example.bakeryrecipe.entity;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import java.time.Instant;
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,6 +38,10 @@ public class Comment {
 
     @Column(name = "video", length = 250)
     private String video;
+
+    @CreatedDate
+    @Column(name = "create_date", nullable = false)
+    private Instant createDate;
 
     public Long getId() {
         return id;
@@ -81,4 +91,11 @@ public class Comment {
         this.video = video;
     }
 
+    public Instant getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Instant createDate) {
+        this.createDate = createDate;
+    }
 }

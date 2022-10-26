@@ -1,11 +1,14 @@
 package com.example.bakeryrecipe.mapper;
 
+import com.example.bakeryrecipe.dto.MemberDTO;
 import com.example.bakeryrecipe.dto.PostDTO;
 import com.example.bakeryrecipe.dto.RecipeDTO;
+import com.example.bakeryrecipe.entity.Member;
 import com.example.bakeryrecipe.entity.Post;
 import com.example.bakeryrecipe.entity.Recipe;
 import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -17,6 +20,7 @@ public class RecipeMapper implements Mapper<Recipe, RecipeDTO> {
     public RecipeMapper(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
     }
+
     @Override
     public Recipe toEntity(RecipeDTO dto) {
         return modelMapper.map(dto, Recipe.class);
