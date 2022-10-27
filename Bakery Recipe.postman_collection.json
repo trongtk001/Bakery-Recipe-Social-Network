@@ -105,7 +105,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"hung\",\r\n    \"password\": \"123456\"\r\n}",
+							"raw": "{\r\n    \"username\": \"Hung\",\r\n    \"password\": \"123456\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -174,7 +174,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"postBody\": \"hôm nay trời thật đẹp\",\r\n    \"postImages\": [\r\n        {\r\n            \"image\": \"https://firebasestorage.googleapis.com/v0/b/bakery-9a92d.appspot.com/o/images%2Fdownload.jfif4e578198-a25e-42f7-aad7-1e3954d4774d?alt=media&token=a0bdf6dc-2b63-4d19-a520-55d0dfd2acc7\"\r\n        }\r\n    ],\r\n    \"postVideos\": [],\r\n    \"recipe\": {\r\n        \"name\": \"bánh Mochi\",\r\n        \"description\": \"Bánh Mochi Nhật Bản là công thức làm bánh truyền thống rất độc đáo của người dân đất nước mặt trời mọc.\",\r\n        \"steps\": [\r\n            \"Làm nhân bánh\",\r\n            \" Nhào bột vỏ bánh\",\r\n            \"Hấp chín bột\",\r\n            \"Tạo hình bánh\",\r\n            \"Thành phẩm\"\r\n        ],\r\n        \"tool\": [\r\n            \"Bột nếp 100gr\",\r\n            \"Đậu đỏ 150gr\"\r\n        ]\r\n    }\r\n}",
+							"raw": "{\r\n    \"postBody\": \"Bánh Mochi Nhật Bản là công thức làm bánh truyền thống rất độc đáo của người dân đất nước mặt trời mọc.\",\r\n    \"recipe\": {\r\n        \"name\": \"bánh Mochi\",\r\n        \"steps\": [\r\n            {\r\n                \"step\": \"Làm nhân bánh\",\r\n                \"description\": \"Cho đậu đỏ vào một cái thau ngâm với nước 1 đến 2 tiếng cho đậu đỏ mềm./nSau đó đem rửa lại thật sạch, để ráo nước rồi cho đậu vào một cái nồi, cho nước cốt dừa vào nấu cho đậu thật chín nhé. Khi đậu đã chín bạn tắt bếp để cho đậu đỏ nguội đi.\",\r\n                \"image\": \"\",\r\n                \"video\": \"\",\r\n                \"ingredients\": [\r\n                    {\r\n                        \"id\": 1,\r\n                        \"quantity\": 2\r\n                    }\r\n                ]\r\n            }\r\n        ],\r\n        \"tool\": [\r\n            \"Dao\",\r\n            \"Nồi\"\r\n        ]\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -382,7 +382,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJodW5nIiwiZXhwIjoxNjY2OTUyNDQwLCJpYXQiOjE2NjYzNDc2NDB9.UfvWWiBuxKXqhMSq4DwnYuFDUWpw3dUVtSqhYCfTZhZl2gFgLJVPtMcAKFtIpnTA9FwF83iqt-8i_z78rJZkgQ",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
@@ -490,7 +490,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"commentDetail\": \"ngon qua di ma\",\r\n    \"image\": \"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/640px-Image_created_with_a_mobile_phone.png\",\r\n    \"member\": {\r\n        \"id\": 1\r\n    },\r\n    \"post\": {\r\n        \"id\": 1\r\n    }\r\n}",
+							"raw": "{\r\n    \"commentDetail\": \"ngon qua di ma\",\r\n    \"image\": \"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/640px-Image_created_with_a_mobile_phone.png\",\r\n    \"member\": {\r\n        \"id\": 14\r\n    },\r\n    \"post\": {\r\n        \"id\": 54\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -620,21 +620,11 @@
 		{
 			"name": "test",
 			"protocolProfileBehavior": {
-				"disableBodyPruning": true,
 				"disableCookies": false
 			},
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"stringList\": [\r\n        \"1\",\r\n        \"2\",\r\n        \"3\"\r\n    ]\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
 				"url": {
 					"raw": "{{url}}/test",
 					"host": [
@@ -646,6 +636,16 @@
 				}
 			},
 			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "http://bakery-recipe.herokuapp.com/api"
+		},
+		{
+			"key": "hehe",
+			"value": "http://35.198.245.224/api"
 		}
 	]
 }
