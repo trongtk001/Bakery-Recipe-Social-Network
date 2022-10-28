@@ -5,7 +5,7 @@ import Comment from "./Comment";
 
 function DataPost({ post }) {
 
-
+console.log(post)
   return (
     <div className="bg-white shadow rounded-md dark:bg-gray-900 -mx-2 lg:mx-0">
       <div className="flex justify-between items-center px-4 py-3">
@@ -30,48 +30,24 @@ function DataPost({ post }) {
       </div>
       <div>
         <h5 className="px-4">{post.postBody}</h5>
-        {post.recipe  && (
-          <>
-            <span className="px-6 block capitalize font-semibold">
-              name: {post.recipe.name}
-            </span>
-            <span className="px-6 block capitalize font-semibold">
-              tool: {post.recipe.tool}
-            </span>
-            <span className="px-6 block capitalize font-semibold">
-              steps: {post.recipe.steps}
-            </span>
-            <span className="px-6 block capitalize font-semibold">
-              description: {post.recipe.description}
-            </span>
-          </>
-        )}
         
         <Link to={`/post/${post.id}`}>
-          {post.postImages.map((image, index) => (
-            <div class="col-span-2" key={index}>
-              {post.postImages.length === 1 ? (
+
+            <div class="col-span-2">
                 <img
-                  src={`${image.image}`}
+                  src={`${post.recipe?.steps[0]?.image 
+                    ? post.recipe?.steps[0]?.image 
+                    : post.recipe?.steps[1]?.image 
+                    ? post.recipe?.steps[1]?.image 
+                    : `https://source.unsplash.com/random/?bakery,bake,${post.member.name}`}`}
                   onError={(i) =>
-                    (i.target.src = `https://source.unsplash.com/random/?bakery,bake,${image.id}`)
+                    (i.target.src = `https://source.unsplash.com/random/?bakery,bake,${post.id}`)
                   }
-                  alt={image.id}
                   className="rounded-md w-full object-cover"
                   style={{ height: "30rem" }}
                 />
-              ) : (
-                <img
-                  src={`${image.image}`}
-                  onError={(i) =>
-                    (i.target.src = `https://source.unsplash.com/random/?bakery,bake,${image.id}`)
-                  }
-                  alt={image.id}
-                  className="rounded-md w-full h-56 object-cover"
-                />
-              )}
             </div>
-          ))}
+
         </Link>
       </div>
       <Comment post={post} />

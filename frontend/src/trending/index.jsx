@@ -20,7 +20,7 @@ export default function Trending(){
                                 <div
                                     class="bg-blue-400 max-w-full lg:h-56  h-48 rounded-lg relative overflow-hidden shadow uk-transition-toggle">
                                     <a href="#story-modal" uk-toggle>
-                                        <img src={item.postImages.length >= 1  ? item.postImages[0].image : 'https://camnangbep.com/wp-content/uploads/2022/04/hinh-anh-do-an-vat-ngon.jpg'} class="w-full h-full absolute object-cover inset-0" />
+                                        <img src={'https://source.unsplash.com/random/?bakery,bake,1'} class="w-full h-full absolute object-cover inset-0" />
                                     </a>
                                     <div
                                         class="flex flex-1 items-center absolute bottom-0 w-full p-3 text-white custom-overly1 uk-transition-slide-bottom-medium">

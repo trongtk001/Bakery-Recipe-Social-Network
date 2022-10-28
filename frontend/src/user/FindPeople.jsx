@@ -3,13 +3,11 @@ import { findPeople } from "./apiUser";
 import { Link } from "react-router-dom";
 
 function FindPeople() {
-  const [users, setUsers] = useState(null);
+  const [users, setUsers] = useState({list:[]});
   useEffect(
     () => {
       findPeople().then((data) => {
-        if (data.error) {
-          console.log(data.error);
-        } else {
+        if (data) {
           setUsers(data);
         }
       });
@@ -39,7 +37,7 @@ function FindPeople() {
           </div>
           <div className="divide-gray-300 divide-gray-50 divide-opacity-50 divide-y px-4 dark:divide-gray-800 dark:text-gray-100">
             {users &&
-              users.list.map((user, i) => (
+              users.list?.map((user, i) => (
                 <div className="flex items-center justify-between py-3" key={i}>
                   <div className="flex flex-1 items-center space-x-4">
                     <Link to={`/user/${user.id}`}>
@@ -65,7 +63,7 @@ function FindPeople() {
                     // onClick={() => clickFollow(user)}
                     className="border border-gray-200 font-semibold px-4 py-1 rounded-full hover:bg-pink-600 hover:text-white hover:border-pink-600 dark:border-gray-800"
                   >
-                    Follow
+                   
                   </button>
                 </div>
               ))}

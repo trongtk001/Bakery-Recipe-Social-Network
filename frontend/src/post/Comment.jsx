@@ -1,9 +1,13 @@
+import { async } from "@firebase/util";
+import { configure } from "@testing-library/react";
+import axios from "axios";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import Load from "../components/load";
 import { useIsHidden } from "../hooks/useIsHidden";
 import { useIsLogin } from "../hooks/useIsLogin";
 import { getComment, postComment } from "../store/actions/post.action";
+import { like } from "../user/apiUser";
 
 function Comment({ post }) {
   const dispatch = useDispatch();
@@ -11,6 +15,8 @@ function Comment({ post }) {
   const { isLogin, avatar } = useIsLogin();
   const [loading, setLoading] = useState(false);
   const [listComment, setListComment] = useState(null);
+  const [likes,setLikes] = useState(()=> post.likes.map((like)=>like.memberID).includes(isLogin.id));
+  const [total,setTotal] = useState(post.likes.length);
 
   const [text, setText] = useState("");
   const onClickPostId = (id) => {
@@ -19,7 +25,7 @@ function Comment({ post }) {
     dispatch(getComment(id, setListComment));
     setLoading(false);
   };
-
+  console.log(post.likes.length)
   const fomatDate = (date)=>{
     const date1 = new Date(date);
     const date2 = new Date();
@@ -31,6 +37,14 @@ function Comment({ post }) {
       diffDays = Math.ceil(diffTime / (1000 * 60 )) + ' phút trước';
     }
     return diffDays;
+  }
+
+
+
+  const onClickLike = async(e)=>{
+     await like(isLogin.id, e)
+      setLikes(!likes)
+      setTotal(likes ? total - 1 : total + 1)
   }
 
   const onComment = (e) => {
@@ -50,18 +64,20 @@ function Comment({ post }) {
   return (
     <div className="py-3 px-4 space-y-3">
       <div className="flex space-x-4 lg:font-bold">
-        <button className="flex items-center space-x-2">
+        <button
+        onClick={()=>onClickLike(post.id)}
+        className={likes ? 'text-red-500 flex items-center space-x-2' : 'flex items-center space-x-2'} >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
             fill="currentColor"
             width={22}
             height={22}
-            className="dark:text-gray-100 text-gray-500"
+            className=''
           >
             <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
           </svg>
-          <div> Like</div>
+          <div>  {total} Like</div>
         </button>
         <button
           className="flex items-center space-x-2"

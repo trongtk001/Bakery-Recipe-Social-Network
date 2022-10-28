@@ -45,7 +45,7 @@ export const remove = (userId, token) => {
 };
 
 export const list = () => {
-  return fetch(`https://nodeapi-social-network.herokuapp.com/api/users`, {
+  return fetch(`${process.env.REACT_APP_API_URL}/users`, {
     method: "GET",
   })
     .then((response) => {
@@ -66,14 +66,14 @@ export const updateUser = (user, next) => {
 };
 
 export const follow = (userId, token, followId) => {
-  return fetch(`${process.env.REACT_APP_API_URL}/user/follow`, {
-    method: "PUT",
+  return fetch(`${process.env.REACT_APP_API_URL}/follow`, {
+    method: "POST",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify({ userId, followId }),
+    body: JSON.stringify({ memberID:userId, followerID:followId }),
   })
     .then((response) => {
       return response.json();
@@ -81,15 +81,36 @@ export const follow = (userId, token, followId) => {
     .catch((err) => console.log(err));
 };
 
-export const unFollow = (userId, token, unFollowId) => {
-  return fetch(`${process.env.REACT_APP_API_URL}/user/unFollow`, {
-    method: "PUT",
+export const like = (userId, followId) => {
+
+  const userLogin = localStorage.getItem("userLogin");
+  const token = userLogin ? JSON.parse(userLogin).token : "";
+
+  return fetch(`${process.env.REACT_APP_API_URL}/like`, {
+    method: "POST",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify({ userId, unFollowId }),
+    body: JSON.stringify({ memberID:userId, postID:followId }),
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .catch((err) => console.log(err));
+};
+
+
+export const unFollow = (userId, token, unFollowId) => {
+  return fetch(`${process.env.REACT_APP_API_URL}/follow`, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({  memberID:userId, followerID:unFollowId}),
   })
     .then((response) => {
       return response.json();
