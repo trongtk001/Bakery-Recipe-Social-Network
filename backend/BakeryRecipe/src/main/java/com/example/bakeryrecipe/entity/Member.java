@@ -35,8 +35,8 @@ public class Member {
     @Column(name = "avatar", length = 250)
     private String avatar;
 
-    @Column(name = "is_active", nullable = true)
-    private Boolean is_active;
+    @Column(name = "status", nullable = true)
+    private Byte status;
 
     @OneToMany(mappedBy = "member")
     private List<MemberRole> memberRoles = new ArrayList<>();
@@ -106,11 +106,11 @@ public class Member {
         this.memberRoles = memberRoles;
     }
 
-    public Boolean getIs_active() {
-        return is_active;
+    public Byte getStatus() {
+        return status;
     }
 
-    public void setIs_active(Boolean is_active) {
-        this.is_active = is_active;
+    public void setStatus(Byte status) {
+        this.status = status;
     }
 }

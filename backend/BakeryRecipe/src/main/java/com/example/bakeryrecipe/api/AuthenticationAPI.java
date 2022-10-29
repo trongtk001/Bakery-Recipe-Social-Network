@@ -51,7 +51,6 @@ public class AuthenticationAPI {
 
     @PostMapping("/register")
     public void register(@RequestBody MemberDTO dto) {
-        dto.setIs_active(false);
         memberService.save(dto);
         // send email
         dto.setToken(jwtUtils.generateTokenFromUsername(dto.getUsername()));

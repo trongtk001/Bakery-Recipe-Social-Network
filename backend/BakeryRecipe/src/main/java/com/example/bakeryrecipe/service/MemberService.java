@@ -5,6 +5,7 @@ import com.example.bakeryrecipe.dto.MemberDTO;
 import com.example.bakeryrecipe.entity.Member;
 import com.example.bakeryrecipe.mapper.MemberMapper;
 import com.example.bakeryrecipe.repository.MemberRepository;
+import com.example.bakeryrecipe.validation.Validation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -44,10 +45,14 @@ public class MemberService implements BaseService<MemberDTO> {
             if (null == memberEntity) {
                 memberEntity = memberRepository.findOneByEmail(dto.getEmail()).orElse(null);
                 if (null == memberEntity) {
-                    memberEntity = mapper.toEntity(dto);
-                    memberEntity.setPassword(passwordEncoder.encode(dto.getPassword()));
-                    memberRepository.save(memberEntity);
-                    memberRoleService.save(memberEntity, dto.getRoles());
+                    if(Validation.CheckEmail(dto.getEmail())){
+                        memberEntity = mapper.toEntity(dto);
+                        memberEntity.setPassword(passwordEncoder.encode(dto.getPassword()));
+                        memberRepository.save(memberEntity);
+                        memberRoleService.save(memberEntity, dto.getRoles());
+                    }else {
+                        throw new ResponseStatusException(HttpStatus.CONFLICT,"wrong email format!!");
+                    }
                 } else {
                     throw new ResponseStatusException(HttpStatus.CONFLICT, "This email already exists");
                 }
@@ -111,20 +116,13 @@ public class MemberService implements BaseService<MemberDTO> {
 
     public MemberDTO searchMemberByUsername(String username) {
         Member member = memberRepository.findOneByUsername(username).orElse(null);
-        if (member == null && member.getIs_active() == false) {
+        if (member == null ) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found this user");
         }
         return mapper.toDTO(member);
     }
     // check code send to email and active member
     public void checkCode(String code){
-        String userName = authTokenFilter.doFilterInternal(code);
-            Member member = memberRepository.findOneByUsername(userName).orElse(null);
-            if(member != null){
-                member.setIs_active(true);
-                memberRepository.save(member);
-            }else {
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND,"active account fail");
-            }
+
     }
 }

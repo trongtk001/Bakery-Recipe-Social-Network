@@ -19,6 +19,4 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     Member findMemberById(Long id);
 
-    @Query("select m from Member m where m.is_active = ?1")
-    Member findMemberByIs_active(String code);
 }
