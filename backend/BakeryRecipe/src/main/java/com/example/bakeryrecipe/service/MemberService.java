@@ -5,7 +5,9 @@ import com.example.bakeryrecipe.dto.MemberDTO;
 import com.example.bakeryrecipe.entity.Member;
 import com.example.bakeryrecipe.mapper.MemberMapper;
 import com.example.bakeryrecipe.repository.MemberRepository;
+import com.example.bakeryrecipe.service.mailservice.ClientService;
 import com.example.bakeryrecipe.validation.Validation;
+import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -25,15 +27,18 @@ public class MemberService implements BaseService<MemberDTO> {
     private final RoleService roleService;
     private final MemberRoleService memberRoleService;
 
+    private final ClientService clientService;
+
     @Autowired
      AuthTokenFilter authTokenFilter;
 
-    public MemberService(PasswordEncoder passwordEncoder, MemberRepository memberRepository, MemberMapper mapper, RoleService roleService, MemberRoleService memberRoleService) {
+    public MemberService(PasswordEncoder passwordEncoder, MemberRepository memberRepository, MemberMapper mapper, RoleService roleService, MemberRoleService memberRoleService, ClientService clientService) {
         this.passwordEncoder = passwordEncoder;
         this.memberRepository = memberRepository;
         this.mapper = mapper;
         this.roleService = roleService;
         this.memberRoleService = memberRoleService;
+        this.clientService = clientService;
     }
 
     @Override
@@ -47,9 +52,13 @@ public class MemberService implements BaseService<MemberDTO> {
                 if (null == memberEntity) {
                     if(Validation.CheckEmail(dto.getEmail())){
                         memberEntity = mapper.toEntity(dto);
+                        memberEntity.setStatus((byte) 1); // set 1 => account is not active
+                        String code = RandomString.make(64);
+                        memberEntity.setVerificationCode(code);
                         memberEntity.setPassword(passwordEncoder.encode(dto.getPassword()));
                         memberRepository.save(memberEntity);
                         memberRoleService.save(memberEntity, dto.getRoles());
+                        clientService.create(dto, memberEntity.getVerificationCode());// dang xu lý chỗ này
                     }else {
                         throw new ResponseStatusException(HttpStatus.CONFLICT,"wrong email format!!");
                     }
@@ -123,6 +132,13 @@ public class MemberService implements BaseService<MemberDTO> {
     }
     // check code send to email and active member
     public void checkCode(String code){
-
+        Member member = memberRepository.findMemberByVerificationCode(code);
+        if(member != null){
+            member.setStatus((byte) 2); // set 2 => account activated
+            member.setVerificationCode(null);
+            memberRepository.save(member);
+        }else {
+            throw new ResponseStatusException(HttpStatus.CONFLICT,"Activation failed!");
+        }
     }
 }

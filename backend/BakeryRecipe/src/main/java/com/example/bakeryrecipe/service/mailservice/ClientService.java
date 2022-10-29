@@ -16,7 +16,7 @@ public class ClientService  {
         this.mailService = mailService;
     }
 
-    public void create(MemberDTO dto) {
+    public void create(MemberDTO dto,String code) {
         try {
             DataMailDTO dataMail = new DataMailDTO();
 
@@ -26,7 +26,7 @@ public class ClientService  {
             Map<String, Object> props = new HashMap<>();
             props.put("name", dto.getName());
             props.put("username", dto.getUsername());
-            props.put("code",dto.getToken());
+            props.put("code",code);
             dataMail.setProps(props);
 
             mailService.sendHtmlMail(dataMail, "index");

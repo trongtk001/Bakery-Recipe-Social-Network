@@ -52,9 +52,6 @@ public class AuthenticationAPI {
     @PostMapping("/register")
     public void register(@RequestBody MemberDTO dto) {
         memberService.save(dto);
-        // send email
-        dto.setToken(jwtUtils.generateTokenFromUsername(dto.getUsername()));
-        clientService.create(dto);
     }
 
     @GetMapping("/register/verify")

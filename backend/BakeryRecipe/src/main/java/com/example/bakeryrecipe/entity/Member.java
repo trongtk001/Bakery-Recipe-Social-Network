@@ -38,6 +38,9 @@ public class Member {
     @Column(name = "status", nullable = true)
     private Byte status;
 
+    @Column(name = "verification_code",  updatable = false ,nullable = true)
+    private String verificationCode;
+
     @OneToMany(mappedBy = "member")
     private List<MemberRole> memberRoles = new ArrayList<>();
 
@@ -112,5 +115,13 @@ public class Member {
 
     public void setStatus(Byte status) {
         this.status = status;
+    }
+
+    public String getVerificationCode() {
+        return verificationCode;
+    }
+
+    public void setVerificationCode(String verificationCode) {
+        this.verificationCode = verificationCode;
     }
 }
