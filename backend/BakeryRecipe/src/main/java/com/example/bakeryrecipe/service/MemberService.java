@@ -131,12 +131,16 @@ public class MemberService implements BaseService<MemberDTO> {
         return mapper.toDTO(member);
     }
     // check code send to email and active member
-    public void checkCode(String code){
-        Member member = memberRepository.findMemberByVerificationCode(code);
-        if(member != null){
-            member.setStatus((byte) 2); // set 2 => account activated
-            member.setVerificationCode(null);
-            memberRepository.save(member);
+    public void checkCode(String code,String username){
+        Member member = memberRepository.findMemberByVerificationCodeOrUsername(code,username);
+        if(member != null ){
+            if(member.getVerificationCode() != null){
+                member.setStatus((byte) 2); // set 2 => account activated
+                member.setVerificationCode(null);
+                memberRepository.save(member);
+            }else {
+                throw new ResponseStatusException(HttpStatus.CONFLICT,"account has been activated!");
+            }
         }else {
             throw new ResponseStatusException(HttpStatus.CONFLICT,"Activation failed!");
         }

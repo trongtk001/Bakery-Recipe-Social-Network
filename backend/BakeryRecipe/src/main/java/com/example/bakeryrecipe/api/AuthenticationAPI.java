@@ -55,8 +55,8 @@ public class AuthenticationAPI {
     }
 
     @GetMapping("/register/verify")
-    public String verify(@RequestParam("code") String code){
-        memberService.checkCode(code);
+    public String verify(@RequestParam("code") String code,@RequestParam("username") String username){
+        memberService.checkCode(code,username);
         return "activated success!!";
     }
 }

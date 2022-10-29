@@ -38,7 +38,7 @@ public class Member {
     @Column(name = "status", nullable = true)
     private Byte status;
 
-    @Column(name = "verification_code",  updatable = false ,nullable = true)
+    @Column(name = "verification_code" ,nullable = true)
     private String verificationCode;
 
     @OneToMany(mappedBy = "member")
