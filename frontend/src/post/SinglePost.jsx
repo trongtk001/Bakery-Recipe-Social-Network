@@ -1,33 +1,87 @@
 import React, { useEffect, useState } from "react";
 import { singlePost, remove, likePost, unlike } from "./apiPost";
-import DefaultPost from "../images/defaultPost.png";
 import { Link, useParams } from "react-router-dom";
 import { isAuthenticated } from "../auth";
 import Comment from "./Comment";
-import DefaultProfile from "../images/avatar.png";
 
 function SinglePost() {
   const { postId } = useParams();
-  const [post, setPost] = useState("");
+  const [post, setPost] = useState({
+    "id": 80,
+    "member": {
+        "id": 3,
+        "name": "trong",
+        "email": "trong@gmail.com",
+        "dob": "2001-10-17",
+        "username": "trong",
+        "password": null,
+        "avatar": null,
+        "roles": [
+            "USER",
+            "ADMIN"
+        ],
+        "token": null
+    },
+    "createDate": "2022-10-27T22:14:46.327Z",
+    "postBody": "Bánh Mochi Nhật Bản là công thức làm bánh truyền thống rất độc đáo của người dân đất nước mặt trời mọc.",
+    "recipe": {
+        "id": 80,
+        "name": "bánh Mochi",
+        "steps": [
+            {
+                "id": 39,
+                "step": "Làm nhân bánh",
+                "description": "Cho đậu đỏ vào một cái thau ngâm với nước 1 đến 2 tiếng cho đậu đỏ mềm./nSau đó đem rửa lại thật sạch, để ráo nước rồi cho đậu vào một cái nồi, cho nước cốt dừa vào nấu cho đậu thật chín nhé. Khi đậu đã chín bạn tắt bếp để cho đậu đỏ nguội đi.",
+                "image": "",
+                "video": "",
+                "ingredients": [
+                    {
+                        "id": 1,
+                        "ingredients": "Bột bánh bông lan Meizan",
+                        "description": "Meizan Hi-ratio cake flour giúp làm ra những chiếc bánh bông lan rất mềm, bông xốp, mịn màng do đây là loại bột đặc biệt có kích cỡ hạt siêu nhỏ, rất lý tưởng dùng cho các loại bánh bông lan cao cấp.",
+                        "unit": "Gói",
+                        "quantity": 2
+                    }
+                ]
+            }
+        ],
+        "tool": [
+            "Dao",
+            "Nồi"
+        ]
+    },
+    "likes": [
+        {
+            "id": 1,
+            "memberID": 3,
+            "postID": 80,
+            "action": null
+        },
+        {
+            "id": 2,
+            "memberID": 2,
+            "postID": 80,
+            "action": null
+        }
+    ]
+});
   const [like, setLike] = useState(false);
   const [likes, setLikes] = useState(0);
   const [comments, setComments] = useState([]);
+
 
   const checkLike = (likes) => {
     const userId = isAuthenticated() && isAuthenticated().user._id;
     let match = likes.indexOf(userId) !== -1;
     return match;
   };
-  useEffect(
-    () => {
+  useEffect( async () => {
       singlePost(postId).then((data) => {
         if (data.error) {
           console.log(data.error);
         } else {
-          setPost(data);
-          setLikes(data.likes.length);
-          setLike(checkLike(data.likes));
-          setComments(data.comments);
+          console.log(data)
+           setPost(data);
         }
       });
     },
@@ -35,235 +89,100 @@ function SinglePost() {
     [postId]
   );
 
+    console.log(post)
   const updateComments = (comments) => {
     setComments(comments);
   };
 
-  const likeToggle = () => {
-    let callApi = like ? unlike : likePost;
-    const userId = isAuthenticated().user._id;
-    const token = isAuthenticated().token;
-    callApi(userId, token, post._id).then((data) => {
-      if (data.error) {
-        console.log(data.error);
-      } else {
-        setLike(!likes);
-        setLikes(data.likes.length);
-      }
-    });
-  };
 
-  const deletePost = () => {
-    const postId = this.props.match.params.postId;
-    const token = isAuthenticated().token;
-    remove(postId, token).then((data) => {
-      if (data.error) {
-        console.log(data.error);
-      } else {
-        // this.setState({ redirectToHome: true });
-        console.log(data.error);
-      }
-    });
-  };
+  // const deletePost = () => {
+  //   const postId = this.props.match.params.postId;
+  //   const token = isAuthenticated().token;
+  //   remove(postId, token).then((data) => {
+  //     if (data.error) {
+  //       console.log(data.error);
+  //     } else {
+  //       // this.setState({ redirectToHome: true });
+  //       console.log(data.error);
+  //     }
+  //   });
+  // };
 
-  const deleteConfirmed = () => {
-    let answer = window.confirm("Are you sure you want to delete your post?");
-    if (answer) {
-      deletePost();
-    }
-  };
+  // const deleteConfirmed = () => {
+  //   let answer = window.confirm("Are you sure you want to delete your post?");
+  //   if (answer) {
+  //     deletePost();
+  //   }
+  // };
 
   return (
-    <div className="container m-auto pt-5">
-      <div className="bg-white py-3 px-4 shadow rounded-md dark:bg-gray-900 -mx-2 lg:mx-0">
-        {!post ? (
-          <div className="loadingio-spinner-rolling-l694aggo5r8">
-            <div className="ldio-2jzvx09mle4">
-              <div />
-            </div>
-          </div>
-        ) : (
-          <>
-            <div className="px-5 py-4 flex uk-flex-between">
-              <Link
-                to={post.postedBy ? `/user/${post.postedBy._id}` : ""}
-                className="flex items-center space-x-3"
-              >
-                <div className="w-10 h-10 rounded-full relative flex-shrink-0">
-                  <img
-                    src={`${process.env.REACT_APP_API_URL}/user/photo/${post.postedBy._id}`}
-                    onError={(i) => (i.target.src = `${DefaultProfile}`)}
-                    alt="avatar"
-                    className="h-full rounded-full w-full"
-                  />
-                  <span className="absolute bg-green-500 border-2 border-white bottom-0 h-3 m-0.5 right-0 rounded-full shadow-md w-3" />
-                </div>
-                <div className="flex-1 min-w-0 relative text-gray-500">
-                  <h4 className="font-semibold text-black text-lg">
-                    {post.postedBy ? post.postedBy.name : " Unknown"}
-                  </h4>
-                  <p className="font-semibold leading-3 text-green-500 text-sm">
-                    on {new Date(post.created).toDateString()}
-                  </p>
-                </div>
-              </Link>
-              {isAuthenticated().user &&
-                isAuthenticated().user._id === post.postedBy._id && (
-                  <div className="flex">
-                    <Link to={`/post/edit/${post._id}`}>
-                      <p className="flex hover:text-yellow-700 items-center leading-8 space-x-2 text-yellow-400 font-medium mr-2">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="16"
-                          height="16"
-                          fill="currentColor"
-                          class="bi bi-pencil-square"
-                          viewBox="0 0 16 16"
-                        >
-                          <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-                          <path
-                            fill-rule="evenodd"
-                            d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"
-                          />
-                        </svg>
-                        <span className="lg:block hidden">Update Post</span>
-                      </p>
-                    </Link>
-                    <Link to="#" onClick={deleteConfirmed}>
-                      <p className="flex hover:text-red-400 items-center leading-8 space-x-2 text-red-500 font-medium">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="16"
-                          height="16"
-                          fill="currentColor"
-                          class="bi bi-trash-fill"
-                          viewBox="0 0 16 16"
-                        >
-                          <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
-                        </svg>
-                        <span className="lg:block hidden">Delete Post</span>
-                      </p>
-                    </Link>
-                  </div>
-                )}
-              {isAuthenticated().user &&
-                isAuthenticated().user.role === "admin" && (
-                  <div class="card mt-5">
-                    <div className="card-body">
-                      <h5 className="card-title">Admin</h5>
-                      <p className="mb-2 text-danger">
-                        Edit/Delete as an Admin
-                      </p>
-                      <Link to={`/post/edit/${post._id}`}>
-                        <p className="flex hover:text-yellow-700 items-center leading-8 space-x-2 text-yellow-400 font-medium mr-2">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="16"
-                            fill="currentColor"
-                            class="bi bi-pencil-square"
-                            viewBox="0 0 16 16"
-                          >
-                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-                            <path
-                              fill-rule="evenodd"
-                              d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"
-                            />
-                          </svg>
-                          <span className="lg:block hidden">Update Post</span>
-                        </p>
-                      </Link>
-                      <Link to="#" onClick={this.deleteConfirmed}>
-                        <p className="flex hover:text-red-400 items-center leading-8 space-x-2 text-red-500 font-medium">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="16"
-                            fill="currentColor"
-                            class="bi bi-trash-fill"
-                            viewBox="0 0 16 16"
-                          >
-                            <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
-                          </svg>
-                          <span className="lg:block hidden">Delete Post</span>
-                        </p>
-                      </Link>
-                    </div>
-                  </div>
-                )}
-            </div>
-            <h2 className="display-2">{post.title}</h2>
-            <p className="mb-5">{post.body}</p>
-            <div className="card-body">
+   <div className="flex justify-center w-full">
+     <div className="bg-white shadow rounded-md dark:bg-gray-900 -mx-2 lg:mx-0 max-w-[800px] ">
+      <div className="flex justify-between items-center px-4 py-3">
+        <div className="flex flex-1 items-center space-x-4">
+          <Link to={`/${post.member.id}`}>
+            <div className="bg-gradient-to-tr from-yellow-600 to-pink-600 p-0.5 rounded-full">
               <img
-                src={`${process.env.REACT_APP_API_URL}/post/photo/${post._id}`}
-                alt={post.title}
-                onError={(i) => (i.target.src = `${DefaultPost}`)}
-                className="img-thunbnail mb-3"
-                style={{
-                  height: "100%",
-                  width: "100%",
-                  objectFit: "cover",
-                }}
+                src={`${post.member.avatar}`}
+                onError={(i) =>
+                  (i.target.src = `https://source.unsplash.com/random/?bakery,bake,${post.member.name}`)
+                }
+                alt="avatar"
+                className="bg-gray-200 border border-white rounded-full w-8 h-8"
               />
-              {like ? (
-                <button
-                  className="flex lg:items-center text-xl"
-                  onClick={likeToggle}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    fill="currentColor"
-                    style={{ color: "#db2777" }}
-                    class="bi bi-heart-fill mr-2"
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"
-                    />
-                  </svg>
-                  {likes} Like
-                </button>
-              ) : (
-                <button
-                  className="flex lg:items-center text-xl"
-                  onClick={likeToggle}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    fill="currentColor"
-                    class="bi bi-heart-fill mr-2"
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"
-                    />
-                  </svg>
-                  {likes} Like
-                </button>
-              )}
-              <Link to={`/`}>
-                <button class="bg-blue-600 font-semibold px-6 py-2 rounded-md text-white mt-5 ml-2">
-                  Back to posts
-                </button>
-              </Link>
             </div>
-            <Comment
-              postId={post._id}
-              comments={comments.reverse()}
-              updateComments={updateComments}
-            />
-          </>
-        )}
+          </Link>
+          <span className="block capitalize font-semibold text-gray-500 dark:text-gray-100">
+            <p className="font-bold">{post.member.name} </p> on
+            {new Date(post.createDate).toDateString()}
+          </span>
+        </div>
       </div>
+    <div>
+      <h5 className="px-4 text-3xl">{post.postBody}</h5>
+      
+      {/* <Link to={`/post/${post.id}`}>
+
+          <div class="col-span-2">
+              <img
+                src={`${post.recipe?.steps[0]?.image 
+                  ? post.recipe?.steps[0]?.image 
+                  : post.recipe?.steps[1]?.image 
+                  ? post.recipe?.steps[1]?.image 
+                  : `https://source.unsplash.com/random/?bakery,bake,${post.member.name}`}`}
+                onError={(i) =>
+                  (i.target.src = `https://source.unsplash.com/random/?bakery,bake,${post.id}`)
+                }
+                className="rounded-md w-full object-cover"
+                style={{ height: "30rem" }}
+              />
+          </div>
+
+      </Link> */}
+      {post.recipe?.steps?.map((step, index) => {
+          return (<div class='p-4'>
+                    <p className="text-2xl font-semibold">Bước {index + 1} {step.step}</p>
+                    <p className="text-xl ">{step.description}</p>
+                    <div class="col-span-2">
+                      <img
+                        src={step.image}
+                        onError={(i) =>
+                          (i.target.src = `https://source.unsplash.com/random/?bakery,bake,${post.id}`)
+                        }
+                        className="rounded-md w-full object-cover"
+                        style={{ height: "30rem" }}
+                      />
+                </div>
+                </div>
+                )
+      })
+    }
     </div>
+    <Comment post={post} />
+  </div>
+   </div>
   );
+
 }
 
 export default SinglePost;

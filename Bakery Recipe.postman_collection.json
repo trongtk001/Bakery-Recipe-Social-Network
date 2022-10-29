@@ -1,0 +1,651 @@
+{
+	"info": {
+		"_postman_id": "cafc90e2-9c8b-49d7-ac34-76f839d623a5",
+		"name": "Bakery Recipe",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20974380"
+	},
+	"item": [
+		{
+			"name": "Member",
+			"item": [
+				{
+					"name": "edit member",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"hung\",\r\n    \"email\": \"hung@gmail.com\",\r\n    \"dob\": \"2001-10-17\",\r\n    \"avatar\": \"https://image.cnbcfm.com/api/v1/image/105897632-1557241558937avatar-e1541360922907.jpg?v=1664130328&w=1920&h=1080\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/member/14",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"member",
+								"14"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get member info",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/member/14",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"member",
+								"14"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search member by name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/member?q=&page=1&size=5",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"member"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": ""
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"Hung\",\r\n    \"password\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/authentication/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"authentication",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n{\r\n    \"name\": \"hung\",\r\n    \"email\": \"hung@gmail.com\",\r\n    \"dob\": \"2001-10-17\",\r\n    \"username\": \"hung\",\r\n    \"password\": \"123456\",\r\n    \"avatar\": null,\r\n    \"roles\": [\"USER\"]\r\n}\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/authentication/register",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"authentication",
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Post",
+			"item": [
+				{
+					"name": "add post",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"postBody\": \"Bánh Mochi Nhật Bản là công thức làm bánh truyền thống rất độc đáo của người dân đất nước mặt trời mọc.\",\r\n    \"recipe\": {\r\n        \"name\": \"bánh Mochi\",\r\n        \"steps\": [\r\n            {\r\n                \"step\": \"Làm nhân bánh\",\r\n                \"description\": \"Cho đậu đỏ vào một cái thau ngâm với nước 1 đến 2 tiếng cho đậu đỏ mềm./nSau đó đem rửa lại thật sạch, để ráo nước rồi cho đậu vào một cái nồi, cho nước cốt dừa vào nấu cho đậu thật chín nhé. Khi đậu đã chín bạn tắt bếp để cho đậu đỏ nguội đi.\",\r\n                \"image\": \"\",\r\n                \"video\": \"\",\r\n                \"ingredients\": [\r\n                    {\r\n                        \"id\": 1,\r\n                        \"quantity\": 2\r\n                    }\r\n                ]\r\n            }\r\n        ],\r\n        \"tool\": [\r\n            \"Dao\",\r\n            \"Nồi\"\r\n        ]\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/post",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"post"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list all post",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/post?page=1&size=5",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"post"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get list post",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/post?page=1&size=5",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"post"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search post body or user contain",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/post/search?q=sao&page=1&size=5",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"post",
+								"search"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "sao"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "listPostByUser",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/post?id=14&page=1&size=5",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"post"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "14"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get post by post id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/post/24",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"post",
+								"24"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Like",
+			"item": [
+				{
+					"name": "like ",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"memberID\": 14,\r\n    \"postID\": 24\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/like",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"like"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Follow",
+			"item": [
+				{
+					"name": "follow",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"memberID\": 4,\r\n    \"followerID\": 14\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/follow",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"follow"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all follower",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/follow/followers/4?page=1&size=2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"follow",
+								"followers",
+								"4"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all friend",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0cm9uZyIsImV4cCI6MTY2NjYyMzk2NywiaWF0IjoxNjY2MDE5MTY3fQ.s-AQnCE7Xz9KuKMlBtYQ4PI6Hg1V2jj0HFLqbHS8ZJTIY0ZimlbDCHgFqVB9Ker-AuiwMaiFAN-i8dpNJtd57g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/follow/friends/14?page=1&size=2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"follow",
+								"friends",
+								"14"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Comment",
+			"item": [
+				{
+					"name": "create comment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"commentDetail\": \"ngon qua di ma\",\r\n    \"image\": \"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/640px-Image_created_with_a_mobile_phone.png\",\r\n    \"member\": {\r\n        \"id\": 14\r\n    },\r\n    \"post\": {\r\n        \"id\": 54\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/comment",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"comment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get comment by post",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/comment?id=1&page=1&size=5",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"comment"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "edit  comment",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"commentDetail\": \"ngon qua di ma\",\r\n    \"image\": \"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/640px-Image_created_with_a_mobile_phone.png\",\r\n    \"video\": null\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/comment/3",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"comment",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Ingredient",
+			"item": [
+				{
+					"name": "get all ingredient",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/ingredient",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ingredient"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create new ingredient",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ingredients\": \"Bột bánh bông lan Meizan\",\r\n    \"description\": \"Meizan Hi-ratio cake flour giúp làm ra những chiếc bánh bông lan rất mềm, bông xốp, mịn màng do đây là loại bột đặc biệt có kích cỡ hạt siêu nhỏ, rất lý tưởng dùng cho các loại bánh bông lan cao cấp.\",\r\n    \"unit\": \"Gói\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/ingredient",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ingredient"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "test",
+			"protocolProfileBehavior": {
+				"disableCookies": false
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/test",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"test"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "http://bakery-recipe.herokuapp.com/api"
+		},
+		{
+			"key": "hehe",
+			"value": "http://35.198.245.224/api"
+		}
+	]
+}

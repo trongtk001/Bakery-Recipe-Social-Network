@@ -51,14 +51,14 @@ class PostByUser extends Component {
           </div>
         </div>
         <div className="my-6 grid lg:grid-cols-4 grid-cols-2 gap-1.5 hover:text-yellow-700 uk-link-reset">
-          {posts.list.length > 0
-            ? posts.list.map((post, i) => (
+          {posts.list?.length > 0
+            ? posts.list?.map((post, i) => (
                 <Link to={`/post/${post.id}`} key={i}>
                   <div
                     className="bg-red-500 max-w-full lg:h-64 h-40 rounded-md relative overflow-hidden uk-transition-toggle"
                     tabIndex={0}
                   >
-                    {post.postImages[0] !== undefined && (
+                    {/* {post.postImages[0] !== undefined && (
                       <img
                         src={post.postImages[0].image}
                         alt=""
@@ -67,7 +67,7 @@ class PostByUser extends Component {
                         }
                         className="w-full h-full absolute object-cover inset-0"
                       />
-                    )}
+                    )} */}
 
                     <div className="absolute bg-black bg-opacity-40 bottom-0 flex h-full items-center justify-center space-x-5 text-lg text-white uk-transition-scale-up w-full">
                       1 {/* {post.likes.length} */}

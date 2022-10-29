@@ -2,6 +2,7 @@ package com.example.bakeryrecipe.service;
 
 import com.example.bakeryrecipe.dto.IngredientDTO;
 import com.example.bakeryrecipe.dto.RecipeDTO;
+import com.example.bakeryrecipe.dto.StepDTO;
 import com.example.bakeryrecipe.entity.Post;
 import com.example.bakeryrecipe.entity.Recipe;
 import com.example.bakeryrecipe.mapper.RecipeMapper;
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static java.util.Objects.nonNull;
+
 @Service
 public class RecipeService implements BaseService<RecipeDTO>{
 
@@ -17,12 +20,12 @@ public class RecipeService implements BaseService<RecipeDTO>{
 
     private final RecipeRepository recipeRepository;
 
-    private final RecipeIngredientService recipeIngredientService;
+    private final StepService stepService;
 
-    public RecipeService(RecipeMapper mapper, RecipeRepository recipeRepository, RecipeIngredientService recipeIngredientService) {
+    public RecipeService(RecipeMapper mapper, RecipeRepository recipeRepository, StepService stepService) {
         this.mapper = mapper;
         this.recipeRepository = recipeRepository;
-        this.recipeIngredientService = recipeIngredientService;
+        this.stepService = stepService;
     }
 
     public RecipeDTO save(Post post, RecipeDTO recipeDTO){
@@ -30,28 +33,37 @@ public class RecipeService implements BaseService<RecipeDTO>{
         recipe.setPost(post);
         recipe = recipeRepository.save(recipe);
 
-        RecipeDTO newRecipeDTO = mapper.toDTO(recipe);
-        List<IngredientDTO> ingredientDTOS = recipeDTO.getIngredients() != null ? recipeIngredientService.save(recipe, recipeDTO.getIngredients()) : null;
-        newRecipeDTO.setIngredients(ingredientDTOS);
-        return newRecipeDTO;
-    }
+        List<StepDTO> stepDTOS = nonNull(recipeDTO.getSteps()) ? stepService.save(recipe, recipeDTO.getSteps()) : null;
 
-    @Override
-    public RecipeDTO save(RecipeDTO dto) {
-        Recipe recipe = mapper.toEntity(dto);
-        recipe = recipeRepository.save(recipe);
-
-        RecipeDTO recipeDTO = mapper.toDTO(recipe);
-        recipeDTO.setIngredients(recipeIngredientService.save(recipe, dto.getIngredients()));
+        recipeDTO = mapper.toDTO(recipe);
+        recipeDTO.setSteps(stepDTOS);
         return recipeDTO;
     }
 
     @Override
-    public RecipeDTO delete(long id) {
+    public RecipeDTO save(RecipeDTO dto) {
+        RecipeDTO recipeDTO;
+        Recipe recipe = mapper.toEntity(dto);
+        recipe = recipeRepository.save(recipe);
+
+        recipeDTO = mapper.toDTO(recipe);
+        return recipeDTO;
+    }
+
+    @Override
+    public RecipeDTO update(RecipeDTO dto) {
         return null;
     }
 
     @Override
+    public RecipeDTO delete(RecipeDTO dto) {
+        return null;
+    }
+
+    public RecipeDTO delete(long id) {
+        return null;
+    }
+
     public RecipeDTO search(Long id) {
         return null;
     }

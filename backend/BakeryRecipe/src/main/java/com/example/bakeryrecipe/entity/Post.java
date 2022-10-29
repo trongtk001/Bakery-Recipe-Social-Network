@@ -1,18 +1,28 @@
 package com.example.bakeryrecipe.entity;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.LazyToOne;
+import org.hibernate.annotations.Filter;
+import org.hibernate.annotations.FilterDef;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
+@FilterDef(name = "likeFilter")
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,19 +38,15 @@ public class Post {
     @Column(name = "create_date", nullable = false)
     private Instant createDate;
 
-    @Column(name = "post_body", columnDefinition = "nvarchar(50)",nullable = false, length = 3000)
+    @Column(name = "post_body", columnDefinition = "nvarchar(3000)",nullable = false)
     private String postBody;
 
-    @OneToMany(mappedBy = "post")
-    private List<PostImage> postImages = new ArrayList<>();
-
-    @OneToMany(mappedBy = "post")
-    private List<PostVideo> postVideos = new ArrayList<>();
     @OneToOne(mappedBy = "post")
     private Recipe recipe;
 
-    @OneToMany(mappedBy = "post")
-    private List<Emoji> emojis = new ArrayList<>();
+    @Filter(name = "likeFilter", condition = "status = 1")
+    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
+    private List<Like> likes;
 
     public Long getId() {
         return id;
@@ -74,22 +80,6 @@ public class Post {
         this.postBody = postBody;
     }
 
-    public List<PostImage> getPostImages() {
-        return postImages;
-    }
-
-    public void setPostImages(List<PostImage> postImages) {
-        this.postImages = postImages;
-    }
-
-    public List<PostVideo> getPostVideos() {
-        return postVideos;
-    }
-
-    public void setPostVideos(List<PostVideo> postVideos) {
-        this.postVideos = postVideos;
-    }
-
     public Recipe getRecipe() {
         return recipe;
     }
@@ -98,11 +88,11 @@ public class Post {
         this.recipe = recipe;
     }
 
-    public List<Emoji> getEmojis() {
-        return emojis;
+    public List<Like> getLikes() {
+        return likes;
     }
 
-    public void setEmojis(List<Emoji> emojis) {
-        this.emojis = emojis;
+    public void setLikes(List<Like> likes) {
+        this.likes = likes;
     }
 }

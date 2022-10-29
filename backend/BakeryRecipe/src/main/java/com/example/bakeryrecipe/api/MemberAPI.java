@@ -28,7 +28,7 @@ public class MemberAPI {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("isAuthenticated()&&#id.equals(authentication.principal.id)")
+    @PreAuthorize("isAuthenticated() && #id.equals(authentication.principal.id)")
     public MemberDTO editMemberInfo(@PathVariable("id") Long id, @RequestBody MemberDTO memberDTO) {
         memberDTO.setId(id);
         memberDTO.setUsername(null);

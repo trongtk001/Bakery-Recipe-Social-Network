@@ -2,6 +2,7 @@ package com.example.bakeryrecipe.config;
 
 import com.example.bakeryrecipe.dto.*;
 import com.example.bakeryrecipe.entity.*;
+import javafx.geometry.Pos;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 import org.modelmapper.convention.MatchingStrategies;
@@ -16,13 +17,24 @@ public class ModelMapperConfig {
     public ModelMapper modelMapper() {
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+
         modelMapper.addMappings(RecipePropertyMap.entityToDTOPropertyMap);
         modelMapper.addMappings(RecipePropertyMap.dtoToEntityPropertyMap);
+
         modelMapper.addMappings(MemberPropertyMap.entityToDTOPropertyMap);
         modelMapper.addMappings(MemberPropertyMap.dtoToEntityPropertyMap);
+
         modelMapper.addMappings(IngredientPropertyMap.entityToDTOPropertyMap);
+
         modelMapper.addMappings(CommentPropertyMap.entityToDTOPropertyMap);
-        modelMapper.addMappings(EmojiPropertyMap.entityToDTOPropertyMap);
+
+        modelMapper.addMappings(LikePropertyMap.entityToDTOPropertyMap);
+        modelMapper.addMappings(LikePropertyMap.dtoToEntityPropertyMap);
+
+        modelMapper.addMappings(FollowPropertyMap.entityToDTOPropertyMap);
+        modelMapper.addMappings(FollowPropertyMap.dtoToEntityPropertyMap);
+
+        modelMapper.addMappings(PostPropertyMap.dtoToEntityPropertyMap);
         return modelMapper;
     }
 }
@@ -31,7 +43,6 @@ class RecipePropertyMap {
     static PropertyMap<Recipe, RecipeDTO> entityToDTOPropertyMap = new PropertyMap<Recipe, RecipeDTO>() {
         @Override
         protected void configure() {
-            map(source.stepsToList(), destination.getSteps());
             map(source.toolToList(), destination.getTool());
         }
     };
@@ -39,8 +50,8 @@ class RecipePropertyMap {
     static PropertyMap<RecipeDTO, Recipe> dtoToEntityPropertyMap = new PropertyMap<RecipeDTO, Recipe>() {
         @Override
         protected void configure() {
-            map(source.stepsToString(), destination.getSteps());
             map(source.toolToString(), destination.getTool());
+            skip(destination.getSteps());
         }
     };
 }
@@ -62,7 +73,7 @@ class MemberPropertyMap {
 }
 
 class IngredientPropertyMap {
-    static PropertyMap<RecipeIngredient, IngredientDTO> entityToDTOPropertyMap = new PropertyMap<RecipeIngredient, IngredientDTO>() {
+    static PropertyMap<StepIngredient, IngredientDTO> entityToDTOPropertyMap = new PropertyMap<StepIngredient, IngredientDTO>() {
         @Override
         protected void configure() {
             map(source.getIngredients().getId(), destination.getId());
@@ -72,7 +83,7 @@ class IngredientPropertyMap {
         }
     };
 
-    static PropertyMap<IngredientDTO, RecipeIngredient> dtoToEntityPropertyMap = new PropertyMap<IngredientDTO, RecipeIngredient>() {
+    static PropertyMap<IngredientDTO, StepIngredient> dtoToEntityPropertyMap = new PropertyMap<IngredientDTO, StepIngredient>() {
         @Override
         protected void configure() {
         }
@@ -88,11 +99,47 @@ class CommentPropertyMap {
     };
 }
 
-class EmojiPropertyMap {
-    static PropertyMap<Emoji, EmojiDTO> entityToDTOPropertyMap = new PropertyMap<Emoji, EmojiDTO>() {
+class LikePropertyMap {
+    static PropertyMap<Like, LikeDTO> entityToDTOPropertyMap = new PropertyMap<Like, LikeDTO>() {
         @Override
         protected void configure() {
-            skip(destination.getPost());
+            map(source.getMember().getId(), destination.getMemberID());
+            map(source.getPost().getId(), destination.getPostID());
+        }
+    };
+
+    static PropertyMap<LikeDTO, Like> dtoToEntityPropertyMap = new PropertyMap<LikeDTO, Like>() {
+        @Override
+        protected void configure() {
+            map(source.getMemberID(), destination.getMember().getId());
+            map(source.getPostID(), destination.getPost().getId());
+        }
+    };
+}
+
+class FollowPropertyMap {
+    static PropertyMap<Follow, FollowDTO> entityToDTOPropertyMap = new PropertyMap<Follow, FollowDTO>() {
+        @Override
+        protected void configure() {
+            map(source.getMember().getId(), destination.getMemberID());
+            map(source.getFollower().getId(), destination.getFollowerID());
+        }
+    };
+
+    static PropertyMap<FollowDTO, Follow> dtoToEntityPropertyMap = new PropertyMap<FollowDTO, Follow>() {
+        @Override
+        protected void configure() {
+            map(source.getMemberID(), destination.getMember().getId());
+            map(source.getFollowerID(), destination.getFollower().getId());
+        }
+    };
+}
+
+class PostPropertyMap {
+    static PropertyMap<PostDTO, Post> dtoToEntityPropertyMap = new PropertyMap<PostDTO, Post>() {
+        @Override
+        protected void configure() {
+            skip(destination.getRecipe());
         }
     };
 }

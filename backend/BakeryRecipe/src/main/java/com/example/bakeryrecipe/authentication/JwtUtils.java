@@ -31,7 +31,14 @@ public class JwtUtils {
     }
 
     public String getToken(HttpServletRequest request){
-        return request.getHeader(jwtKey);
+        String token = request.getHeader(jwtKey);
+        if (token != null) {
+            token = token.substring(7);
+            if (validateJwtToken(token)) {
+                return token;
+            }
+        }
+        return null;
     }
 
     public ResponseCookie generateJwtCookie(String username) {

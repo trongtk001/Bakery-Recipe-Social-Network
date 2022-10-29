@@ -68,7 +68,7 @@ public class MemberService implements BaseService<MemberDTO> {
     }
 
     @Override
-    public MemberDTO delete(long id) {
+    public MemberDTO update(MemberDTO dto) {
         return null;
     }
 
@@ -83,6 +83,14 @@ public class MemberService implements BaseService<MemberDTO> {
     }
 
     @Override
+    public MemberDTO delete(MemberDTO dto) {
+        return null;
+    }
+
+    public MemberDTO delete(long id) {
+        return null;
+    }
+
     public MemberDTO search(Long id) {
         Member member = memberRepository.findById(id).orElse(null);
         if (member == null) {

@@ -29,17 +29,14 @@ public class Recipe {
     @Column(name = "name", columnDefinition = "nvarchar(50)",nullable = false, length = 50)
     private String name;
 
-    @Column(name = "description", columnDefinition = "nvarchar(500)",nullable = false, length = 500)
-    private String description;
+    @OneToMany(mappedBy = "recipe")
+    private List<Step> steps;
 
-    @Column(name = "steps", columnDefinition = "nvarchar(3000)", nullable = false, length = 3000)
-    private String steps;
-
-    @Column(name = "tool", columnDefinition = "nvarchar(50)", nullable = false, length = 500)
+    @Column(name = "tool", columnDefinition = "nvarchar(500)", nullable = false, length = 500)
     private String tool;
 
-    @OneToMany(mappedBy = "post")
-    private List<RecipeIngredient> ingredients = new ArrayList<>();
+    @OneToMany(mappedBy = "step")
+    private List<StepIngredient> ingredients = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -65,19 +62,11 @@ public class Recipe {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getSteps() {
+    public List<Step> getSteps() {
         return steps;
     }
 
-    public void setSteps(String steps) {
+    public void setSteps(List<Step> steps) {
         this.steps = steps;
     }
 
@@ -89,16 +78,12 @@ public class Recipe {
         this.tool = tool;
     }
 
-    public List<RecipeIngredient> getIngredients() {
+    public List<StepIngredient> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(List<RecipeIngredient> ingredients) {
+    public void setIngredients(List<StepIngredient> ingredients) {
         this.ingredients = ingredients;
-    }
-
-    public List<String> stepsToList() {
-        return new ArrayList<>(Arrays.asList(steps.split("/n")));
     }
 
     public List<String> toolToList() {

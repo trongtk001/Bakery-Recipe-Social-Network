@@ -2,7 +2,6 @@ package com.example.bakeryrecipe.service;
 
 import com.example.bakeryrecipe.dto.CommentDTO;
 import com.example.bakeryrecipe.entity.Comment;
-import com.example.bakeryrecipe.entity.Post;
 import com.example.bakeryrecipe.mapper.CommentMapper;
 import com.example.bakeryrecipe.repository.CommentRepository;
 import org.springframework.data.domain.Page;
@@ -56,6 +55,15 @@ public class CommentService implements BaseService<CommentDTO> {
     }
 
     @Override
+    public CommentDTO update(CommentDTO dto) {
+        return null;
+    }
+
+    @Override
+    public CommentDTO delete(CommentDTO dto) {
+        return null;
+    }
+
     public CommentDTO delete(long id) {
         Comment commentEntity = commentRepository.findById(id).orElse(null);
         if (commentEntity != null) {
@@ -66,7 +74,6 @@ public class CommentService implements BaseService<CommentDTO> {
         }
     }
 
-    @Override
     public CommentDTO search(Long id) {
         return null;
     }

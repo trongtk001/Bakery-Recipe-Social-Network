@@ -210,8 +210,8 @@ const Sidebar = () => {
               <span> Messages </span> <span className="nav-tag"> 3</span>
             </Link>
           </li>
-          <li>
-            <Link to="#">
+          <li className={isActive("/trending")}>
+            <Link to="/trending">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"

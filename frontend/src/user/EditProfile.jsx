@@ -90,7 +90,7 @@ function EditProfile() {
                     <div
                       className="bg-gray-400 border-2 border-dashed flex flex-col h-56 items-center justify-center relative w-full rounded-lg dark:bg-gray-800 dark:border-gray-600"
                       style={{
-                        backgroundImage: `url(${avatar})`,
+                        backgroundImage: `url(${avatar ? avatar : user.avatar})`,
                       }}
                     ></div>
                   ) : (
@@ -185,15 +185,7 @@ function EditProfile() {
                     className="shadow-none bg-gray-100"
                   />
                 </div>
-                <div className="col-span-2">
-                  <label htmlFor="about">About me</label>
-                  <textarea
-                    id="about"
-                    name="about"
-                    rows={3}
-                    className="shadow-none bg-gray-100"
-                  />
-                </div>
+               
               </div>
               <div className="bg-gray-10 p-6 pt-0 flex justify-end space-x-3">
                 <Link
@@ -213,11 +205,11 @@ function EditProfile() {
                       height: "40px",
                     }}
                   >
-                    Create Post
+                    Update Profile
                     <Load isSmall={true} />
                   </button>
                 ) : (
-                  <button className="button bg-blue-700">Create Post</button>
+                  <button className="button bg-blue-700">Update Profile</button>
                 )}
               </div>
             </div>
