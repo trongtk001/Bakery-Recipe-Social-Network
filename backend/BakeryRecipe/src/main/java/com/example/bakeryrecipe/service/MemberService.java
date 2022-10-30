@@ -58,7 +58,7 @@ public class MemberService implements BaseService<MemberDTO> {
                         memberEntity.setPassword(passwordEncoder.encode(dto.getPassword()));
                         memberRepository.save(memberEntity);
                         memberRoleService.save(memberEntity, dto.getRoles());
-                        clientService.create(dto, memberEntity.getVerificationCode());// dang xu lý chỗ này
+                        clientService.create(dto, memberEntity.getVerificationCode());
                     }else {
                         throw new ResponseStatusException(HttpStatus.CONFLICT,"wrong email format!!");
                     }
