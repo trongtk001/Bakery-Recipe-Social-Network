@@ -86,16 +86,19 @@ export default function Message() {
     }
 
     const chat = () => {
-        stompClient.send("/app/private-message", header, JSON.stringify({
-            senderID: isLogin.id,
-            receiverID: active.id,
-            messageBody: message
-        }));
-        dispatch(setListMess({
-            senderID: isLogin.id,
-            receiverID: active.id,
-            messageBody: message
-        }))
+
+        if (message) {
+            stompClient.send("/app/private-message", header, JSON.stringify({
+                senderID: isLogin.id,
+                receiverID: active.id,
+                messageBody: message
+            }));
+            dispatch(setListMess({
+                senderID: isLogin.id,
+                receiverID: active.id,
+                messageBody: message
+            }))
+        }        
     }
 
     const onMessageReceived = (payload) => {

@@ -6,7 +6,7 @@ export default function FormChat({listMess,setMessage,chat,message}){
     const textInput = useRef(null);
     const handleChat =()=>{
         chat()
-        setMessage(' ')
+        setMessage('')
     }
     
 
