@@ -48,8 +48,6 @@ public class Member {
     @Column(name = "verification_code" ,nullable = true)
     private String verificationCode;
 
-    @OneToMany(mappedBy = "member")
-    private List<MemberRole> memberRoles = new ArrayList<>();
 
 
     public Long getId() {
@@ -130,12 +128,15 @@ public class Member {
                 '}';
     }
     public List<String> getRolesString() {
-        return roles.stream().map(memberRole -> {
-            if (nonNull(memberRole.getRole())) {
-                return memberRole.getRole().getRoleName();
-            }
-            return null;
-        }).collect(Collectors.toList());
+        if (nonNull(roles)) {
+            return roles.stream().map(memberRole -> {
+                if (nonNull(memberRole.getRole())) {
+                    return memberRole.getRole().getRoleName();
+                }
+                return null;
+            }).collect(Collectors.toList());
+        }
+        return null;
     }
 
     public Byte getStatus() {

@@ -26,4 +26,10 @@ public class MemberRoleService {
                 memberRoleRepository.save(new MemberRole(memberEntity, roleEntity));
         });
     }
+    public void delete(Member member){
+        List<MemberRole> memberRole = memberRoleRepository.findAllByMemberId(member.getId());
+        for(MemberRole mr : memberRole){
+            memberRoleRepository.delete(mr);
+        }
+    }
 }

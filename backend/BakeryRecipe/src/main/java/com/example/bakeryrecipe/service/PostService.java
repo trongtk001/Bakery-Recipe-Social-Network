@@ -68,10 +68,7 @@ public class PostService implements BaseService<PostDTO> {
         }
     }
 
-    @Override
-    public PostDTO delete(PostDTO dto) {
-        return null;
-    }
+
 
     public Page<PostDTO> findAll(Pageable pageable) {
 
@@ -123,5 +120,9 @@ public class PostService implements BaseService<PostDTO> {
             return new PageImpl<>(mapper.toDTOList(posts.getContent()), pageable, posts.getTotalElements());
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Not found");
+    }
+    @Override
+    public PostDTO delete(PostDTO dto) {
+        return null;
     }
 }
