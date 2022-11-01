@@ -44,7 +44,11 @@ export default function FormChat({listMess,setMessage,chat,message}){
                                  */}
                             </div>
                             <div class="border-t flex p-6 dark:border-gray-700">
-                                <textarea refs={textInput} value={message} onChange={e=>setMessage(e.target.value)} cols="1" rows="1" placeholder="Your Message.." class="border-0 flex-1 h-10 min-h-0 resize-none min-w-0 shadow-none dark:bg-transparent"></textarea>
+                                <input refs={textInput} onKeyPress={e => {
+                                    if(e.key === "Enter") {
+                                        handleChat();
+                                    }
+                                }} value={message} onChange={e=>setMessage(e.target.value)} cols="1" rows="1" placeholder="Your Message.." class="border-0 flex-1 h-10 min-h-0 resize-none min-w-0 shadow-none dark:bg-transparent"></input>
                                 <div class="flex h-full space-x-2">
                                     <button  onClick={handleChat} type="submit" class="bg-pink-600 font-semibold px-6 py-2 rounded-md text-white">Send</button>
                                 </div>

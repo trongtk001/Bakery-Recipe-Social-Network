@@ -82,7 +82,7 @@ export default function Message() {
         isConnect = true
         stompClient.subscribe('/app/online', onActive, header);
         stompClient.subscribe(`/user/${username}/queue/private`, onMessageReceived, header);
-        stompClient.subscribe(`/user/${username}/error`, onMessageReceived, header);
+        stompClient.subscribe(`/user/${username}/info/error`, onMessageReceived, header);
     }
 
     const chat = () => {
