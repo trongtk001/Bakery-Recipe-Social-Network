@@ -204,6 +204,10 @@ export const putProfile = (name, email, dob, avatar, history) => {
     })
       .then((res) => {
         dispatch(stopLoading());
+        dispatch({
+          type: "PUT_USER_SUCCESS",
+          payload: res.data
+        });
         history.goBack("/");
         NotificationManager.success("Update Profile is successful");
       })

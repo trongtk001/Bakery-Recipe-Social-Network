@@ -50,6 +50,9 @@ const userReducer = (state = initialState, action) => {
     case POST_BY_USER_FAILED: {
       return { ...state, errors: payload };
     }
+    case "PUT_USER_SUCCESS": {
+      return { ...state, user: payload };
+    }
     case ACT_LOGOUT:
       localStorage.removeItem("userLogin");
       return {
