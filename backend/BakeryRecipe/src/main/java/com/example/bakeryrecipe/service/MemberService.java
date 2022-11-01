@@ -35,12 +35,13 @@ public class MemberService implements BaseService<MemberDTO> {
     @Autowired
      AuthTokenFilter authTokenFilter;
 
-    public MemberService(PasswordEncoder passwordEncoder, MemberRepository memberRepository, MemberMapper mapper, RoleService roleService, MemberRoleService memberRoleService, ClientService clientService) {
+    public MemberService(PasswordEncoder passwordEncoder, MemberRepository memberRepository, MemberMapper mapper, RoleService roleService, MemberRoleService memberRoleService, ClientService clientService, ClientService clientService1) {
         this.passwordEncoder = passwordEncoder;
         this.memberRepository = memberRepository;
         this.mapper = mapper;
         this.roleService = roleService;
         this.memberRoleService = memberRoleService;
+        this.clientService = clientService1;
     }
 
     @Override
