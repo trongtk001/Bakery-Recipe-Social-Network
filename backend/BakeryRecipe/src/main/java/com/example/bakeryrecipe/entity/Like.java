@@ -15,7 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "[like]")
+@Table(name = "[Like]")
 @FilterDef(name = "unlikeFilter", parameters = @ParamDef(name = "status", type = "byte"))
 @Filter(name = "unlikeFilter", condition = "status = :status")
 public class Like {

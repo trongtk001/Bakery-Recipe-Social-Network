@@ -1,82 +1,58 @@
 package com.example.bakeryrecipe.event;
 
+import com.example.bakeryrecipe.authentication.JwtUtils;
 import com.example.bakeryrecipe.repository.ParticipantRepository;
 import org.springframework.context.event.EventListener;
-import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
-import org.springframework.messaging.support.GenericMessage;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.stereotype.Component;
 import org.springframework.web.socket.messaging.SessionConnectEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
-import java.util.List;
-import java.util.Optional;
-
-import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
-/**
- * Listener to track user presence.
- * Sends notifications to the login destination when a connected event is received
- * and notifications to the logout destination when a disconnect event is received
- *
- * @author Sergi Almar
- */
+@Component
 public class PresenceEventListener {
 
 	private ParticipantRepository participantRepository;
 
 	private SimpMessagingTemplate messagingTemplate;
 
-	private String loginDestination;
+	private JwtUtils jwtUtils;
 
-	private String logoutDestination;
+	private UserDetailsService userDetailsService;
 
-	public PresenceEventListener(SimpMessagingTemplate messagingTemplate, ParticipantRepository participantRepository) {
-		this.messagingTemplate = messagingTemplate;
+
+	public PresenceEventListener(ParticipantRepository participantRepository, SimpMessagingTemplate messagingTemplate, JwtUtils jwtUtils, UserDetailsService userDetailsService) {
 		this.participantRepository = participantRepository;
+		this.messagingTemplate = messagingTemplate;
+		this.jwtUtils = jwtUtils;
+		this.userDetailsService = userDetailsService;
 	}
 
 	@EventListener
 	private void handleSessionConnected(SessionConnectEvent event) {
 		StompHeaderAccessor accessor = StompHeaderAccessor.wrap(event.getMessage());
-		String token = getUserId(accessor);
-
-
-//		LoginEvent loginEvent = new LoginEvent();
-//		messagingTemplate.convertAndSend(loginDestination, loginEvent);
-//
-//		// We store the session as we need to be idempotent in the disconnect event processing
-//		participantRepository.add(accessor.getSessionId(), loginEvent);
-	}
-
-	private String getUserId(StompHeaderAccessor accessor) {
-		GenericMessage<?> generic = (GenericMessage<?>) accessor.getHeader(SimpMessageHeaderAccessor.CONNECT_MESSAGE_HEADER);
-		if (nonNull(generic)) {
-			SimpMessageHeaderAccessor nativeAccessor = SimpMessageHeaderAccessor.wrap(generic);
-			List<String> userIdValue = nativeAccessor.getNativeHeader("Authorization");
-
-			return isNull(userIdValue) ? null : userIdValue.stream().findFirst().orElse(null);
+		String token = accessor.getNativeHeader("Authorization").get(0);
+		if (nonNull(token)) {
+			if (jwtUtils.validateJwtToken(token.substring(7))) {
+				String username = jwtUtils.getUserNameFromJwtToken(token.substring(7));
+				if (nonNull(username)) {
+					UserDetails user = userDetailsService.loadUserByUsername(username);
+					if (nonNull(user)) {
+						participantRepository.add(user.getUsername(), accessor.getSessionId());
+					}
+				}
+			} 
 		}
-
-		return null;
 	}
+
 
 	@EventListener
 	private void handleSessionDisconnect(SessionDisconnectEvent event) {
-
-		Optional.ofNullable(participantRepository.getParticipant(event.getSessionId()))
-				.ifPresent(login -> {
-					messagingTemplate.convertAndSend(logoutDestination, new LogoutEvent());
-					participantRepository.removeParticipant(event.getSessionId());
-				});
-	}
-
-	public void setLoginDestination(String loginDestination) {
-		this.loginDestination = loginDestination;
-	}
-
-	public void setLogoutDestination(String logoutDestination) {
-		this.logoutDestination = logoutDestination;
+		participantRepository.removeParticipant(event.getSessionId());
+		messagingTemplate.convertAndSend("/app/online", participantRepository.getOnlineUser());
 	}
 }

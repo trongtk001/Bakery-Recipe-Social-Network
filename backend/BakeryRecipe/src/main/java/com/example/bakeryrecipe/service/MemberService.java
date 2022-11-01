@@ -12,6 +12,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 @Service
 public class MemberService implements BaseService<MemberDTO> {
 
@@ -42,7 +45,7 @@ public class MemberService implements BaseService<MemberDTO> {
                     memberEntity = mapper.toEntity(dto);
                     memberEntity.setPassword(passwordEncoder.encode(dto.getPassword()));
                     memberRepository.save(memberEntity);
-                    memberRoleService.save(memberEntity, dto.getRoles());
+                    memberRoleService.save(memberEntity, new ArrayList<>(Arrays.asList("USER")));
                 } else {
                     throw new ResponseStatusException(HttpStatus.CONFLICT, "This email already exists");
                 }

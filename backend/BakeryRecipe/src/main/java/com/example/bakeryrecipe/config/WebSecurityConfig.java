@@ -63,8 +63,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-
-        // auth.inMemoryAuthentication().withUser("admin").password(passwordEncoder().encode("password")).roles("ADMIN");
         auth.authenticationProvider(authenticationProvider());
     }
 
@@ -72,7 +70,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.csrf().disable();
-        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
         http.exceptionHandling().authenticationEntryPoint(unauthorizedHandler);
 
         http.addFilterBefore(new AuthTokenFilter(jwtUtils, userDetailsService()), UsernamePasswordAuthenticationFilter.class);

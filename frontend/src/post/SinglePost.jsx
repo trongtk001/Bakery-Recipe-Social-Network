@@ -77,12 +77,9 @@ function SinglePost() {
   };
   useEffect( async () => {
       singlePost(postId).then((data) => {
-        if (data.error) {
-          console.log(data.error);
-        } else {
-          console.log(data)
+   
            setPost(data);
-        }
+        
       });
     },
     // eslint-disable-next-line
@@ -116,8 +113,8 @@ function SinglePost() {
   // };
 
   return (
-   <div className="flex justify-center w-full">
-     <div className="bg-white shadow rounded-md dark:bg-gray-900 -mx-2 lg:mx-0 max-w-[800px] ">
+   <div className="flex justify-center w-full ">
+     <div className="bg-white shadow rounded-md dark:bg-gray-900  w-full mx-4 lg:mx-0 max-w-[800px] mt-20 xl:mt-10 md:min-w-[800px] ">
       <div className="flex justify-between items-center px-4 py-3">
         <div className="flex flex-1 items-center space-x-4">
           <Link to={`/${post.member.id}`}>
@@ -128,52 +125,50 @@ function SinglePost() {
                   (i.target.src = `https://source.unsplash.com/random/?bakery,bake,${post.member.name}`)
                 }
                 alt="avatar"
-                className="bg-gray-200 border border-white rounded-full w-8 h-8"
+                className="bg-gray-200 border border-white rounded-full w-12 h-12"
               />
             </div>
           </Link>
           <span className="block capitalize font-semibold text-gray-500 dark:text-gray-100">
-            <p className="font-bold">{post.member.name} </p> on
+            <p className="font-bold text-lg">{post.member.name} <span className="text-gray-500 font-normal text-sm">@{post.member.username}</span> </p> on
             {new Date(post.createDate).toDateString()}
           </span>
         </div>
       </div>
     <div>
-      <h5 className="px-4 text-3xl">{post.postBody}</h5>
-      
-      {/* <Link to={`/post/${post.id}`}>
-
-          <div class="col-span-2">
-              <img
-                src={`${post.recipe?.steps[0]?.image 
-                  ? post.recipe?.steps[0]?.image 
-                  : post.recipe?.steps[1]?.image 
-                  ? post.recipe?.steps[1]?.image 
-                  : `https://source.unsplash.com/random/?bakery,bake,${post.member.name}`}`}
-                onError={(i) =>
-                  (i.target.src = `https://source.unsplash.com/random/?bakery,bake,${post.id}`)
-                }
-                className="rounded-md w-full object-cover"
-                style={{ height: "30rem" }}
-              />
-          </div>
-
-      </Link> */}
+      <h5 className="px-4 mt-4 text-3xl text-pink-600  font-bold pb-4">{post.postBody}</h5>
+        <ul className="px-4 mb-2 flex gap-2 wrap">
+          {post.recipe.tool && (post.recipe.tool?.map((item, index) => {
+          return <li className="border border-pink-600 text-pink-600 rounded-full px-2 py-1 min-w-40 text-center">#{item}</li>
+          }))}
+        </ul>
       {post.recipe?.steps?.map((step, index) => {
-          return (<div class='p-4'>
-                    <p className="text-2xl font-semibold">Bước {index + 1} {step.step}</p>
-                    <p className="text-xl ">{step.description}</p>
-                    <div class="col-span-2">
-                      <img
-                        src={step.image}
-                        onError={(i) =>
-                          (i.target.src = `https://source.unsplash.com/random/?bakery,bake,${post.id}`)
-                        }
-                        className="rounded-md w-full object-cover"
-                        style={{ height: "30rem" }}
-                      />
-                </div>
-                </div>
+          return (<div class='p-4 flex gap-4'>
+                    <p className="text-2xl font-semibold bg-pink-200 py-1 rounded-md text-center w-[40px] h-[40px] text-pink-600">{index + 1}</p>
+                    <div className="flex-1">
+                      <p className="text-2xl font-semibold mb-4 text-pink-600">{step.step}</p>
+                      <p className="text-xl text-justify ">{step.description}</p>
+                      <ul className="my-4 ">
+                          <p className="text-lg font-bold">Nguyên liệu cần có cho bước {index+ 1} :</p>
+                          {step.ingredients && (step.ingredients?.map((inn, index) => {
+                            return <li className="text-md ml-10 my-1 text-dark-900 flex items-center gap-2 ">
+                              <svg xmlns="http://www.w3.org/2000/svg" fill="#db2777" className="h-4 w-4" viewBox="0 0 512 512"><path d="M470.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L192 338.7 425.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>
+                               {inn.ingredients} - {inn.quantity} {inn.unit}</li>
+                          }))}
+                      </ul>
+                        <div class="col-span-2 my-4">
+                          <img
+                            src={step.image}
+                            onError={(i) =>
+                              (i.target.src = `https://source.unsplash.com/random/?bakery,bake,${post.id}`)
+                            }
+                            className="rounded-md w-full object-cover"
+                            style={{ height: "30rem" }}
+                          />
+
+                    </div>
+                    </div>
+                  </div>
                 )
       })
     }

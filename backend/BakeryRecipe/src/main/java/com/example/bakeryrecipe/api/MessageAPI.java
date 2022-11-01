@@ -1,49 +1,94 @@
 package com.example.bakeryrecipe.api;
 
 
+import com.example.bakeryrecipe.api.input.GetMessageInput;
+import com.example.bakeryrecipe.api.output.ListMessageOutput;
+import com.example.bakeryrecipe.dto.MemberDTO;
 import com.example.bakeryrecipe.dto.MessageDTO;
+import com.example.bakeryrecipe.repository.ParticipantRepository;
+import com.example.bakeryrecipe.service.MemberService;
+import com.example.bakeryrecipe.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.Message;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.messaging.simp.annotation.SubscribeMapping;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
+import java.security.Principal;
+import java.time.Instant;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @CrossOrigin(origins = "*")
 @RestController
-@PreAuthorize("isAuthenticated()")
+@RequestMapping("message")
 public class MessageAPI {
 
-    private List<Long> memberList;
-    private Map<String, List<Long>> onlineMember;
+    private final ParticipantRepository participantRepository;
 
-    public MessageAPI() {
-        memberList = new ArrayList<>();
-        onlineMember = new HashMap<>();
-        onlineMember.put("onlineMember", memberList);
-    }
+    private final MemberService memberService;
+
+    private final MessageService messageService;
 
     @Autowired
     private SimpMessagingTemplate simpMessagingTemplate;
 
-    @MessageMapping("/message")
-    @SendTo("/chatroom")
-    public Message login(@Payload Message message){
-        return message;
+    public MessageAPI(ParticipantRepository participantRepository, MemberService memberService, MessageService messageService) {
+        this.participantRepository = participantRepository;
+        this.memberService = memberService;
+        this.messageService = messageService;
     }
 
+    @SubscribeMapping("/online")
+    public void login() {
+        List<String> onlineUser = participantRepository.getOnlineUser();
+        simpMessagingTemplate.convertAndSend("/app/online", onlineUser);
+    }
+
+
+
     @MessageMapping("/private-message")
-    public MessageDTO recMessage(@Payload MessageDTO message){
-        simpMessagingTemplate.convertAndSendToUser(message.getReceiverID().toString(),"/private",message);
-        System.out.println(message.toString());
-        return message;
+    public void sendMessage(@Payload MessageDTO message, Principal principal) {
+        try {
+            MemberDTO member = memberService.searchMemberByUsername(principal.getName());
+            if (member.getId().equals(message.getSenderID())) {
+                String receiverName = memberService.search(message.getReceiverID()).getUsername();
+
+                message.setCreateDate(Instant.now());
+                MessageDTO messageDTO = messageService.save(message);
+                simpMessagingTemplate.convertAndSendToUser(receiverName, "queue/private", messageDTO);
+            } else {
+                throw new RuntimeException("Forbidden");
+            }
+        } catch (Exception ex) {
+            simpMessagingTemplate.convertAndSendToUser(principal.getName(), "info/error", new HashMap<String, Object>() {{
+                put("errorMessage", ex.getMessage());
+                put("payload", message);
+            }});
+        }
+    }
+
+    @PostMapping()
+    public MessageDTO createMessage(@RequestBody MessageDTO messageDTO) {
+        return messageService.save(messageDTO);
+    }
+
+    @GetMapping()
+    @PreAuthorize("isAuthenticated()")
+    public ListMessageOutput getMessage(@RequestBody GetMessageInput getMessageInput, @RequestParam int page, @RequestParam int size) {
+        Pageable pageable = PageRequest.of(page - 1, size, Sort.by(Sort.Direction.DESC, "createDate"));
+        List<MessageDTO> messageDTOS = messageService.getMessage(getMessageInput.getMemberID(), getMessageInput.getFriendID(), pageable);
+        return new ListMessageOutput(page, messageDTOS.size(), 0, messageDTOS);
     }
 }

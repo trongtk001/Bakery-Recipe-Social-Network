@@ -1,7 +1,9 @@
 import axios from "axios";
 import { NotificationManager } from "react-notifications";
 import {
+  LIST_MESS,
   LOGIN_FAILED,
+  LIST_MESS_NULL,
   LOGIN_SUCCESS,
   ACT_LOGOUT,
   USER_SUCCESS,
@@ -46,6 +48,18 @@ export const postLoginSuccess = (user) => {
   return {
     type: LOGIN_SUCCESS,
     payload: user,
+  };
+};
+export const setListMess = (mess) => {
+  return {
+    type: LIST_MESS,
+    payload: mess,
+  };
+};
+export const setListMessNULL = () => {
+  return {
+    type: LIST_MESS_NULL,
+    payload: null,
   };
 };
 

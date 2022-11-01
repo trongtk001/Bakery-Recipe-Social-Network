@@ -1,7 +1,6 @@
 package com.example.bakeryrecipe.dto;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 public class IngredientDTO implements Serializable {
     private Long id;

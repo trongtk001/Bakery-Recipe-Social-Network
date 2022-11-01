@@ -9,7 +9,7 @@ public class ListCommentOutput {
     private int page;
     private int size;
     private int totalPage;
-    private List<CommentDTO> list = new ArrayList<>();
+    private List<CommentDTO> list;
 
     public ListCommentOutput() {
     }

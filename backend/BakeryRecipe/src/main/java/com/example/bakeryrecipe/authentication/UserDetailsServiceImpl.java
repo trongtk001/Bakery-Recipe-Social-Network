@@ -5,6 +5,7 @@ import com.example.bakeryrecipe.entity.Role;
 import com.example.bakeryrecipe.repository.MemberRepository;
 import com.example.bakeryrecipe.repository.MemberRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

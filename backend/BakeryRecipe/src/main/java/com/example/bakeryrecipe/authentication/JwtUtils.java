@@ -9,6 +9,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseCookie;
+import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +23,7 @@ public class JwtUtils {
 
     private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
+
     @Value("${app.jwtSecret}")
     private String jwtSecret;
     @Value("${app.jwtExpirationTime}")
@@ -28,6 +33,17 @@ public class JwtUtils {
 
     private Algorithm getAlgorithm() {
         return Algorithm.HMAC512(jwtSecret);
+    }
+
+    public String getToken(StompHeaderAccessor accessor) {
+        String token = accessor.getNativeHeader("Authorization").get(0);
+        if (token != null) {
+            token = token.substring(7);
+            if (validateJwtToken(token)) {
+                return token;
+            }
+        }
+        return null;
     }
 
     public String getToken(HttpServletRequest request){
@@ -63,6 +79,7 @@ public class JwtUtils {
         }
         return null;
     }
+
     public boolean validateJwtToken(String authToken) {
 
         try {

@@ -40,11 +40,8 @@ public class FollowService implements BaseService<FollowDTO>{
     }
 
     private void checkMember(FollowDTO dto){
-        Member member = memberService.searchEntity(dto.getMemberID());
-        Member follower = memberService.searchEntity(dto.getFollowerID());
-        if (null == member || null == follower) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found member");
-        }
+        checkMember(dto.getMemberID());
+        checkMember(dto.getFollowerID());
     }
 
     @Override

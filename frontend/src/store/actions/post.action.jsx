@@ -19,25 +19,8 @@ export const Post = ({postBody, recipe, history}) => {
       },
       
       data: {
-        postBody,
-        recipe : {
-          name: recipe.name,
-
-          steps: recipe.steps.map((item,index)=>{
-            return {
-              step: item.recipe.name,
-              description: item.recipe.description,
-              ingredients: item.tool.map((item,index)=>{
-                return {
-                  id: 1,
-                  quantity: index
-                }
-              }),
-              image : item.recipe?.postImages ? item.recipe?.postImages[0].image : null
-            }
-          }),
-          tool : ['a','b','c']
-        }
+        postBody, 
+        recipe
       },
     })
       .then((res) => {

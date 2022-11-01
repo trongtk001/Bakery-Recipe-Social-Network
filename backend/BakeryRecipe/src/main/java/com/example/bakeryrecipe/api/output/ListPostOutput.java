@@ -9,7 +9,7 @@ public class ListPostOutput {
     private int page;
     private int size;
     private int totalPage;
-    private List<PostDTO> list = new ArrayList<>();
+    private List<PostDTO> list;
 
     public ListPostOutput() {
     }

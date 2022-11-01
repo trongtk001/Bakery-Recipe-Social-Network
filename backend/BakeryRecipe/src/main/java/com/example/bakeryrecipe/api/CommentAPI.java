@@ -1,6 +1,5 @@
 package com.example.bakeryrecipe.api;
 
-
 import com.example.bakeryrecipe.api.output.ListCommentOutput;
 import com.example.bakeryrecipe.dto.CommentDTO;
 import com.example.bakeryrecipe.service.CommentService;
@@ -21,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("api/comment")
+@RequestMapping("comment")
 @PreAuthorize("permitAll()")
 public class CommentAPI {
 

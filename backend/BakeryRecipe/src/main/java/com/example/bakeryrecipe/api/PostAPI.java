@@ -2,7 +2,6 @@ package com.example.bakeryrecipe.api;
 
 import com.example.bakeryrecipe.api.output.ListPostOutput;
 import com.example.bakeryrecipe.dto.PostDTO;
-import com.example.bakeryrecipe.service.MemberService;
 import com.example.bakeryrecipe.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,11 +20,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("api/post")
+@RequestMapping("post")
 @PreAuthorize("permitAll()")
 public class PostAPI {
     @Autowired

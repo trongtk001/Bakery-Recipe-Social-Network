@@ -6,7 +6,7 @@ import FindPeople from "../user/FindPeople";
 
 const Home = () => {
   return (
-    <div className="container m-auto">
+    <div className="container m-auto " >
       <h1 className="lg:text-2xl text-lg font-extrabold leading-none text-gray-900 tracking-tight mb-5">
         Feed
       </h1>

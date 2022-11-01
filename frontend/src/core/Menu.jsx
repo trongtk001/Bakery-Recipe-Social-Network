@@ -71,7 +71,7 @@ const Menu = () => {
             ></ion-icon>{" "}
             Create new post
           </Link>
-          <a href="/" class="header-links-item">
+          <a  class="header-links-item">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -92,7 +92,7 @@ const Menu = () => {
             </h4>
           </div>
           {/* Messages */}
-          <a href="/" className="header-links-item">
+          <a  className="header-links-item">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -111,10 +111,23 @@ const Menu = () => {
             <h4 className="-mt-5 -mx-5 bg-gradient-to-t from-gray-100 to-gray-50 border-b font-bold px-6 py-3">
               Messages
             </h4>
+            <div  className="overflow-scroll ">
+                  <Link>
+                      <div class="drop_avatar"> 
+                        <img src="https://source.unsplash.com/random/?bakery,bake,q"/>
+                      </div>
+                      <div class="drop_content">
+                          <p> <strong>tusieunhan</strong> đã lilke bài viết của bạn
+                              <span class="text-link">bánh ngon từ thịt vịt </span>
+                          </p>
+                          <span class="time-ago"> 2 hours ago </span>
+                      </div>
+               </Link> 
+            </div>
           </div>
-          <div>
-            <Link href="#">
-              <div className="bg-gradient-to-tr from-yellow-600 to-pink-600 p-0.5 rounded-full">
+          <div className="ml-4 w-9">
+            <Link >
+              <div className="bg-gradient-to-tr from-yellow-600 to-pink-600 p-0.5 rounded-full ">
                 <img
                   src={
                     avatar
@@ -128,17 +141,17 @@ const Menu = () => {
             </Link>
             <div
               uk-drop="mode: click;offset:9"
-              className="header_dropdown profile_dropdown border-t"
+              className="header_dropdown profile_dropdown border-t z-10000"
             >
               <ul>
                 <li>
-                  <Link href="#"> Account setting </Link>
+                  <Link > Account setting </Link>
                 </li>
                 <li>
-                  <Link href="#"> Payments </Link>
+                  <Link > Payments </Link>
                 </li>
                 <li>
-                  <Link href="#"> Help </Link>
+                  <Link > Help </Link>
                 </li>
                 <li>
                   <Link to="/signIn" onClick={handleLogout}>
