@@ -2,6 +2,7 @@ package com.example.bakeryrecipe.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -9,6 +10,9 @@ import javax.persistence.OneToMany;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static java.util.Objects.nonNull;
 
 @Entity
 public class Member {
@@ -34,6 +38,9 @@ public class Member {
 
     @Column(name = "avatar", length = 250)
     private String avatar;
+
+    @OneToMany(mappedBy = "member", fetch = FetchType.EAGER)
+    private List<MemberRole> roles = new ArrayList<>();
 
     @Column(name = "status", nullable = true)
     private Byte status;
@@ -101,12 +108,34 @@ public class Member {
         this.avatar = avatar;
     }
 
-    public List<MemberRole> getMemberRoles() {
-        return memberRoles;
+    public List<MemberRole> getRoles() {
+        return roles;
     }
 
-    public void setMemberRoles(List<MemberRole> memberRoles) {
-        this.memberRoles = memberRoles;
+    public void setRoles(List<MemberRole> roles) {
+        this.roles = roles;
+    }
+
+    @Override
+    public String toString() {
+        return "Member{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", dob=" + dob +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", roles=" + roles +
+                '}';
+    }
+    public List<String> getRolesString() {
+        return roles.stream().map(memberRole -> {
+            if (nonNull(memberRole.getRole())) {
+                return memberRole.getRole().getRoleName();
+            }
+            return null;
+        }).collect(Collectors.toList());
     }
 
     public Byte getStatus() {

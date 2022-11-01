@@ -2183,9 +2183,11 @@ header .header_inner .right-side .header-avatar {
 }
 
 header.uk-sticky-fixed {
-  z-index: 990;
+  z-index:1;
 }
-
+.uk-sticky-fixed{
+  z-index: 1 !important;
+}
 .shadow-none {
   -webkit-box-shadow: none !important;
   box-shadow: none !important;

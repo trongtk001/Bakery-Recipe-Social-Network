@@ -36,3 +36,16 @@
     transform: rotate(360deg);
   }
 }
+
+.line-clmap-4{
+  overflow: hidden;
+display: -webkit-box;
+-webkit-box-orient: vertical;
+-webkit-line-clamp: 4;
+}
+.line-clmap-2{
+  overflow: hidden;
+display: -webkit-box;
+-webkit-box-orient: vertical;
+-webkit-line-clamp: 2;
+}

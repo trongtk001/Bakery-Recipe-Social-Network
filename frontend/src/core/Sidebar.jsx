@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useIsLogin } from "../hooks/useIsLogin";
 import { useDispatch } from "react-redux";
 import { actLogout } from "../store/actions/user.action";
+import axios from "axios";
 // import axios from "axios";
 
 const Sidebar = () => {
@@ -13,50 +14,55 @@ const Sidebar = () => {
     if (pathname === path) return "active";
     else return "";
   };
-  // const [users, setUsers] = useState(null);
-  // const [postByUser, setPostByUser] = useState(null);
-  // useEffect(
-  //   () => {
-  //     axios({
-  //       method: "GET",
-  //       url: `${process.env.REACT_APP_API_URL}/user/${isLogin.user.id}`,
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Authorization: `Bearer ${isLogin.token}`,
-  //       },
-  //       data: null,
-  //     })
-  //       .then((res) => {
-  //         setUsers(res.data);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   },
-  //   // eslint-disable-next-line
-  //   []
-  // );
-  // useEffect(
-  //   () => {
-  //     axios({
-  //       method: "GET",
-  //       url: `${process.env.REACT_APP_API_URL}/post/by/${isLogin.user.id}`,
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Authorization: `Bearer ${isLogin.token}`,
-  //       },
-  //       data: null,
-  //     })
-  //       .then((res) => {
-  //         setPostByUser(res.data);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   },
-  //   // eslint-disable-next-line
-  //   []
-  // );
+
+  const [users, setUsers] = useState([]);
+  const [postByUser, setPostByUser] = useState(null);
+  useEffect(
+    () => {
+      axios({
+        method: "GET",
+        url: `${process.env.REACT_APP_API_URL}/follow/followers/${isLogin.id}?page=1&size=100`,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${isLogin.token}`,
+        },
+        data: null,
+      })
+        .then((res) => {
+          setUsers(res.data.list);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    // eslint-disable-next-line
+    []
+  );
+  useEffect(
+    () => {
+      axios({
+        method: "GET",
+        url: `${process.env.REACT_APP_API_URL}/post/user/${isLogin.id}?page=1&size=100`,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${isLogin.token}`,
+        },
+        data: null,
+      })
+        .then((res) => {
+          setPostByUser(res.data.list.length);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    // eslint-disable-next-line
+    []
+  );
+
+
+  console.log("users",users);
+  
 
   function handleLogout(e) {
     e.preventDefault();
@@ -89,10 +95,10 @@ const Sidebar = () => {
   };
   return (
     <div className="sidebar">
-      <div className="sidebar_header border-b border-gray-200 from-gray-100 to-gray-50 bg-gradient-to-t  uk-visible@s">
+      <div className="sidebar_header border-b  uk-visible@s">
         <Link
           to="/"
-          className="bg-gradient-to-bl font-semibold from-pink-400 px-6 py-3  rounded text-sm text-white to-pink-600"
+          className="bg-gradient-to-bl font-semibold px-6 py-3  rounded text-sm text-pink-600 "
         >
           BAKERY
           {/* <img src={DefaultProfile} className="logo_inverse" alt="avatar" /> */}
@@ -110,11 +116,7 @@ const Sidebar = () => {
         <div className="flex flex-col items-center my-6 uk-visible@s">
           <div className="bg-gradient-to-tr from-yellow-600 to-pink-600 p-1 rounded-full transition m-0.5 mr-2  w-24 h-24">
             <img
-              src={
-                avatar
-                  ? avatar
-                  : `https://source.unsplash.com/random/?bakery,bake,${isLogin.name}`
-              }
+              src={isLogin.avatar ? isLogin.avatar : 'https://images.squarespace-cdn.com/content/v1/54b7b93ce4b0a3e130d5d232/1519987020970-8IQ7F6Z61LLBCX85A65S/icon.png?format=1000w'}
               className="bg-gray-200 border-4 border-white rounded-full w-full h-full"
               alt="avatar"
             />
@@ -123,31 +125,33 @@ const Sidebar = () => {
             to={`/user/${isLogin.id}`}
             className="text-xl font-medium capitalize mt-4 uk-link-reset"
           >
-            {`${isLogin.name}`}
+            {`${isLogin.name}`} <span className="text-sm"> @{isLogin.username}</span>
           </Link>
-          {/* {users && postByUser && (
+          <p className="followers mt-4 "></p>
+          <div className="flex -space-x-2 overflow-hidden p-1">
+            {users.map((user, index) => {
+              return <img class="inline-block h-10 w-10 rounded-full ring-2 ring-white" src={user.avatar} />
+          })}
+          </div>
             <div className="flex justify-around w-full items-center text-center uk-link-reset text-gray-800 mt-6">
               <div>
                 <div>
                   <strong>Post</strong>
-                  <div>{postByUser.length}</div>
+                  <div>{postByUser}</div>
                 </div>
               </div>
               <div>
-                <div>
-                  <strong>Following</strong>
-                  <div>{users.following.length}</div>
-                </div>
-              </div>
-              <div>
+             
                 <div>
                   <strong>Followers</strong>
-                  <div>{users.followers.length}</div>
+                  <div>{users.length}</div>
                 </div>
               </div>
             </div>
-          )} */}
+          
         </div>
+
+        
         <hr className="-mx-4 -mt-1 uk-visible@s" />
         <ul>
           <li className={isActive("/")}>
@@ -194,8 +198,8 @@ const Sidebar = () => {
               <span> Explore </span>
             </Link>
           </li>
-          <li>
-            <Link to="#">
+          <li className={isActive(`/message`)}> 
+            <Link to="/message" >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -207,7 +211,7 @@ const Sidebar = () => {
                 <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1h-2.5a2 2 0 0 0-1.6.8L8 14.333 6.1 11.8a2 2 0 0 0-1.6-.8H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
                 <path d="M3 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 6a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 6zm0 2.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z" />
               </svg>
-              <span> Messages </span> <span className="nav-tag"> 3</span>
+              <span> Messages </span> 
             </Link>
           </li>
           <li className={isActive("/trending")}>
@@ -234,7 +238,7 @@ const Sidebar = () => {
               <span> Trending </span>
             </Link>
           </li>
-          <li>
+          {/* <li>
             <Link to="#">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -248,7 +252,7 @@ const Sidebar = () => {
               </svg>
               <span> Marketplace </span>
             </Link>
-          </li>
+          </li> */}
           <li className={isActive(`/setting`)}>
             <Link to={`/setting`}>
               <svg
@@ -270,7 +274,7 @@ const Sidebar = () => {
                   d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
                 />
               </svg>
-              <span> Settings </span>
+              <span> Account Setting</span>
             </Link>
           </li>
           <li className={isActive(`/user/${isLogin.id}`)}>

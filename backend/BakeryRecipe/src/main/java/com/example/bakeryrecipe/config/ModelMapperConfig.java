@@ -1,7 +1,21 @@
 package com.example.bakeryrecipe.config;
 
-import com.example.bakeryrecipe.dto.*;
-import com.example.bakeryrecipe.entity.*;
+import com.example.bakeryrecipe.dto.CommentDTO;
+import com.example.bakeryrecipe.dto.FollowDTO;
+import com.example.bakeryrecipe.dto.IngredientDTO;
+import com.example.bakeryrecipe.dto.LikeDTO;
+import com.example.bakeryrecipe.dto.MemberDTO;
+import com.example.bakeryrecipe.dto.PostDTO;
+import com.example.bakeryrecipe.dto.RecipeDTO;
+import com.example.bakeryrecipe.entity.Comment;
+import com.example.bakeryrecipe.entity.Follow;
+import com.example.bakeryrecipe.entity.Like;
+import com.example.bakeryrecipe.entity.Member;
+import com.example.bakeryrecipe.entity.Post;
+import com.example.bakeryrecipe.entity.Recipe;
+import com.example.bakeryrecipe.entity.StepIngredient;
+import com.example.bakeryrecipe.mapper.MemberMapper;
+import com.example.bakeryrecipe.mapper.MessageMapper;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 import org.modelmapper.convention.MatchingStrategies;
@@ -20,8 +34,8 @@ public class ModelMapperConfig {
         modelMapper.addMappings(RecipePropertyMap.entityToDTOPropertyMap);
         modelMapper.addMappings(RecipePropertyMap.dtoToEntityPropertyMap);
 
-        modelMapper.addMappings(MemberPropertyMap.entityToDTOPropertyMap);
-        modelMapper.addMappings(MemberPropertyMap.dtoToEntityPropertyMap);
+        modelMapper.addMappings(MemberMapper.entityToDTOPropertyMap);
+        modelMapper.addMappings(MemberMapper.dtoToEntityPropertyMap);
 
         modelMapper.addMappings(IngredientPropertyMap.entityToDTOPropertyMap);
 
@@ -34,6 +48,9 @@ public class ModelMapperConfig {
         modelMapper.addMappings(FollowPropertyMap.dtoToEntityPropertyMap);
 
         modelMapper.addMappings(PostPropertyMap.dtoToEntityPropertyMap);
+
+        modelMapper.addMappings(MessageMapper.entityToDTOPropertyMap);
+        modelMapper.addMappings(MessageMapper.dtoToEntityPropertyMap);
         return modelMapper;
     }
 }
@@ -51,22 +68,6 @@ class RecipePropertyMap {
         protected void configure() {
             map(source.toolToString(), destination.getTool());
             skip(destination.getSteps());
-        }
-    };
-}
-
-class MemberPropertyMap {
-    static PropertyMap<Member, MemberDTO> entityToDTOPropertyMap = new PropertyMap<Member, MemberDTO>() {
-        @Override
-        protected void configure() {
-            skip(destination.getPassword());
-        }
-    };
-
-    static PropertyMap<MemberDTO, Member> dtoToEntityPropertyMap = new PropertyMap<MemberDTO, Member>() {
-        @Override
-        protected void configure() {
-            skip(destination.getPassword());
         }
     };
 }

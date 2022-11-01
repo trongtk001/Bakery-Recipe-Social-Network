@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("api/authentication")
+@RequestMapping("authentication")
 @PreAuthorize("permitAll()")
 public class AuthenticationAPI {
 

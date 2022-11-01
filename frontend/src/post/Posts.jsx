@@ -16,12 +16,32 @@ function Posts() {
     // eslint-disable-next-line
   }, [page]);
 
+    const loadMore = () => { 
+      
+      window.onscroll = function () {
+        let h;
+            if(document.querySelector(".load-more")){
+                h = document.querySelector(".load-more").clientHeight;
+            }
+
+          let a = h - this.pageYOffset
+        if(a  <= 1000 ){
+          setPage(page + 1);
+          setLoading(true)
+        }
+      }
+    }
+  
+    loadMore()
+  
+
+  
   return posts.length === 0 ? (
     <h5 className="px-4">not found</h5>
   ) : (
-    <div className="space-y-5 flex-shrink-0 lg:w-7/12">
+    <div className="space-y-5 flex-shrink-0 lg:w-7/12 load-more">
       {posts.map((post, i) => {
-        return <DataPost post={post} key={i} />;
+        return <DataPost post={post} key={i}  />;
       })}
       {loading ? (
         <button
@@ -40,13 +60,14 @@ function Posts() {
       ) : (
         <>
           {totalPages !== page && (
-            <button
-              onClick={() => setPage(page + 1, setLoading(true))}
-              className="bg-gradient-to-bl font-semibold from-pink-400 px-6 py-3 rounded-full text-sm text-white to-pink-600"
-              style={{ display: "flex", margin: "25px auto" }}
-            >
-              <span className="w_ia">Load More..</span>
-            </button>
+            // <button
+            //   onClick={() => setPage(page + 1, setLoading(true))}
+            //   className="bg-gradient-to-bl font-semibold from-pink-400 px-6 py-3 rounded-full text-sm text-white to-pink-600"
+            //   style={{ display: "flex", margin: "25px auto" }}
+            // >
+            //   <span className="w_ia">Load More..</span>
+            // </button>
+            ''
           )}
         </>
       )}

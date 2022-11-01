@@ -15,7 +15,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("api/like")
+@RequestMapping("like")
 @PreAuthorize("permitAll()")
 public class LikeAPI {
     private final LikeService likeService;

@@ -1,7 +1,11 @@
 package com.example.bakeryrecipe.entity;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,10 +30,10 @@ public class Message {
     private Member memberReceiver;
 
     @Column(name = "massage_body", columnDefinition = "nvarchar(500)", nullable = false, length = 500)
-    private String massageBody;
+    private String messageBody;
 
-    @Column(name = "mss_create_date", nullable = false)
-    private Instant mssCreateDate;
+    @Column(name = "create_date", nullable = false)
+    private Instant createDate;
 
     public Long getId() {
         return id;
@@ -55,20 +59,19 @@ public class Message {
         this.memberReceiver = memberReceiver;
     }
 
-    public String getMassageBody() {
-        return massageBody;
+    public String getMessageBody() {
+        return messageBody;
     }
 
-    public void setMassageBody(String massageBody) {
-        this.massageBody = massageBody;
+    public void setMessageBody(String messageBody) {
+        this.messageBody = messageBody;
     }
 
-    public Instant getMssCreateDate() {
-        return mssCreateDate;
+    public Instant getCreateDate() {
+        return createDate;
     }
 
-    public void setMssCreateDate(Instant mssCreateDate) {
-        this.mssCreateDate = mssCreateDate;
+    public void setCreateDate(Instant createDate) {
+        this.createDate = createDate;
     }
-
 }

@@ -2,15 +2,14 @@ package com.example.bakeryrecipe.dto;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.Objects;
 
 public class MessageDTO implements Serializable {
 
     private Long id;
     private Long senderID;
     private Long receiverID;
-    private String massageBody;
-    private Instant mssCreateDate;
+    private String messageBody;
+    private Instant createDate;
 
     public Long getId() {
         return id;
@@ -36,19 +35,19 @@ public class MessageDTO implements Serializable {
         this.receiverID = receiverID;
     }
 
-    public String getMassageBody() {
-        return massageBody;
+    public String getMessageBody() {
+        return messageBody;
     }
 
-    public void setMassageBody(String massageBody) {
-        this.massageBody = massageBody;
+    public void setMessageBody(String messageBody) {
+        this.messageBody = messageBody;
     }
 
-    public Instant getMssCreateDate() {
-        return mssCreateDate;
+    public Instant getCreateDate() {
+        return createDate;
     }
 
-    public void setMssCreateDate(Instant mssCreateDate) {
-        this.mssCreateDate = mssCreateDate;
+    public void setCreateDate(Instant createDate) {
+        this.createDate = createDate;
     }
 }

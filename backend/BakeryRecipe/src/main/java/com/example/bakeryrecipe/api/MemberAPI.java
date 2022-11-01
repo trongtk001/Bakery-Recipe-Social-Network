@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("api/member")
+@RequestMapping("member")
 @PreAuthorize("permitAll()")
 public class MemberAPI {
 

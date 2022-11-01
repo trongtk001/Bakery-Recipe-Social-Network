@@ -3,7 +3,6 @@ package com.example.bakeryrecipe.api;
 import com.example.bakeryrecipe.api.output.ListMemberOutput;
 import com.example.bakeryrecipe.dto.FollowDTO;
 import com.example.bakeryrecipe.dto.MemberDTO;
-import com.example.bakeryrecipe.entity.Member;
 import com.example.bakeryrecipe.service.FollowService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,11 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("api/follow")
+@RequestMapping("follow")
 @PreAuthorize("permitAll()")
 public class FollowAPI {
 
@@ -32,7 +29,7 @@ public class FollowAPI {
         this.followService = followService;
     }
 
-    @PreAuthorize("isAuthenticated() && #followDTO.followerID.equals(authentication.principal.id)")
+    @PreAuthorize("isAuthenticated() && #followDTO.memberID.equals(authentication.principal.id)")
     @PostMapping("")
     public FollowDTO createNewFollow(@RequestBody FollowDTO followDTO){
         return followService.save(followDTO);

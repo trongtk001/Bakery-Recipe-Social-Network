@@ -9,7 +9,7 @@ public class ListMemberOutput {
     private int page;
     private int size;
     private int totalPage;
-    private List<MemberDTO> list = new ArrayList<>();
+    private List<MemberDTO> list;
 
     public ListMemberOutput() {
     }

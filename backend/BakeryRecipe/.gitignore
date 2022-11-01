@@ -6,6 +6,7 @@ target/BakeryRecipe-0.0.1-SNAPSHOT.jar.original
 .idea/*
 .mvn
 test-output
+src/main/resources/application.properties
 
 testdb.trace.db
 testdb.mv.db

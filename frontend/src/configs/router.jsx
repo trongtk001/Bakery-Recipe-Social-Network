@@ -14,7 +14,7 @@ import ContentSignUp from "../page/sign/ContentSignUp";
 import { ErrPage } from "../page/err";
 import LandingPage from "./../page/landing/index";
 import Trending from "../trending";
-
+import Message from "../message";
 export const mainRouter = [
   {
     path: "/",
@@ -30,6 +30,11 @@ export const mainRouter = [
     path: "/trending",
     exact: false,
     Component: Trending,
+  },
+  {
+    path: "/message",
+    exact: false,
+    Component: Message,
   },
   {
     path: "/post/create",

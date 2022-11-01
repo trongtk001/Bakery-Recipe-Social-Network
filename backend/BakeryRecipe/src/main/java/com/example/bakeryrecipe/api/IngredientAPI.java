@@ -15,7 +15,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("api/ingredient")
+@RequestMapping("ingredient")
 @PreAuthorize("permitAll()")
 public class IngredientAPI {
 

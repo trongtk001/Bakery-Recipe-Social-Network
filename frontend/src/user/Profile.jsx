@@ -13,6 +13,7 @@ const Profile = () => {
   const { userId } = useParams();
   const dispatch = useDispatch();
   const [following, setFollowing] = useState(false);
+  const [a, setA] = useState(true);
   const checkFollow = (user) => {
     const jwt = isAuthenticated();
     const match = user.followers.find((follower) => {
@@ -200,7 +201,7 @@ const Profile = () => {
             </div>
             <div className="w-20" />
           </div>
-          {postByUser !== null && <PostByUser posts={postByUser} />}
+          {postByUser !== null && <PostByUser posts={postByUser} a={a} setA={setA} />}
         </div>
       )}
     </>

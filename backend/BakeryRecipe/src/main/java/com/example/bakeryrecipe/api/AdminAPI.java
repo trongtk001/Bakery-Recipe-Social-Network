@@ -15,44 +15,39 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("api/admin")
-@PreAuthorize("hasAnyAuthority('ADMIN')")
+@RequestMapping("admin")
+@PreAuthorize("hasAuthority('ADMIN')")
 public class AdminAPI {
-//    @GetMapping()
-//    public String AuthorizationController(){
-//        return "admin page";
-//    }
-//    private final MemberService memberService;
-//    private final PostService postService;
-//    public  AdminAPI(MemberService memberService, PostService postService){
-//        this.memberService = memberService;
-//        this.postService = postService;
-//    }
-//    @GetMapping("/member")
-//    public ListMemberOutput getMembers(@RequestParam("page") int page, @RequestParam("size") int size ){
-//        Pageable pageable = PageRequest.of(page - 1, size, Sort.by(Sort.Direction.DESC, "createDate"));
-//        Page<MemberDTO> memberList=  memberService.searchMemberByName("",pageable);
-//        return new ListMemberOutput(page,size,memberList.getTotalPages(),memberList.getContent());
-//    }
-//    @GetMapping("/member")
-//    public ListMemberOutput getMembers(@RequestParam("name") String q, @RequestParam("page") int page, @RequestParam("size") int size ){
-//        Pageable pageable = PageRequest.of(page - 1, size, Sort.by(Sort.Direction.DESC, "createDate"));
-//        Page<MemberDTO> memberList=  memberService.searchMemberByName(q,pageable);
-//        return new ListMemberOutput(page,size,memberList.getTotalPages(),memberList.getContent());
-//    }
-//    @GetMapping("/member/{id}")
-//    public MemberDTO getMember(@PathVariable("id") Long id){
-//        return memberService.search(id);
-//    }
-//    @GetMapping("/post/{id}")
-//    public ListPostOutput getPostsByMember(@PathVariable("id") Long id, @RequestParam("page") int page, @RequestParam("size") int size){
-//        Pageable pageable = PageRequest.of(page - 1, size, Sort.by(Sort.Direction.DESC, "createDate"));
-//        Page<PostDTO> postDTOS = postService.findAllByMemberId(id, pageable);
-//        return new ListPostOutput(page, size, postDTOS.getTotalPages(), postDTOS.getContent());
-//    }
-//    @DeleteMapping("post/{id}")
-//    @PreAuthorize("isAuthenticated()")
-//    public PostDTO deletePost(@PathVariable("id") Long id){
-//        return postService.delete(id);
-//    }
+
+    private final MemberService memberService;
+    private final PostService postService;
+
+    public  AdminAPI(MemberService memberService, PostService postService){
+        this.memberService = memberService;
+        this.postService = postService;
+    }
+    @GetMapping("/member")
+    public ListMemberOutput getMembers(@RequestParam("page") int page, @RequestParam("size") int size ){
+        Pageable pageable = PageRequest.of(page - 1, size);
+        Page<MemberDTO> memberList=  memberService.searchMemberByName("",pageable);
+        return new ListMemberOutput(page,size,memberList.getTotalPages(),memberList.getContent());
+    }
+
+    @GetMapping("/member/{id}")
+    public MemberDTO getMember(@PathVariable("id") Long id){
+        return memberService.search(id);
+    }
+
+    @GetMapping("/post/{id}")
+    public ListPostOutput getPostsByMember(@PathVariable("id") Long id, @RequestParam("page") int page, @RequestParam("size") int size){
+        Pageable pageable = PageRequest.of(page - 1, size);
+        Page<PostDTO> postDTOS = postService.findAllByMemberId(id, pageable);
+        return new ListPostOutput(page, size, postDTOS.getTotalPages(), postDTOS.getContent());
+    }
+
+    @DeleteMapping("post/{id}")
+    @PreAuthorize("isAuthenticated()")
+    public PostDTO deletePost(@PathVariable("id") Long id){
+        return postService.delete(id);
+    }
 }

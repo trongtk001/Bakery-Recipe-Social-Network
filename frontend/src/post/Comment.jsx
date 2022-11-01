@@ -40,11 +40,16 @@ function Comment({ post }) {
   }
 
 
+ console.log(listComment)
+
 
   const onClickLike = async(e)=>{
      await like(isLogin.id, e)
       setLikes(!likes)
       setTotal(likes ? total - 1 : total + 1)
+  }
+  const shareToFacebook = ()=>{
+    window.open(`https://www.facebook.com/sharer/sharer.php?u=${window.location.href}`, '_blank');
   }
 
   const onComment = (e) => {
@@ -110,7 +115,7 @@ function Comment({ post }) {
           >
             <path d="M15 8a3 3 0 10-2.977-2.63l-4.94 2.47a3 3 0 100 4.319l4.94 2.47a3 3 0 10.895-1.789l-4.94-2.47a3.027 3.027 0 000-.74l4.94-2.47C13.456 7.68 14.19 8 15 8z" />
           </svg>
-          <div> Share</div>
+          <div onClick={shareToFacebook} > Share</div>
         </button>
       </div>
       {hidden && (
@@ -134,8 +139,8 @@ function Comment({ post }) {
                               />
                             </div>
                             <div className="text-gray-700 py-2 px-3 rounded-md bg-gray-100 h-full relative lg:ml-5 ml-2 lg:mr-20  dark:bg-gray-800 dark:text-gray-100">
-                              <p className="leading-6">
-                                {comment.commentDetail} -  <spam className="text-sm opacity-50">{fomatDate(comment.createDate)}</spam>
+                              <p className="leading-6 flex gap-2 items-center"> 
+                                <strong>{comment.member.name ? comment.member.name :  isLogin.name }</strong> {comment.commentDetail}   <spam className="text-sm opacity-50">{fomatDate(comment.createDate)}</spam>
                                 <i className="uil-grin-tongue-wink"> </i>
                               </p>
                               <div className="absolute w-3 h-3 top-3 -left-1 bg-gray-100 transform rotate-45 dark:bg-gray-800" />

@@ -37,7 +37,7 @@ export const list = (page) => {
     .catch((err) => console.log(err));
 };
 export const listAll = async () => {
-  return await (await axios.get(`${process.env.REACT_APP_API_URL}/post?page=1&size=30`)).data.list;
+  return await (await axios.get(`${process.env.REACT_APP_API_URL}/post?page=1&size=21`)).data.list;
 };
 
 export const singlePost = (postId) => {

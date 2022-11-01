@@ -1,6 +1,5 @@
 package com.example.bakeryrecipe.dto;
 
-
 import java.io.Serializable;
 
 public class LikeDTO implements Serializable {

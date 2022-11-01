@@ -20,7 +20,7 @@ public class MemberRole {
     private Member member;
 
     @MapsId("roleId")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
 
@@ -57,4 +57,12 @@ public class MemberRole {
         this.role = role;
     }
 
+    @Override
+    public String toString() {
+        return "MemberRole{" +
+                "id=" + id +
+                ", member=" + member +
+                ", role=" + role +
+                '}';
+    }
 }
