@@ -96,7 +96,7 @@ public class MemberService implements BaseService<MemberDTO> {
                 memberRepository.delete(entity);
                 return mapper.toDTO(entity);
         } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Not found this post");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Not found this member");
         }
     }
 
