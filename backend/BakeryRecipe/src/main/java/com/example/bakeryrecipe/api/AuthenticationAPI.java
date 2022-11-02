@@ -3,17 +3,14 @@ package com.example.bakeryrecipe.api;
 import com.example.bakeryrecipe.api.input.LoginInput;
 import com.example.bakeryrecipe.authentication.JwtUtils;
 import com.example.bakeryrecipe.dto.MemberDTO;
+import com.example.bakeryrecipe.service.mailservice.ClientService;
 import com.example.bakeryrecipe.service.MemberService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @CrossOrigin(origins = "*")
@@ -24,13 +21,16 @@ public class AuthenticationAPI {
 
     private final MemberService memberService;
 
+    private final ClientService clientService;
+
     private final AuthenticationManager authenticationManager;
 
     private final JwtUtils jwtUtils;
 
 
-    public AuthenticationAPI(MemberService memberService, AuthenticationManager authenticationManager, JwtUtils jwtUtils) {
+    public AuthenticationAPI(MemberService memberService, ClientService clientService, AuthenticationManager authenticationManager, JwtUtils jwtUtils) {
         this.memberService = memberService;
+        this.clientService = clientService;
         this.authenticationManager = authenticationManager;
         this.jwtUtils = jwtUtils;
     }
@@ -54,4 +54,9 @@ public class AuthenticationAPI {
         memberService.save(dto);
     }
 
+    @GetMapping("/register/verify")
+    public String verify(@RequestParam("code") String code,@RequestParam("username") String username){
+        memberService.checkCode(code,username);
+        return "activated success!!";
+    }
 }

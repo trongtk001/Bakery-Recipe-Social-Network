@@ -8,8 +8,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimeZone;
+import java.util.Timer;
 import java.util.stream.Collectors;
 
 import static java.util.Objects.nonNull;
@@ -42,6 +45,14 @@ public class Member {
     @OneToMany(mappedBy = "member", fetch = FetchType.EAGER)
     private List<MemberRole> roles = new ArrayList<>();
 
+    @Column(name = "status", nullable = true)
+    private Byte status;
+
+    @Column(name = "verification_code" ,nullable = true)
+    private String verificationCode;
+
+    @Column(name = "time_check")
+    private LocalTime time;
 
     public Long getId() {
         return id;
@@ -107,6 +118,20 @@ public class Member {
         this.roles = roles;
     }
 
+//    @Override
+//    public String toString() {
+//        return "Member{" +
+//                "id=" + id +
+//                ", name='" + name + '\'' +
+//                ", email='" + email + '\'' +
+//                ", dob=" + dob +
+//                ", username='" + username + '\'' +
+//                ", password='" + password + '\'' +
+//                ", avatar='" + avatar + '\'' +
+//                ", roles=" + roles +
+//                '}';
+//    }
+
     @Override
     public String toString() {
         return "Member{" +
@@ -118,15 +143,45 @@ public class Member {
                 ", password='" + password + '\'' +
                 ", avatar='" + avatar + '\'' +
                 ", roles=" + roles +
+                ", status=" + status +
+                ", verificationCode='" + verificationCode + '\'' +
+                ", time=" + time +
                 '}';
     }
 
     public List<String> getRolesString() {
-        return roles.stream().map(memberRole -> {
-            if (nonNull(memberRole.getRole())) {
-                return memberRole.getRole().getRoleName();
-            }
-            return null;
-        }).collect(Collectors.toList());
+        if (nonNull(roles)) {
+            return roles.stream().map(memberRole -> {
+                if (nonNull(memberRole.getRole())) {
+                    return memberRole.getRole().getRoleName();
+                }
+                return null;
+            }).collect(Collectors.toList());
+        }
+        return null;
+    }
+
+    public Byte getStatus() {
+        return status;
+    }
+
+    public void setStatus(Byte status) {
+        this.status = status;
+    }
+
+    public String getVerificationCode() {
+        return verificationCode;
+    }
+
+    public void setVerificationCode(String verificationCode) {
+        this.verificationCode = verificationCode;
+    }
+
+    public LocalTime getTime() {
+        return time;
+    }
+
+    public void setTime(LocalTime time) {
+        this.time = time;
     }
 }

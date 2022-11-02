@@ -68,10 +68,7 @@ public class PostService implements BaseService<PostDTO> {
         }
     }
 
-    @Override
-    public PostDTO delete(PostDTO dto) {
-        return null;
-    }
+
 
     public Page<PostDTO> findAll(Pageable pageable) {
 
@@ -108,7 +105,7 @@ public class PostService implements BaseService<PostDTO> {
     public PostDTO search(Long id) {
         Post post = postRepository.findById(id).orElse(null);
         if (post == null) {
-            new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found this post");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found this post");
         }
         return mapper.toDTO(post);
     }
@@ -123,5 +120,9 @@ public class PostService implements BaseService<PostDTO> {
             return new PageImpl<>(mapper.toDTOList(posts.getContent()), pageable, posts.getTotalElements());
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Not found");
+    }
+    @Override
+    public PostDTO delete(PostDTO dto) {
+        return null;
     }
 }
