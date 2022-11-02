@@ -20,6 +20,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 @Service
 public class MemberService implements BaseService<MemberDTO> {
@@ -47,6 +48,7 @@ public class MemberService implements BaseService<MemberDTO> {
 
     @Override
     public MemberDTO save(MemberDTO dto) {
+        checkAllRegisteredAccounts();
         Member memberEntity;
         if (null == dto.getId()) {
             //create new member
@@ -63,7 +65,6 @@ public class MemberService implements BaseService<MemberDTO> {
                         memberEntity.setPassword(passwordEncoder.encode(dto.getPassword()));
                         memberRepository.save(memberEntity);
                         memberRoleService.save(memberEntity, new ArrayList<>(Arrays.asList("USER")));
-
                         clientService.create(dto, memberEntity.getVerificationCode());
                     }else {
                         throw new ResponseStatusException(HttpStatus.CONFLICT,"wrong email format!!");
@@ -103,6 +104,8 @@ public class MemberService implements BaseService<MemberDTO> {
         }
     }
 
+
+
     @Override
     public MemberDTO delete(MemberDTO dto) {
         return null;
@@ -134,7 +137,14 @@ public class MemberService implements BaseService<MemberDTO> {
         return mapper.toDTO(member);
     }
 
-
+    public void checkAllRegisteredAccounts(){
+        List<Member> list = memberRepository.findAllByStatus((byte) 1);
+        for (Member member : list) {
+            if(Validation.checkTime(member.getTime()) > 5){
+                delete(member.getId());
+            }
+        }
+    }
     // check code send to email and active member
     public void checkCode(String code,String username){
         Member member = memberRepository.findMemberByVerificationCodeOrUsername(code,username);
