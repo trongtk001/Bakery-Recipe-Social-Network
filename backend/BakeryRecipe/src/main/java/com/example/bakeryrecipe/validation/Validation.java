@@ -1,5 +1,6 @@
 package com.example.bakeryrecipe.validation;
 
+import java.time.LocalTime;
 import java.util.regex.Pattern;
 
 public class Validation {
@@ -9,5 +10,9 @@ public class Validation {
             return true;
         }
         return false;
+    }
+    public static int checkTime(LocalTime time){
+        int timeResult = LocalTime.now().getMinute() - time.getMinute() ;
+        return timeResult;
     }
 }

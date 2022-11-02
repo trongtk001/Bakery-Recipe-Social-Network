@@ -8,8 +8,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimeZone;
+import java.util.Timer;
 import java.util.stream.Collectors;
 
 import static java.util.Objects.nonNull;
@@ -48,7 +51,8 @@ public class Member {
     @Column(name = "verification_code" ,nullable = true)
     private String verificationCode;
 
-
+    @Column(name = "time_check")
+    private LocalTime time;
 
     public Long getId() {
         return id;
@@ -114,6 +118,20 @@ public class Member {
         this.roles = roles;
     }
 
+//    @Override
+//    public String toString() {
+//        return "Member{" +
+//                "id=" + id +
+//                ", name='" + name + '\'' +
+//                ", email='" + email + '\'' +
+//                ", dob=" + dob +
+//                ", username='" + username + '\'' +
+//                ", password='" + password + '\'' +
+//                ", avatar='" + avatar + '\'' +
+//                ", roles=" + roles +
+//                '}';
+//    }
+
     @Override
     public String toString() {
         return "Member{" +
@@ -125,8 +143,12 @@ public class Member {
                 ", password='" + password + '\'' +
                 ", avatar='" + avatar + '\'' +
                 ", roles=" + roles +
+                ", status=" + status +
+                ", verificationCode='" + verificationCode + '\'' +
+                ", time=" + time +
                 '}';
     }
+
     public List<String> getRolesString() {
         if (nonNull(roles)) {
             return roles.stream().map(memberRole -> {
@@ -153,5 +175,13 @@ public class Member {
 
     public void setVerificationCode(String verificationCode) {
         this.verificationCode = verificationCode;
+    }
+
+    public LocalTime getTime() {
+        return time;
+    }
+
+    public void setTime(LocalTime time) {
+        this.time = time;
     }
 }

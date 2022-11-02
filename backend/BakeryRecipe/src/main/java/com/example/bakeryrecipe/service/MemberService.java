@@ -17,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -58,9 +59,11 @@ public class MemberService implements BaseService<MemberDTO> {
                         memberEntity.setStatus((byte) 1); // set 1 => account is not active
                         String code = RandomString.make(64);
                         memberEntity.setVerificationCode(code);
+                        memberEntity.setTime(LocalTime.now());
                         memberEntity.setPassword(passwordEncoder.encode(dto.getPassword()));
                         memberRepository.save(memberEntity);
                         memberRoleService.save(memberEntity, new ArrayList<>(Arrays.asList("USER")));
+
                         clientService.create(dto, memberEntity.getVerificationCode());
                     }else {
                         throw new ResponseStatusException(HttpStatus.CONFLICT,"wrong email format!!");
@@ -105,10 +108,6 @@ public class MemberService implements BaseService<MemberDTO> {
         return null;
     }
 
-    public MemberDTO delete(long id) {
-        return null;
-    }
-
     public MemberDTO search(Long id) {
         Member member = memberRepository.findById(id).orElse(null);
         if (member == null) {
@@ -134,14 +133,22 @@ public class MemberService implements BaseService<MemberDTO> {
         }
         return mapper.toDTO(member);
     }
+
+
     // check code send to email and active member
     public void checkCode(String code,String username){
         Member member = memberRepository.findMemberByVerificationCodeOrUsername(code,username);
         if(member != null ){
-            if(member.getVerificationCode() != null){
-                member.setStatus((byte) 2); // set 2 => account activated
-                member.setVerificationCode(null);
-                memberRepository.save(member);
+            if(member.getVerificationCode() != null){ // if The account has been activated
+                if(Validation.checkTime(member.getTime()) < 5){ // If you don't check the code within 5 minutes, the account will expire
+                    member.setStatus((byte) 2); // set 2 => account activated
+                    member.setVerificationCode(null);
+                    memberRepository.save(member);
+                }else {
+                    delete(member.getId());
+                    throw new ResponseStatusException(HttpStatus.CONFLICT,"User account has expired,\n" +
+                            "Please re-register ");
+                }
             }else {
                 throw new ResponseStatusException(HttpStatus.CONFLICT,"account has been activated!");
             }
