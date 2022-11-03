@@ -59,11 +59,6 @@ public class CommentService implements BaseService<CommentDTO> {
         return null;
     }
 
-    @Override
-    public CommentDTO delete(CommentDTO dto) {
-        return null;
-    }
-
     public CommentDTO delete(long id) {
         Comment commentEntity = commentRepository.findById(id).orElse(null);
         if (commentEntity != null) {

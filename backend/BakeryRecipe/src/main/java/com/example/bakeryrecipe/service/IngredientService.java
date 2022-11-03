@@ -22,7 +22,6 @@ public class IngredientService implements BaseService<IngredientDTO> {
         this.mapper = mapper;
     }
 
-
     @Override
     public IngredientDTO save(IngredientDTO dto) {
         Ingredient ingredient;
@@ -48,11 +47,6 @@ public class IngredientService implements BaseService<IngredientDTO> {
 
     @Override
     public IngredientDTO update(IngredientDTO dto) {
-        return null;
-    }
-
-    @Override
-    public IngredientDTO delete(IngredientDTO dto) {
         return null;
     }
 

@@ -1,3 +1,5 @@
+import callApi from "../utils/api/callApi";
+
 export const read = (userId, token) => {
   return fetch(`${process.env.REACT_APP_API_URL}/user/${userId}`, {
     method: "GET",
@@ -66,20 +68,17 @@ export const updateUser = (user, next) => {
 };
 
 export const follow = (userId, token, followId) => {
-  return fetch(`${process.env.REACT_APP_API_URL}/follow`, {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify({ memberID:userId, followerID:followId }),
-  })
-    .then((response) => {
-      return response.json();
-    })
-    .catch((err) => console.log(err));
+  return callApi('follow', 'POST', {body: { memberID:followId, followerID:userId }}, token)
+  .then(res => res)
+  .catch(err => console.log(err));
 };
+
+export const unFollow = (userId, token, unFollowId) => {
+  return callApi('follow', 'POST', {body: { memberID:unFollowId, followerID:userId }}, token)
+  .then(res => res)
+  .catch(err => console.log(err));
+};
+
 
 export const like = (userId, followId) => {
 
@@ -102,21 +101,6 @@ export const like = (userId, followId) => {
 };
 
 
-export const unFollow = (userId, token, unFollowId) => {
-  return fetch(`${process.env.REACT_APP_API_URL}/follow`, {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify({  memberID:userId, followerID:unFollowId}),
-  })
-    .then((response) => {
-      return response.json();
-    })
-    .catch((err) => console.log(err));
-};
 
 export const findPeople = () => {
   return fetch(`${process.env.REACT_APP_API_URL}/member?q=&page=1&size=5`, {

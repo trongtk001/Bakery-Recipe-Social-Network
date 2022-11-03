@@ -57,7 +57,7 @@ public class MessageService implements BaseService<MessageDTO> {
     }
 
     @Override
-    public MessageDTO delete(MessageDTO dto) {
+    public MessageDTO delete(long id) {
         return null;
     }
 

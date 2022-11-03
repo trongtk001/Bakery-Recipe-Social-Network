@@ -70,11 +70,6 @@ public class MemberService implements BaseService<MemberDTO> {
         return null;
     }
 
-    @Override
-    public MemberDTO delete(MemberDTO dto) {
-        return null;
-    }
-
     public MemberDTO delete(long id) {
         return null;
     }

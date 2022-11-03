@@ -50,10 +50,10 @@ public class MessageAPI {
         this.messageService = messageService;
     }
 
-    @SubscribeMapping("/online")
+    @SubscribeMapping("/chat/online")
     public void login() {
         List<String> onlineUser = participantRepository.getOnlineUser();
-        simpMessagingTemplate.convertAndSend("/app/online", onlineUser);
+        simpMessagingTemplate.convertAndSend("/app/chat/online", onlineUser);
     }
 
 
@@ -80,11 +80,6 @@ public class MessageAPI {
     }
 
     @PostMapping()
-    public MessageDTO createMessage(@RequestBody MessageDTO messageDTO) {
-        return messageService.save(messageDTO);
-    }
-
-    @GetMapping()
     @PreAuthorize("isAuthenticated()")
     public ListMessageOutput getMessage(@RequestBody GetMessageInput getMessageInput, @RequestParam int page, @RequestParam int size) {
         Pageable pageable = PageRequest.of(page - 1, size, Sort.by(Sort.Direction.DESC, "createDate"));

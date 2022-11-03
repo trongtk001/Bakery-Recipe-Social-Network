@@ -6,5 +6,5 @@ public interface BaseService<T> {
 
     T update(T dto);
 
-    T delete(T dto);
+    T delete(long id);
 }

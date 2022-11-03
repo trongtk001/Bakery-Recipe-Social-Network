@@ -122,11 +122,14 @@ public class Member {
     }
 
     public List<String> getRolesString() {
-        return roles.stream().map(memberRole -> {
-            if (nonNull(memberRole.getRole())) {
-                return memberRole.getRole().getRoleName();
-            }
-            return null;
-        }).collect(Collectors.toList());
+        if (nonNull(roles)) {
+            return roles.stream().map(memberRole -> {
+                if (nonNull(memberRole.getRole())) {
+                    return memberRole.getRole().getRoleName();
+                }
+                return null;
+            }).collect(Collectors.toList());
+        }
+        return null;
     }
 }

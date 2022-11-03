@@ -97,7 +97,7 @@ function Users() {
                           <ul className=" mb-2 flex gap-2 ">
                               {item.recipe.tool && (item.recipe.tool?.map((_item, index) => {
                                 if(index <=2 ){
-                                  return <li className=" px-2 py-1 text-pink-600 ">#{_item}</li>
+                                  return <li key={index} className=" px-2 py-1 text-pink-600 ">#{_item}</li>
                                 }else{
                                   return ''
                                 }

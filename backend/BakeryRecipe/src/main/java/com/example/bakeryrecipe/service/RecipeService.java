@@ -55,11 +55,6 @@ public class RecipeService implements BaseService<RecipeDTO>{
         return null;
     }
 
-    @Override
-    public RecipeDTO delete(RecipeDTO dto) {
-        return null;
-    }
-
     public RecipeDTO delete(long id) {
         return null;
     }

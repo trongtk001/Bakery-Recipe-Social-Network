@@ -1,6 +1,3 @@
-import { async } from "@firebase/util";
-import { configure } from "@testing-library/react";
-import axios from "axios";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import Load from "../components/load";
@@ -25,7 +22,6 @@ function Comment({ post }) {
     dispatch(getComment(id, setListComment));
     setLoading(false);
   };
-  console.log(post.likes.length)
   const fomatDate = (date)=>{
     const date1 = new Date(date);
     const date2 = new Date();
@@ -38,9 +34,6 @@ function Comment({ post }) {
     }
     return diffDays;
   }
-
-
- console.log(listComment)
 
 
   const onClickLike = async(e)=>{

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 
 import { FaTrashAlt } from "react-icons/fa";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { storeImageToFireBase } from "../../../utils/storeImageToFirebase.";
-import Load from "../../../components/load/index";
+import Load from "../../load/index";
 
-import axios from "axios";
+import callApi from "../../../utils/api/callApi";
 
 function Step({ steps, setSteps }) {
 
@@ -23,11 +23,8 @@ function Step({ steps, setSteps }) {
     const [dataIng, setDataIng] = useState([]);
 
 
-    useEffect(async () => {
-        const res = await axios.get(`${process.env.REACT_APP_API_URL + "/ingredient"}`);
-        if (res.data) {
-            setDataIng(res.data);
-        }
+    useEffect(() => {
+        callApi('ingredient').then(res => setDataIng(res.data)).catch(err => console.log(err));
     }, []);
 
     useEffect(

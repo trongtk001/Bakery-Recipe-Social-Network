@@ -63,11 +63,6 @@ public class LikeService implements BaseService<LikeDTO>{
         return null;
     }
 
-    @Override
-    public LikeDTO delete(LikeDTO dto) {
-        return null;
-    }
-
     public List<LikeDTO> findAllByPost(Long id){
         List<Like> list = likeRepository.findAllByPost_Id(id);
         return mapper.toDTOList(list);

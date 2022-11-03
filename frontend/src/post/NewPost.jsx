@@ -1,14 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { FaTrashAlt } from "react-icons/fa";
 import { Post } from "../store/actions/post.action";
-import { storeImageToFireBase } from "../utils/storeImageToFirebase.";
 import Load from "./../components/load/index";
 import { useIsLogin } from "../hooks/useIsLogin";
-import { NotificationContainer } from "react-notifications";
-import axios from "axios";
-import Step from "../components/post/step";
+import { NotificationContainer, NotificationManager } from "react-notifications";
+import Step from "../components/post/Step";
 
 function NewPost() {
     const dispatch = useDispatch();
@@ -19,63 +16,24 @@ function NewPost() {
     const [tool, setTool] = useState("");
     const [tools, setTools] = useState([]);
     const [steps, setSteps] = useState([]);
-    const [postImages, setPostImages] = useState([]);
-    const [postVideos, setPostVideos] = useState([]);
-    const [recipe, setRecipe] = useState({});
-    const [selectedFile, setSelectedFile] = useState();
-    const [isLoading, setIsLoading] = useState(false);
-    const [post, setPost] = useState({
-        postBody,
-        steps: [],
-    });
-
-    const [dataIng, setDataIng] = useState([]);
-
-    useEffect(async () => {
-        const res = await axios.get(`${process.env.REACT_APP_API_URL}/ingredient`);
-        if (res.data) {
-            setDataIng(res.data);
-            console.log(dataIng);
-        }
-    }, []);
-
-    useEffect(
-        () => {
-            const uploadImage = async () => {
-                setIsLoading(true);
-                if (!selectedFile) {
-                    setIsLoading(false);
-                    return;
-                }
-                const { isSuccess, imageUrl, message } = await storeImageToFireBase(selectedFile);
-                if (isSuccess) {
-                    setPostImages([...postImages, { image: imageUrl }]);
-                    setIsLoading(false);
-                    return imageUrl;
-                } else {
-                    console.log(message);
-                }
-                setIsLoading(false);
-            };
-            uploadImage();
-        },
-        // eslint-disable-next-line
-        [selectedFile]
-    );
 
     const handleDelItemTool = (index) => {
         setTools((pre) => pre.filter((item, i) => i !== index));
     };
 
     const clickSubmit = (event) => {
-        const recipe = {
-            name,
-            steps,
-            tool: tools,
-        };
-        console.log(JSON.stringify({postBody, recipe}))
-        event.preventDefault();
-        dispatch(Post({ postBody, recipe, history }));
+        if (postBody && steps && tools) {
+            const recipe = {
+                name,
+                steps,
+                tool: tools,
+            };
+            console.log(JSON.stringify({ postBody, recipe }));
+            event.preventDefault();
+            dispatch(Post({ postBody, recipe, history }));
+        } else {
+            NotificationManager.warning("Your content must not empty", "Warning");
+        }
     };
 
     return (
@@ -140,26 +98,28 @@ function NewPost() {
 
             {/* Button */}
             <div className="bg-gray-10 p-6 pt-10 flex justify-end space-x-3">
-              <Link to="#" className="p-2 px-4 rounded  text-red-500 ">
-                Cancel
-              </Link>
-              {loading ? (
-                <button
-                  className="button bg-blue-700"
-                  disabled
-                  style={{
-                    opacity: ".4",
-                    display: "inline-flex",
-                    alignItems: "center",
-                    height: "40px",
-                  }}
-                >
-                  Create Post
-                  <Load isSmall={true} />
-                </button>
-              ) : (
-                <button onClick={clickSubmit} className="button bg-blue-700">Create Post</button>
-              )}
+                <Link to="#" className="p-2 px-4 rounded  text-red-500 ">
+                    Cancel
+                </Link>
+                {loading ? (
+                    <button
+                        className="button bg-blue-700"
+                        disabled
+                        style={{
+                            opacity: ".4",
+                            display: "inline-flex",
+                            alignItems: "center",
+                            height: "40px",
+                        }}
+                    >
+                        Create Post
+                        <Load isSmall={true} />
+                    </button>
+                ) : (
+                    <button onClick={clickSubmit} className="button bg-blue-700">
+                        Create Post
+                    </button>
+                )}
             </div>
 
             <NotificationContainer />

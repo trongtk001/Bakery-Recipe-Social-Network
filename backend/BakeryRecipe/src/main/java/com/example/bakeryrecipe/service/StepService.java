@@ -58,7 +58,7 @@ public class StepService implements BaseService<StepDTO> {
     }
 
     @Override
-    public StepDTO delete(StepDTO dto) {
+    public StepDTO delete(long id) {
         return null;
     }
 }

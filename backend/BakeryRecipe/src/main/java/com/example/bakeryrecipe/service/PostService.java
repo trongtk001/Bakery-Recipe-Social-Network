@@ -68,11 +68,6 @@ public class PostService implements BaseService<PostDTO> {
         }
     }
 
-    @Override
-    public PostDTO delete(PostDTO dto) {
-        return null;
-    }
-
     public Page<PostDTO> findAll(Pageable pageable) {
 
         entityManager.unwrap(Session.class).enableFilter("likeFilter");

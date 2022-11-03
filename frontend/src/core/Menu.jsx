@@ -71,7 +71,7 @@ const Menu = () => {
             ></ion-icon>{" "}
             Create new post
           </Link>
-          <a  class="header-links-item">
+          <a href="/#" className="header-links-item">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -79,20 +79,20 @@ const Menu = () => {
               stroke="currentColor"
             >
               <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
                 d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
               />
             </svg>
           </a>
-          <div uk-drop="mode: click;offset: 4" class="header_dropdown">
-            <h4 class="-mt-5 -mx-5 bg-gradient-to-t from-gray-100 to-gray-50 border-b font-bold px-6 py-3">
+          <div uk-drop="mode: click;offset: 4" className="header_dropdown">
+            <h4 className="-mt-5 -mx-5 bg-gradient-to-t from-gray-100 to-gray-50 border-b font-bold px-6 py-3">
               Notification{" "}
             </h4>
           </div>
           {/* Messages */}
-          <a  className="header-links-item">
+          <a href="/#" className="header-links-item">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -112,21 +112,21 @@ const Menu = () => {
               Messages
             </h4>
             <div  className="overflow-scroll ">
-                  <Link>
-                      <div class="drop_avatar"> 
-                        <img src="https://source.unsplash.com/random/?bakery,bake,q"/>
+                  <Link to={"/#"}>
+                      <div className="drop_avatar"> 
+                        <img alt="" src="https://source.unsplash.com/random/?bakery,bake,q"/>
                       </div>
-                      <div class="drop_content">
+                      <div className="drop_content">
                           <p> <strong>tusieunhan</strong> đã lilke bài viết của bạn
-                              <span class="text-link">bánh ngon từ thịt vịt </span>
+                              <span className="text-link">bánh ngon từ thịt vịt </span>
                           </p>
-                          <span class="time-ago"> 2 hours ago </span>
+                          <span className="time-ago"> 2 hours ago </span>
                       </div>
                </Link> 
             </div>
           </div>
           <div className="ml-4 w-9">
-            <Link >
+            <Link to={"/#"}>
               <div className="bg-gradient-to-tr from-yellow-600 to-pink-600 p-0.5 rounded-full ">
                 <img
                   src={
@@ -134,7 +134,7 @@ const Menu = () => {
                       ? avatar
                       : `https://source.unsplash.com/random/?bakery,bake,${isLogin.id}`
                   }
-                  class="bg-gray-200 border border-white rounded-full w-8 h-8"
+                  className="bg-gray-200 border border-white rounded-full w-8 h-8"
                   alt="avatar"
                 />
               </div>
@@ -145,13 +145,13 @@ const Menu = () => {
             >
               <ul>
                 <li>
-                  <Link > Account setting </Link>
+                  <Link to={"/#"} > Account setting </Link>
                 </li>
                 <li>
-                  <Link > Payments </Link>
+                  <Link to={"/#"} > Payments </Link>
                 </li>
                 <li>
-                  <Link > Help </Link>
+                  <Link  to={"/#"}> Help </Link>
                 </li>
                 <li>
                   <Link to="/signIn" onClick={handleLogout}>

@@ -75,11 +75,6 @@ public class FollowService implements BaseService<FollowDTO>{
         return null;
     }
 
-    @Override
-    public FollowDTO delete(FollowDTO dto) {
-        return null;
-    }
-
     public List<FollowDTO> findAllFollowByMember(long id) {
         checkMember(id);
         List<Follow> followList = followRepository.findAllByMember_Id(id);

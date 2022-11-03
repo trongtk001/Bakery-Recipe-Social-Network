@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
 class PostByUser extends Component {
@@ -72,6 +72,7 @@ class PostByUser extends Component {
                   >
                     {
                       <img
+                        alt="post img"
                         src={post.recipe.steps[0] ? post.recipe.steps[0].image : ""}
                         onError={(i) =>
                           (i.target.src = `https://source.unsplash.com/random/?bakery,bake,1`)
