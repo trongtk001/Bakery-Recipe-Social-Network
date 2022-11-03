@@ -25,7 +25,7 @@ public class UserDetailsImpl implements UserDetails {
     }
 
     public static UserDetailsImpl build(Member member, List<Role> roles) {
-        return new UserDetailsImpl(member.getId(), member.getUsername(), member.getPassword(), (byte) 0, roles);
+        return new UserDetailsImpl(member.getId(), member.getUsername(), member.getPassword(), member.getStatus(), roles);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return status == 0;
+        return true;
     }
 
     @Override
@@ -68,7 +68,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return status == 2;
     }
 
     public void setUsername(String username) {

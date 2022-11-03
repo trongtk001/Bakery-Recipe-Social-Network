@@ -93,7 +93,7 @@ public class MemberService implements BaseService<MemberDTO> {
         return null;
     }
 
-    public MemberDTO delete(Long id) {
+    public MemberDTO delete(long id) {
         Member entity = memberRepository.findMemberById(id);
         if(entity != null){
                 memberRoleService.delete(entity);
