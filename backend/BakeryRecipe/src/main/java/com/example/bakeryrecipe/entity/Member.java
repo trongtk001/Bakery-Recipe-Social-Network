@@ -117,21 +117,7 @@ public class Member {
     public void setRoles(List<MemberRole> roles) {
         this.roles = roles;
     }
-
-//    @Override
-//    public String toString() {
-//        return "Member{" +
-//                "id=" + id +
-//                ", name='" + name + '\'' +
-//                ", email='" + email + '\'' +
-//                ", dob=" + dob +
-//                ", username='" + username + '\'' +
-//                ", password='" + password + '\'' +
-//                ", avatar='" + avatar + '\'' +
-//                ", roles=" + roles +
-//                '}';
-//    }
-
+    
     @Override
     public String toString() {
         return "Member{" +
