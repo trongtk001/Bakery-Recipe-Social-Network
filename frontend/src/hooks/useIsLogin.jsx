@@ -9,7 +9,7 @@ export function useIsLogin() {
     const dispatch = useDispatch();
     useEffect(
         () => {
-            user && dispatch(getUser(user.id));
+            user && dispatch(getUser(user.id, true));
         },
         // eslint-disable-next-line
         []

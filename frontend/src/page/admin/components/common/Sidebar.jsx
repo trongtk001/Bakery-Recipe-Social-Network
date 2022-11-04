@@ -18,13 +18,13 @@ const SidebarStyled = styled.nav`
 const Sidebar = () => {
   return (
     <SidebarStyled>
-      <Button as={Link} variant='light' to='/users'>
+      <Button as={Link} variant='light' to='/admin/users'>
         Users
       </Button>
-      <Button as={Link} variant='light' to='/posts'>
+      <Button as={Link} variant='light' to='/admin/posts'>
         Posts
       </Button>
-      <Button as={Link} variant='light' to='/ingredients'>
+      <Button as={Link} variant='light' to='/admin/ingredients'>
         Ingredients
       </Button>
     </SidebarStyled>

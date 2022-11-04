@@ -23,6 +23,7 @@ const defaultValues = {
 const PostEditPage = () => {
   const params = useParams();
   const [post, setPost] = useState();
+  // eslint-disable-next-line
   const titleRef = useRef(null);
   const { register, reset, control, handleSubmit } = useForm({
     defaultValues: defaultValues,
@@ -54,6 +55,7 @@ const PostEditPage = () => {
         }
       } catch (error) {}
     })();
+    // eslint-disable-next-line
   }, []);
 
   const onSubmitForm = async (formValues) => {

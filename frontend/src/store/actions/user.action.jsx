@@ -97,7 +97,7 @@ export function actLogout() {
         type: ACT_LOGOUT,
     };
 }
-export const getUser = (userId) => {
+export const getUser = (userId, isOwner) => {
     return (dispatch) => {
         dispatch(startLoading());
         axios({
@@ -109,7 +109,7 @@ export const getUser = (userId) => {
             data: null,
         })
             .then((res) => {
-                dispatch(getUserSuccess(res.data));
+                dispatch(getUserSuccess(res.data, isOwner));
                 // setFollowing(checkFollow(res.data));
                 dispatch(stopLoading());
             })
@@ -120,11 +120,18 @@ export const getUser = (userId) => {
     };
 };
 
-export const getUserSuccess = (users) => {
-    return {
-        type: USER_SUCCESS,
-        payload: users,
-    };
+export const getUserSuccess = (users, isOwner) => {
+    if (isOwner) {
+        return ({
+            type: LOGIN_SUCCESS,
+            payload: users
+        })
+    } else {
+        return ({
+            type: USER_SUCCESS,
+            payload: users
+        })
+    }
 };
 
 const getUserFailed = (err) => {

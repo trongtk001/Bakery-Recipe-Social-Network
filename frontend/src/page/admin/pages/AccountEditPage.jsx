@@ -60,6 +60,7 @@ const AccountEditPage = () => {
         }
       } catch (error) {}
     })();
+    // eslint-disable-next-line
   }, []);
 
   return (

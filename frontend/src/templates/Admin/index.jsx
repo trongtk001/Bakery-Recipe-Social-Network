@@ -1,14 +1,8 @@
 import React from "react";
 import { Redirect, Route } from "react-router-dom";
 import { isAuthenticated } from "../../auth";
+import Admin from "../../page/admin";
 
-function AdminTemplate(props) {
-  return (
-    <>
-        <section>{props.children}</section>
-    </>
-  );
-}
 
 const RouterAdminTemplate = ({ path, exact, Component }) => {
   return (
@@ -17,9 +11,7 @@ const RouterAdminTemplate = ({ path, exact, Component }) => {
       exact={exact}
       render={(props) =>
         isAuthenticated() ? (
-          <AdminTemplate>
-            <Component {...props} />
-          </AdminTemplate>
+          <Admin/>
         ) : (
           <Redirect
             to={{

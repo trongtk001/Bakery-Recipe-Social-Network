@@ -46,6 +46,7 @@ const PostPage = () => {
         console.log(error);
       }
     })();
+    // eslint-disable-next-line
   }, [postFilter.page]);
 
   const handleChangePage = (page) => {
@@ -59,7 +60,7 @@ const PostPage = () => {
     <PostPageStyled>
       <Stack direction='horizontal' gap={3}>
         <h1>Manage Posts</h1>
-        <Button as={Link} to='/posts/add'>
+        <Button as={Link} to='/admin/posts/add'>
           Add
         </Button>
       </Stack>
@@ -69,7 +70,7 @@ const PostPage = () => {
             <tr key={post.id}>
               <td>{post.id}</td>
               <td style={{ maxWidth: '250px' }}>
-                <Link to={`/posts/${post.id}`}>{post.postBody}</Link>
+                <Link to={`/admin/posts/${post.id}`}>{post.postBody}</Link>
               </td>
               <td>{post.likes.length}</td>
               <td style={{ whiteSpace: 'nowrap' }}>{post.member.name}</td>
@@ -79,7 +80,7 @@ const PostPage = () => {
                   variant='primary'
                   style={{ marginRight: '12px' }}
                   as={Link}
-                  to={`/posts/edit/${post.id}`}
+                  to={`/admin/posts/edit/${post.id}`}
                 >
                   Edit
                 </Button>

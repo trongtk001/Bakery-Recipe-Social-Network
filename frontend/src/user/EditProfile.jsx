@@ -110,7 +110,7 @@ function EditProfile() {
                     Do you have a photo wants to share us <br /> please upload
                     her ..
                   </p>
-                  <div uk-form-custom className="uk-form-custom">
+                  <div uk-form-custom="true" className="uk-form-custom">
                     {isLoading ? (
                       <>
                         <button
@@ -153,34 +153,34 @@ function EditProfile() {
             <div className="bg-white dark:bg-gray-900 rounded-md lg:shadow-lg shadow col-span-2">
               <div className="grid grid-cols-2 gap-3 lg:p-6 p-4">
                 <div>
-                  <label htmlFor> name</label>
+                  <label htmlFor="true"> name</label>
                   <input
                     type="text"
                     name="name"
                     onChange={handleChange}
-                    value={user.name}
+                    defaultValue={user.name}
                     placeholder="Your name.."
                     className="shadow-none bg-gray-100"
                   />
                 </div>
                 <div>
-                  <label htmlFor> birth date</label>
+                  <label htmlFor="true"> birth date</label>
                   <input
                     type="text"
                     name="dob"
                     onChange={handleChange}
-                    value={user.dob}
+                    defaultValue={user.dob}
                     placeholder="Your birth date.."
                     className="shadow-none bg-gray-100"
                   />
                 </div>
                 <div className="col-span-2">
-                  <label htmlFor> Email</label>
+                  <label htmlFor="true"> Email</label>
                   <input
                     type="text"
                     name="email"
                     onChange={handleChange}
-                    value={user.email}
+                    defaultValue={user.email}
                     placeholder="Your Email.."
                     className="shadow-none bg-gray-100"
                   />

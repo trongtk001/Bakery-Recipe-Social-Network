@@ -2,6 +2,7 @@ import React from 'react';
 import Container from 'react-bootstrap/Container';
 import styled from 'styled-components';
 import Avatar from './Avatar';
+import { Link } from 'react-router-dom';
 
 const HeaderStyled = styled.header`
   display: flex;
@@ -24,7 +25,7 @@ const Header = () => {
         style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
         fluid
       >
-        <h2>Food Recipe</h2>
+        <Link to="/"><h2>Food Recipe</h2></Link>
         <Avatar />
       </Container>
     </HeaderStyled>

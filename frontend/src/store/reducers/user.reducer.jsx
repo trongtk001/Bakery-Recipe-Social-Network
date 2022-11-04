@@ -41,6 +41,12 @@ const userReducer = (state = initialState, action) => {
         case "GET_FOLLOWER": {
             return { ...state, followers: payload };
         }
+        case "FOLLOW": {
+            return { ...state, friends: [...state.friends, payload] }
+        }
+        case "UNFOLLOW": {
+            return { ...state, friends: state.friends.filter(f => f.id !== payload.id)}
+        }
         case "GET_FRIEND": {
             return { ...state, friends: payload };
         }

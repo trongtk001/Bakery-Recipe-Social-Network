@@ -32,6 +32,7 @@ const AccountPage = () => {
         console.log(error);
       }
     })();
+    // eslint-disable-next-line
   }, [userFilter]);
 
   const handleChangePage = (page) => {
@@ -47,7 +48,7 @@ const AccountPage = () => {
     <AccountPageStyled>
       <Stack direction='horizontal' gap={3}>
         <h1>Manage Users</h1>
-        <Button as={Link} to='/users/add'>
+        <Button as={Link} to='/admin/users/add'>
           Add
         </Button>
       </Stack>
@@ -67,7 +68,7 @@ const AccountPage = () => {
                   variant='primary'
                   style={{ marginRight: '12px' }}
                   as={Link}
-                  to={`users/edit/${user.id}`}
+                  to={`/admin/users/edit/${user.id}`}
                 >
                   Edit
                 </Button>

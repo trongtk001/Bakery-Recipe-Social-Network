@@ -46,6 +46,7 @@ const IngredientPage = () => {
         console.log(error);
       }
     })();
+    // eslint-disable-next-line
   }, [ingredientFilter.page]);
 
   const handleChangePage = (page) => {
@@ -74,7 +75,7 @@ const IngredientPage = () => {
                   variant='primary'
                   style={{ marginRight: '12px' }}
                   as={Link}
-                  to={`/ingredients/edit/${ingredient.id}`}
+                  to={`/admin/ingredients/edit/${ingredient.id}`}
                 >
                   Edit
                 </Button>

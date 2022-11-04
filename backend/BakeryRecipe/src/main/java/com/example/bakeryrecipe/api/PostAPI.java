@@ -54,7 +54,6 @@ public class PostAPI {
         return new ListPostOutput(page, size, postDTOS.getTotalPages(), postDTOS.getContent());
     }
 
-    @PreAuthorize("isAuthenticated()")
     @GetMapping("/user/{id}")
     public ListPostOutput listPostUser(@PathVariable("id") Long id,@RequestParam("page") int page, @RequestParam("size") int size){
         Pageable pageable = PageRequest.of(page - 1, size, Sort.by(Sort.Direction.DESC, "createDate"));
