@@ -5,11 +5,7 @@ import { isAuthenticated } from "../../auth";
 function AdminTemplate(props) {
   return (
     <>
-      <header>Header Của Admin</header>
-      <main className="d-flex">
-        <section>SideBar</section>
         <section>{props.children}</section>
-      </main>
     </>
   );
 }

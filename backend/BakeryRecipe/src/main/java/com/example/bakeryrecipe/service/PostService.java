@@ -91,7 +91,7 @@ public class PostService implements BaseService<PostDTO> {
         Post entity = postRepository.findPostsById(id);
         if(entity != null){
             UserDetailsImpl userDetails = (UserDetailsImpl)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            if (entity.getMember().getId().equals(userDetails.getId())) {
+            if (entity.getMember().getId().equals(userDetails.getId()) && userDetails.getAuthorities().contains("ADMIN")) {
                 postRepository.delete(entity);
                 return mapper.toDTO(entity);
             } else {

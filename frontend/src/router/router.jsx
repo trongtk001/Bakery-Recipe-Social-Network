@@ -1,5 +1,5 @@
 import Home from "../core/Home";
-import Admin from "../admin/Admin";
+import Admin from "../page/admin";
 import ResetPassword from "../user/ResetPassword";
 import ForgotPassword from "../user/ForgotPassword";
 import Users from "../user/Users";

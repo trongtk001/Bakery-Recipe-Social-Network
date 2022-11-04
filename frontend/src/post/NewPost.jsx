@@ -5,7 +5,7 @@ import { Post } from "../store/actions/post.action";
 import Load from "./../components/load/index";
 import { useIsLogin } from "../hooks/useIsLogin";
 import { NotificationContainer, NotificationManager } from "react-notifications";
-import Step from "../components/post/Step";
+import Step from "../components/post/step";
 
 function NewPost() {
     const dispatch = useDispatch();
