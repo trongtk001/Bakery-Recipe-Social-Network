@@ -1,5 +1,6 @@
 package com.example.bakeryrecipe.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -29,13 +30,13 @@ public class Recipe {
     @Column(name = "name", columnDefinition = "nvarchar(50)",nullable = false, length = 50)
     private String name;
 
-    @OneToMany(mappedBy = "recipe")
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.REMOVE)
     private List<Step> steps;
 
     @Column(name = "tool", columnDefinition = "nvarchar(500)", nullable = false, length = 500)
     private String tool;
 
-    @OneToMany(mappedBy = "step")
+    @OneToMany(mappedBy = "step", cascade = CascadeType.REMOVE)
     private List<StepIngredient> ingredients = new ArrayList<>();
 
     public Long getId() {

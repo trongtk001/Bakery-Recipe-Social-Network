@@ -50,7 +50,7 @@ public class MessageAPI {
         this.messageService = messageService;
     }
 
-    @SubscribeMapping("/chat/online")
+    @MessageMapping("/chat/join")
     public void login() {
         List<String> onlineUser = participantRepository.getOnlineUser();
         simpMessagingTemplate.convertAndSend("/app/chat/online", onlineUser);

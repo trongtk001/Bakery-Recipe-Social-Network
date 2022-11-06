@@ -48,7 +48,7 @@ public class JwtUtils {
 
     public String getToken(HttpServletRequest request){
         String token = request.getHeader(jwtKey);
-        if (token != null) {
+        if (token != null && token.length() > 20) {
             token = token.substring(7);
             if (validateJwtToken(token)) {
                 return token;

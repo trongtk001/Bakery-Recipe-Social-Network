@@ -34,7 +34,7 @@ public class Step {
     @Column(name = "video", length = 250)
     private String video;
 
-    @OneToMany(mappedBy = "step")
+    @OneToMany(mappedBy = "step", fetch = FetchType.EAGER)
     private List<StepIngredient> ingredients = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

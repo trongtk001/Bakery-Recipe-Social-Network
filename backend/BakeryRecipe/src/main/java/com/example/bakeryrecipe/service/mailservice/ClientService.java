@@ -26,7 +26,7 @@ public class ClientService  {
             Map<String, Object> props = new HashMap<>();
             props.put("name", dto.getName());
             props.put("username", dto.getUsername());
-            props.put("code",code);
+            props.put("code",code + "\\" + dto.getUsername());
             dataMail.setProps(props);
 
             mailService.sendHtmlMail(dataMail, "index");

@@ -20,6 +20,9 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
@@ -91,7 +94,8 @@ public class PostService implements BaseService<PostDTO> {
         Post entity = postRepository.findPostsById(id);
         if(entity != null){
             UserDetailsImpl userDetails = (UserDetailsImpl)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            if (entity.getMember().getId().equals(userDetails.getId()) && userDetails.getAuthorities().contains("ADMIN")) {
+            List<String> roleList = userDetails.getAuthorities().stream().map(grantedAuthority -> grantedAuthority.getAuthority()).collect(Collectors.toList());
+            if (entity.getMember().getId().equals(userDetails.getId()) || roleList.contains("ADMIN")) {
                 postRepository.delete(entity);
                 return mapper.toDTO(entity);
             } else {

@@ -60,9 +60,7 @@ public class MemberRole {
     @Override
     public String toString() {
         return "MemberRole{" +
-                "id=" + id +
-                ", member=" + member +
-                ", role=" + role +
+                "role=" + role +
                 '}';
     }
 }
