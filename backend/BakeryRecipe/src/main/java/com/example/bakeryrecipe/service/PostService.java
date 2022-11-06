@@ -108,6 +108,7 @@ public class PostService implements BaseService<PostDTO> {
 
     public PostDTO search(Long id) {
         Post post = postRepository.findById(id).orElse(null);
+        entityManager.unwrap(Session.class).enableFilter("likeFilter");
         if (post == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found this post");
         }
