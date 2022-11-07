@@ -87,7 +87,13 @@ public class FollowService implements BaseService<FollowDTO>{
         List<Member> friendList = followList.getContent().stream().map(follow -> follow.getMember()).collect(Collectors.toList());
         return new PageImpl<>(memberMapper.toDTOList(friendList), pageable, followList.getTotalElements());
     }
-
+    public List<Long> findAllIdFriend(long id){
+        checkMember(id);
+        List<Follow> followList = followRepository.findAllByFollower_Id(id);
+        List<Member> friendList = followList.stream().map(follow -> follow.getMember()).collect(Collectors.toList());
+        List<Long> ids = friendList.stream().map(member -> member.getId()).collect(Collectors.toList());
+        return ids;
+    }
     public Page<MemberDTO> findAllFollower(long id, Pageable pageable) {
         checkMember(id);
         Page<Follow> followList = followRepository.findAllByMember_Id(id, pageable);

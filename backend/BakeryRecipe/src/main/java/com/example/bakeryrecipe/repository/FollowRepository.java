@@ -16,10 +16,14 @@ public interface FollowRepository extends JpaRepository<Follow, Long> {
     @Query("select f from Follow f where f.member.id = ?1 and f.status = 1")
     List<Follow> findAllByMember_Id(Long id);
 
+    @Query("select f from Follow f where f.follower.id = ?1 and f.status = 1")
+    List<Follow> findAllByFollower_Id(Long id);
+
     @Query("select f from Follow f where f.member.id = ?1 and f.status = 1")
     Page<Follow> findAllByMember_Id(Long id, Pageable pageable);
 
     @Query("select f from Follow f where f.follower.id = ?1 and f.status = 1")
     Page<Follow> findAllByFollower_Id(Long id, Pageable pageable);
-    
+
+
 }

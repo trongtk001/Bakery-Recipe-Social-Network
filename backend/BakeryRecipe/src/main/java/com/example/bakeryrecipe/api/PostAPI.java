@@ -61,6 +61,13 @@ public class PostAPI {
         return new ListPostOutput(page, size, postDTOS.getTotalPages(), postDTOS.getContent());
     }
 
+    @GetMapping("/user/follow/{id}")
+    public ListPostOutput listPostUserFollow(@PathVariable("id") Long id,@RequestParam("page") int page, @RequestParam("size") int size){
+        Pageable pageable = PageRequest.of(page - 1, size, Sort.by(Sort.Direction.DESC, "createDate"));
+        Page<PostDTO> postDTOS = postService.findAllPostFollowByMemberId(id,pageable);
+        return new ListPostOutput(page, size, postDTOS.getTotalPages(), postDTOS.getContent());
+    }
+
     @GetMapping("/search")
     public ListPostOutput searchPostByName(@RequestParam("q") String q, @RequestParam("page") int page, @RequestParam("size") int size){
         Pageable pageable = PageRequest.of(page - 1, size, Sort.by(Sort.Direction.DESC, "createDate"));

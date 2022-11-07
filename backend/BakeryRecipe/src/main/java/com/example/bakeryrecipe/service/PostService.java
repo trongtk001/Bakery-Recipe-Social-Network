@@ -20,8 +20,10 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
@@ -34,13 +36,16 @@ public class PostService implements BaseService<PostDTO> {
     private final RecipeService recipeService;
     private final PostRepository postRepository;
 
+    private final FollowService followService;
+
     @PersistenceContext
     private EntityManager entityManager;
 
-    public PostService(PostMapper mapper, RecipeService recipeService, PostRepository postRepository) {
+    public PostService(PostMapper mapper, RecipeService recipeService, PostRepository postRepository, FollowService followService) {
         this.mapper = mapper;
         this.recipeService = recipeService;
         this.postRepository = postRepository;
+        this.followService = followService;
     }
 
     @Override
@@ -88,6 +93,23 @@ public class PostService implements BaseService<PostDTO> {
        Page<Post> list = postRepository.findAllByMemberId(id, pageable);
        Page<PostDTO> postDTOS = new PageImpl<>(mapper.toDTOList(list.getContent()),pageable,list.getTotalElements());
        return postDTOS;
+    }
+
+    public Page<PostDTO> findAllPostFollowByMemberId(long id, Pageable pageable) {
+        entityManager.unwrap(Session.class).enableFilter("likeFilter");
+        List<Long> ids = followService.findAllIdFriend(id);
+        List<Post> newList = new ArrayList<>();
+        for (Long i:
+             ids) {
+            List<Post> list = postRepository.findAllByMemberIds(i);
+            for(int j=0;j< list.size();j++){
+                newList.add(list.get(j));
+            }
+        }
+        Page<Post> page = new PageImpl<>(newList,pageable, newList.size());
+
+        Page<PostDTO> postDTOS = new PageImpl<>(mapper.toDTOList(page.getContent()),pageable,page.getTotalElements());
+        return postDTOS;
     }
 
     public PostDTO delete(long id) {

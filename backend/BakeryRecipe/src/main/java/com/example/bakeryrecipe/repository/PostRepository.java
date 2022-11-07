@@ -17,8 +17,10 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     Post findPostsById(Long id);
 
+    @Query("select p from Post p where p.member.id = ?1")
     Page<Post> findAllByMemberId(Long id, Pageable pageable);
-
+    @Query("select p from Post p where p.member.id = ?1")
+    List<Post> findAllByMemberIds(Long id);
     @Query("select p from Post p ")
     Page<Post> findAll(Pageable pageable);
 
@@ -33,6 +35,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     @Query("select p from Post p where p.postBody LIKE CONCAT('%',:q,'%') or p.member.name LIKE CONCAT('%',:q,'%')")
     Page<Post> findAllByPostBodyOrMember_Name(String q, Pageable pageable);
+
 
 
 }
