@@ -98,16 +98,7 @@ public class PostService implements BaseService<PostDTO> {
     public Page<PostDTO> findAllPostFollowByMemberId(long id, Pageable pageable) {
         entityManager.unwrap(Session.class).enableFilter("likeFilter");
         List<Long> ids = followService.findAllIdFriend(id);
-        List<Post> newList = new ArrayList<>();
-        for (Long i:
-             ids) {
-            List<Post> list = postRepository.findAllByMemberIds(i);
-            for(int j=0;j< list.size();j++){
-                newList.add(list.get(j));
-            }
-        }
-        Page<Post> page = new PageImpl<>(newList,pageable, newList.size());
-
+        Page<Post> page = postRepository.findAllByMember_IdIn(ids,pageable);
         Page<PostDTO> postDTOS = new PageImpl<>(mapper.toDTOList(page.getContent()),pageable,page.getTotalElements());
         return postDTOS;
     }
