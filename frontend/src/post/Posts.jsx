@@ -40,6 +40,7 @@ function Posts() {
     loadMore();
 
     const handleClick = ()=>{
+        setPage(1)
         setUrl(`post/user/follow/${isLogin.id}`);
     }
 
@@ -50,7 +51,7 @@ function Posts() {
         <div className="space-y-5 flex-shrink-0 lg:w-7/12 load-more">
 
             <div className="flex gap-2 cursor-pointer ">
-                <p onClick={()=>setUrl('post')} className={ url == 'post' ? 'text-pink-500' : ''}>Mọi người</p>
+                <p onClick={()=>{setUrl('post');setPage(1)}} className={ url == 'post' ? 'text-pink-500' : ''}>Mọi người</p>
                 <p onClick={handleClick} className={ url == 'post' ? '' : 'text-pink-500'}>Follow</p>
             </div>
             {posts.map((post, i) => {
