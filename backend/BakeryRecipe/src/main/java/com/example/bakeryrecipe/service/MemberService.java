@@ -131,6 +131,11 @@ public class MemberService implements BaseService<MemberDTO> {
         return mapper.toDTO(member);
     }
 
+    public List<MemberDTO> searchTop5Member(){
+        List<Member> list = memberRepository.findTopByCountPost();
+        return mapper.toDTOList(list);
+    }
+
     public void checkAllRegisteredAccounts(){
         List<Member> list = memberRepository.findAllByStatus((byte) 1);
         for (Member member : list) {

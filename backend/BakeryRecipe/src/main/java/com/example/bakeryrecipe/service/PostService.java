@@ -85,6 +85,17 @@ public class PostService implements BaseService<PostDTO> {
 
         return postDTOS;
     }
+    public List<PostDTO> findAllByLike() {
+
+        entityManager.unwrap(Session.class).enableFilter("likeFilter");
+
+        List<Post> entities = postRepository.findAllByLike();
+
+
+
+        return mapper.toDTOList(entities);
+    }
+
 
     public Page<PostDTO> findAllByMemberId(long id, Pageable pageable) {
        Page<Post> list = postRepository.findAllByMemberId(id, pageable);

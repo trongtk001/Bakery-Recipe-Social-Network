@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -50,7 +52,10 @@ public class MemberAPI {
         return new ListMemberOutput(page, size, memberDTOS.getTotalPages(), memberDTOS.getContent());
     }
 
-
+    @GetMapping("/top")
+    public List<MemberDTO> listTop5Member(){
+        return memberService.searchTop5Member();
+    }
 
     @DeleteMapping("/{id}")
     public MemberDTO deleteMember(@PathVariable("id") Long id){

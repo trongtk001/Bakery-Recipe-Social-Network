@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("post")
@@ -52,6 +54,12 @@ public class PostAPI {
         Pageable pageable = PageRequest.of(page - 1, size, Sort.by(Sort.Direction.DESC, "createDate"));
         Page<PostDTO> postDTOS = postService.findAll(pageable);
         return new ListPostOutput(page, size, postDTOS.getTotalPages(), postDTOS.getContent());
+    }
+
+    @GetMapping("/postlike")
+    public List<PostDTO> listPostByLike(){
+
+        return postService.findAllByLike();
     }
 
     @GetMapping("/user/{id}")
