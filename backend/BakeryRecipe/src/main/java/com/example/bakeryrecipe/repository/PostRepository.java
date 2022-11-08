@@ -22,6 +22,9 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     Page<Post> findAllByMemberId(Long id, Pageable pageable);
     @Query("select p from Post p where p.member.id = ?1")
     List<Post> findAllByMemberIds(Long id);
+
+    @Query("select p from Post p where p.member.id in ?1")
+    Page<Post> findAllByMember_IdIn(List<Long> memberIDs, Pageable pageable);
     @Query("select p from Post p ")
     Page<Post> findAll(Pageable pageable);
 
