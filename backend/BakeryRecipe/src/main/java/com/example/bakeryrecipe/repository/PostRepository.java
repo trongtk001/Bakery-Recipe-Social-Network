@@ -13,6 +13,7 @@ import java.util.List;
 
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
+
     Post findPostByMemberId(Long id);
 
     Post findPostsById(Long id);
@@ -24,11 +25,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Query("select p from Post p ")
     Page<Post> findAll(Pageable pageable);
 
-    @Modifying
-    @Transactional
-    Post deletePostById(long id);
-
-
     @Query("select p from Post p where p.postBody LIKE CONCAT('%',:name,'%') or p.member.name LIKE CONCAT('%',:name,'%')")
     List<Post> findAllByPostBodyOrMember_Name(String name);
 
@@ -36,6 +32,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Query("select p from Post p where p.postBody LIKE CONCAT('%',:q,'%') or p.member.name LIKE CONCAT('%',:q,'%')")
     Page<Post> findAllByPostBodyOrMember_Name(String q, Pageable pageable);
 
-
+    @Query("select p from Post p where p.member.id in ?1")
+    Page<Post> findAllByMember_IdIn(List<Integer> memberIDs, Pageable pageable);
 
 }
