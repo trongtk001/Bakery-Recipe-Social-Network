@@ -6,7 +6,7 @@ const initialState = {
 
 const messageReducer = (state = initialState, action) => {
     const { type, payload } = action;
-    var temp;
+    var temp = new Map(state.usersActive);
     switch (type) {
         case "CONNECT":
             return {
@@ -14,7 +14,6 @@ const messageReducer = (state = initialState, action) => {
                 isConnect: payload,
             };
         case "CHAT_FRIENDS":
-            temp = new Map(state.usersActive);
             payload.forEach(member => {
                 temp.set(member.id, [])
             });
@@ -23,7 +22,6 @@ const messageReducer = (state = initialState, action) => {
                 usersActive: [...temp]
             }
         case "GET_MESSAGE":
-            temp = new Map(state.usersActive)
             if (temp.has(payload.memberID)) {
                 temp.set(payload.memberID, [...temp.get(payload.memberID), ...payload.messages])
             }
@@ -36,16 +34,15 @@ const messageReducer = (state = initialState, action) => {
                 ...state,
                 usersActive: payload
             }
-
         case "SEND_MESSAGE":
+            temp.has(payload.memberID) && temp.set(payload.memberID, [...temp.get(payload.memberID), payload.message])
             return {
                 ...state,
+                usersActive: [...temp]
             };
         case "RECEIVED_MESSAGE":
-            temp = new Map(state.usersActive)
-            if (temp.has(payload.memberID)) {
-                temp.set(payload.memberID, [...temp.get(payload.memberID), payload.messages])
-            }
+            temp.has(payload.memberID) && temp.set(payload.memberID, [...temp.get(payload.memberID), payload.messages])
+
             return {
                 ...state,
                 usersActive: [...temp]

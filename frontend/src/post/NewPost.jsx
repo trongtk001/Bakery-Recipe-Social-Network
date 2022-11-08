@@ -22,7 +22,7 @@ function NewPost() {
     };
 
     const clickSubmit = (event) => {
-        if (postBody && steps && tools) {
+        if (postBody && steps) {
             const recipe = {
                 name,
                 steps,
@@ -64,9 +64,9 @@ function NewPost() {
                         {tools?.map((item, index) => {
                             return (
                                 <div onClick={() => handleDelItemTool(index)} key={index} className="inline-block ">
-                                    <div className="flex gap-2 items-center px-5 py-1 border border-pink-600 text-pink-600 rounded-full ">
-                                        <span>{item}</span>
-                                        <div className="w-3 h-3 pb-4 rounded-full = hover:opacity-30 ">
+                                    <div className="flex gap-2 items-center px-3 py-1 border border-pink-600 text-pink-600 rounded-full ">
+                                        <p>{item}</p>
+                                        <div className="w-3 h-3  rounded-full pb-3 hover:opacity-30 ">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="#db2222" viewBox="0 0 320 512">
                                                 <path d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z" />
                                             </svg>

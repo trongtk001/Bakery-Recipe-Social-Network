@@ -5,6 +5,7 @@ export const getMessage = (memberID, friendID, page, size, setMessage) => {
     const token = userLogin ? JSON.parse(userLogin).token : "";
     return (dispatch) => {
         callApi(`message?page=${page}&size=${size}`, 'POST', {body:{memberID, friendID}}, token).then((res) => {
+            res.data.list.reverse()
             setMessage(res.data.list);
             dispatch({type: "GET_MESSAGE", payload: {memberID: friendID, messages: res.data.list}})
         }).catch(error => console.log(error));

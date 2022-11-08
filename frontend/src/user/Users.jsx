@@ -14,7 +14,7 @@ function Users() {
   });
   const [loading, setLoading] = useState(false);
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchData = () => {
       setLoading(true);
       fetch(`${process.env.REACT_APP_API_URL}/member?q=${text}&page=1&size=4`, {
         method: "GET",
@@ -33,7 +33,7 @@ function Users() {
         });
     };
     fetchData();
-    const fetchData2 = async () => {
+    const fetchData2 = () => {
       setLoading(true);
       fetch(`${process.env.REACT_APP_API_URL}/post?q=${text}&page=1&size=6`, {
         method: "GET",

@@ -40,8 +40,8 @@ export const listAll = async () => {
   return await (await axios.get(`${process.env.REACT_APP_API_URL}/post?page=1&size=21`)).data.list;
 };
 
-export const singlePost = (postId) => {
-  return fetch(`${process.env.REACT_APP_API_URL}/post/${postId}`, {
+export const singlePost = async (postId) => {
+  return await fetch(`${process.env.REACT_APP_API_URL}/post/${postId}`, {
     method: "GET",
   })
     .then((response) => {
@@ -66,6 +66,7 @@ export const listByUser = (userId, token) => {
 };
 
 export const remove = (postId, token) => {
+  console.log(postId,token)
   return fetch(`${process.env.REACT_APP_API_URL}/post/${postId}`, {
     method: "DELETE",
     headers: {
@@ -81,7 +82,6 @@ export const remove = (postId, token) => {
 };
 
 export const update = (postId, token, post) => {
-  console.log(postId, token, post);
   return fetch(`${process.env.REACT_APP_API_URL}/post/${postId}`, {
     method: "PUT",
     headers: {

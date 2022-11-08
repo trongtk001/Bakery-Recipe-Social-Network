@@ -1,26 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useIsLogin } from "../hooks/useIsLogin";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { actLogout, getFollowers, getFriends } from "../store/actions/user.action";
 import axios from "axios";
+import defaltAvatar from '../images/avatar.png'
 // import axios from "axios";
 
 const Sidebar = () => {
     const dispatch = useDispatch();
+    const followers = useSelector(state => state.user.followers);
+    const friends = useSelector(state => state.user.friends);
+    
     const { isLogin } = useIsLogin();
     const pathname = window.location.pathname;
     const isActive = (path) => {
         if (pathname === path) return "active";
         else return "";
     };
-    const [followers, setFollowers] = useState([]);
-    const [friends, setFriends] = useState([]);
+
     const [postByUser, setPostByUser] = useState(null);
 
     useEffect(() => {
-      dispatch(getFollowers(isLogin.id, setFollowers));
-      dispatch(getFriends(isLogin.id, setFriends));
+      (followers && followers.length) || dispatch(getFollowers(isLogin.id));
+      (friends && friends.length) || dispatch(getFriends(isLogin.id));
       // eslint-disable-next-line
     }, [])
 
@@ -89,7 +92,7 @@ const Sidebar = () => {
                 <div className="flex flex-col items-center my-6 uk-visible@s">
                     <div className="bg-gradient-to-tr from-yellow-600 to-pink-600 p-1 rounded-full transition m-0.5 mr-2  w-24 h-24">
                         <img
-                            src={isLogin.avatar ? isLogin.avatar : "https://images.squarespace-cdn.com/content/v1/54b7b93ce4b0a3e130d5d232/1519987020970-8IQ7F6Z61LLBCX85A65S/icon.png?format=1000w"}
+                            src={isLogin.avatar ? isLogin.avatar : defaltAvatar}
                             className="bg-gray-200 border-4 border-white rounded-full w-full h-full"
                             alt="avatar"
                         />
@@ -99,8 +102,8 @@ const Sidebar = () => {
                     </Link>
                     <p className="followers mt-4 "></p>
                     <div className="flex -space-x-2 overflow-hidden p-1">
-                        {friends.map((user, index) => {
-                            return <img alt="" key={index} className="inline-block h-10 w-10 rounded-full ring-2 ring-white" src={user.avatar} />;
+                        {friends && friends.map((user, index) => {
+                            return <img alt="" key={index} className="inline-block h-10 w-10 rounded-full ring-2 ring-white" src={user.avatar ? user.avatar : 'https://images.squarespace-cdn.com/content/v1/54b7b93ce4b0a3e130d5d232/1519987020970-8IQ7F6Z61LLBCX85A65S/icon.png?format=1000w'} />;
                         })}
                     </div>
                     <div className="flex justify-around w-full items-center text-center uk-link-reset text-gray-800 mt-6">
@@ -113,7 +116,7 @@ const Sidebar = () => {
                         <div>
                             <div>
                                 <strong>Followers</strong>
-                                <div>{followers.length}</div>
+                                <div>{followers && followers.length}</div>
                             </div>
                         </div>
                     </div>
@@ -213,12 +216,12 @@ const Sidebar = () => {
                     <li>
                         <hr className="my-2" />
                     </li>
-                    <li>
+                    <li className=" !text-red-500">
                         <Link to="/signIn" onClick={handleLogout}>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                             </svg>
-                            <span> Logout </span>
+                            <span className=""> Logout </span>
                         </Link>
                     </li>
                 </ul>

@@ -70,7 +70,9 @@ function Step({ steps, setSteps }) {
     }
 
     const handleAddStep = () => {
-        if (stepName && description && ingredients.length > 0) {
+
+        
+        if (stepName && description) {
             const data = {
                 step: stepName,
                 description: description,
@@ -78,6 +80,8 @@ function Step({ steps, setSteps }) {
                 video: video,
                 ingredients: ingredients
             }
+
+        console.log("data");
 
             setSteps((pre) => [...pre, data]);
 
@@ -87,7 +91,6 @@ function Step({ steps, setSteps }) {
             setImage('');
             setVideo('');
         }
-        console.log(steps);
     }
 
     const handleDelStep = (index) => {
@@ -100,7 +103,7 @@ function Step({ steps, setSteps }) {
                 {steps.map((item, index) => {
                     return (
                         <div key={index} className="mb-4">
-                            <div className="flex gap-2 border border-pink-600 rounded-md w-full shadow-sm hover:shadow-lg transition overflow-hidden">
+                            <div className="flex gap-2 border  border-pink-600 rounded-md w-full shadow-sm hover:shadow-lg transition overflow-hidden">
                                 <div className="rounded-md w-[30%] object-cover">
                                     {item.image &&
                                         <div className="inline-block w-full h-full">
@@ -109,7 +112,7 @@ function Step({ steps, setSteps }) {
                                     }
                                 </div>
                                 <div className="p-4 flex-1 ">
-                                    <div className="flex item-center justify-between w-full">
+                                    <div className="flex items-center justify-between w-full">
                                         <p className="text-2xl font-bold mb-4 text-pink-600 flex-1">{item.step ? item.step : ""}</p>
                                         <div onClick={() => handleDelStep(index)} className="w-9 cursor-pointer border-2 ml-4 h-9 py-1 px-2  hover:border-pink-300 bg-pink-200 rounded-full">
                                             <svg xmlns="http://www.w3.org/2000/svg" width='16px' hieght='16px' fill="#db2777" viewBox="0 0 320 512">
@@ -199,7 +202,6 @@ function Step({ steps, setSteps }) {
                                 </div>
                             </div>
                         </div>
-                        <div className="bg-white dark:bg-gray-900 px-4 py-3 -mx-5 -mb-4 mt-5 border-t text-sm dark:border-gray-500 dark:text-gray-500">Your Photo size Must be Maxmium 999MB</div>
                     </div>
                     <div className="bg-white dark:bg-gray-900 col-span-2 ">
                         <div className="grid grid-cols-2 gap-3 ">

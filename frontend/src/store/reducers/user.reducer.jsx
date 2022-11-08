@@ -1,10 +1,7 @@
 import { LOGIN_FAILED, LOGIN_SUCCESS, ACT_LOGOUT, USER_SUCCESS, USER_FAILED, POST_BY_USER_SUCCESS, POST_BY_USER_FAILED } from "../constants/user.const";
 
 const initialState = {
-    user:
-        JSON.parse(localStorage.getItem("jwtToken")) || JSON.parse(localStorage.getItem("userLogin"))
-            ? JSON.parse(localStorage.getItem("jwtToken")) || JSON.parse(localStorage.getItem("userLogin"))
-            : null,
+    user: localStorage.getItem("userLogin") ? JSON.parse(localStorage.getItem("userLogin")) : null,
     errors: {},
     users: null,
     other: null,
@@ -19,12 +16,11 @@ const userReducer = (state = initialState, action) => {
         case LOGIN_SUCCESS: {
             return { ...state, user: payload };
         }
-
         case LOGIN_FAILED: {
             return { ...state, errors: payload };
         }
         case USER_SUCCESS: {
-            return { ...state, users: payload };
+            return { ...state, user: payload };
         }
         case USER_FAILED: {
             return { ...state, errors: payload };
@@ -36,7 +32,7 @@ const userReducer = (state = initialState, action) => {
             return { ...state, errors: payload };
         }
         case "GET_OTHER": {
-            return { ...state, other: payload };
+            return { ...state, users: payload };
         }
         case "GET_FOLLOWER": {
             return { ...state, followers: payload };
@@ -53,8 +49,7 @@ const userReducer = (state = initialState, action) => {
         case ACT_LOGOUT:
             localStorage.removeItem("userLogin");
             return {
-                ...state,
-                user: null,
+                initialState
             };
         default:
             return state;

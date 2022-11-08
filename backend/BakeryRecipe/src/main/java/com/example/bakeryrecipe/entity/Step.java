@@ -1,5 +1,6 @@
 package com.example.bakeryrecipe.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -34,7 +35,7 @@ public class Step {
     @Column(name = "video", length = 250)
     private String video;
 
-    @OneToMany(mappedBy = "step", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "step", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private List<StepIngredient> ingredients = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -88,7 +89,6 @@ public class Step {
     public void setRecipe(Recipe recipe) {
         this.recipe = recipe;
     }
-
 
     public List<StepIngredient> getIngredients() {
         return ingredients;

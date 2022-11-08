@@ -1,36 +1,62 @@
 
+import SockJS from 'sockjs-client';
+import * as StompJs from '@stomp/stompjs';
 
-const [username, setUsername] = useState('');
 
-const header = {
-    "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJodW5nIiwiZXhwIjoxNjY3NzYwMjUyLCJpYXQiOjE2NjcxNTU0NTJ9.SQwsadF4dslcwHy-n3eLgJOFa_fCsfn4cMJZoiSAIgA3uIfH-_EKO9GznO_uu-DmYEaJ1cma_2vB1M_pI1OfbA"
-};
+export const connect = (header) => {
+    const client = new StompJs.Client({
+        brokerURL: "ws://35.198.245.224/api/chat",
+        connectHeaders: header,
+        debug: function (str) {
+            console.log(str);
+        },
+        reconnectDelay: 5000,
+        heartbeatIncoming: 4000,
+        heartbeatOutgoing: 4000,
+    });
 
-const connect = () => {
-    let Sock = new SockJS('http://localhost:80/ws');
-    stompClient = over(Sock);
-    // stompClient.debug = null;
-    stompClient.connect(header, onConnected, onError);
+
+    if (typeof WebSocket !== 'function') {
+        client.webSocketFactory = function () {
+            return new SockJS(`http://35.198.245.224/api/chat`);
+        };
+    }
+    client.activate();
+    return client;
 }
 
-const onConnected = () => {
-    stompClient.subscribe('/app/online', onMessageReceived, header);
-    stompClient.subscribe(`/user/${username}/private`, onMessageReceived, header);
-    stompClient.subscribe('/user/1/error', onMessageReceived, header);
-    // userJoin();
+export const disconect = (stompClient) => {
+    stompClient.deactivate();
+}
+
+export const subscribeOnline = (header, callback, stompClient) => {
+    stompClient.subscribe("/app/chat/online", callback, header)
+}
+
+export const subscribePrivateChat = (header, username, callback, stompClient) => {
+    stompClient.subscribe(`/user/${username}/queue/private`, callback, header)
+}
+
+export const subscribeError = (header, username, callback, stompClient) => {
+    stompClient.subscribe(`/user/${username}/queue/private`, callback, header)
+}
+
+export const joinChat = (header, stompClient) => {
+    stompClient.publish({
+        destination: "/app/chat/join",
+        header
+    });
+}
+
+export const sendMess = (header, message, stompClient) => {
+    stompClient.publish({
+        destination: "/app/private-message",
+        body: JSON.stringify(message),
+        headers: header,
+        isBinaryBody: false
+    });
 }
 
 
-const userJoin = () => {
-    stompClient.send("/app/private-message", header, JSON.stringify({
-        senderID: 1,
-        receiverID: 67,
-        massageBody: "Test"
-    }));
-}
 
-
-const onMessageReceived = (payload) => {
-    console.log(JSON.parse(payload.body))
-}
 

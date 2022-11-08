@@ -53,6 +53,6 @@ public class PresenceEventListener {
 	@EventListener
 	private void handleSessionDisconnect(SessionDisconnectEvent event) {
 		participantRepository.removeParticipant(event.getSessionId());
-		messagingTemplate.convertAndSend("/chat/app/online", participantRepository.getOnlineUser());
+		messagingTemplate.convertAndSend("/app/chat/online", participantRepository.getOnlineUser());
 	}
 }

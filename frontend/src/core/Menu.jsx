@@ -71,7 +71,7 @@ const Menu = () => {
             ></ion-icon>{" "}
             Create new post
           </Link>
-          <a href="/#" className="header-links-item">
+          {/* <a href="/#" className="header-links-item">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -85,14 +85,14 @@ const Menu = () => {
                 d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
               />
             </svg>
-          </a>
-          <div uk-drop="mode: click;offset: 4" className="header_dropdown">
+          </a> */}
+          {/* <div uk-drop="mode: click;offset: 4" className="header_dropdown">
             <h4 className="-mt-5 -mx-5 bg-gradient-to-t from-gray-100 to-gray-50 border-b font-bold px-6 py-3">
               Notification{" "}
             </h4>
-          </div>
+          </div> */}
           {/* Messages */}
-          <a href="/#" className="header-links-item">
+          <a href="/message" className="header-links-item">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -107,11 +107,11 @@ const Menu = () => {
               />
             </svg>
           </a>
-          <div uk-drop="mode: click;offset: 4" className="header_dropdown">
+          {/* <div uk-drop="mode: click;offset: 4" className="header_dropdown">
             <h4 className="-mt-5 -mx-5 bg-gradient-to-t from-gray-100 to-gray-50 border-b font-bold px-6 py-3">
               Messages
-            </h4>
-            <div  className="overflow-scroll ">
+            </h4> */}
+            {/* <div  className="overflow-scroll ">
                   <Link to={"/#"}>
                       <div className="drop_avatar"> 
                         <img alt="" src="https://source.unsplash.com/random/?bakery,bake,q"/>
@@ -123,8 +123,8 @@ const Menu = () => {
                           <span className="time-ago"> 2 hours ago </span>
                       </div>
                </Link> 
-            </div>
-          </div>
+            </div> */}
+          {/* </div> */}
           <div className="ml-4 w-9">
             <Link to={"/#"}>
               <div className="bg-gradient-to-tr from-yellow-600 to-pink-600 p-0.5 rounded-full ">
@@ -145,16 +145,16 @@ const Menu = () => {
             >
               <ul>
                 <li>
-                  <Link to={"/#"} > Account setting </Link>
+                  <Link to={"/setting"} > Account setting </Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link to={"/#"} > Payments </Link>
                 </li>
                 <li>
                   <Link  to={"/#"}> Help </Link>
-                </li>
+                </li> */}
                 <li>
-                  <Link to="/signIn" onClick={handleLogout}>
+                  <Link className="!text-red-500" to="/signIn" onClick={handleLogout}>
                     Log Out
                   </Link>
                 </li>

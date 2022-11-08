@@ -1,27 +1,43 @@
-import React, { useState } from "react";
+import { async } from "@firebase/util";
+import { clippingParents } from "@popperjs/core";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import Load from "../components/load";
 import { useIsHidden } from "../hooks/useIsHidden";
 import { useIsLogin } from "../hooks/useIsLogin";
-import { getComment, postComment } from "../store/actions/post.action";
+import { delComment, getComment, postComment } from "../store/actions/post.action";
 import { like } from "../user/apiUser";
 
 function Comment({ post }) {
   const dispatch = useDispatch();
-  const { hidden, handleClick } = useIsHidden();
+  const [ hidden, handleClick ] = useState(true);
   const { isLogin, avatar } = useIsLogin();
   const [loading, setLoading] = useState(false);
   const [listComment, setListComment] = useState(null);
-  const [likes,setLikes] = useState(()=> post.likes.map((like)=>like.memberID).includes(isLogin.id));
+  const [likes,setLikes] = useState(false);
   const [total,setTotal] = useState(post.likes.length);
 
   const [text, setText] = useState("");
-  const onClickPostId = (id) => {
-    handleClick();
-    setLoading(true);
-    dispatch(getComment(id, setListComment));
-    setLoading(false);
-  };
+
+
+  console.log( post.likes.map((like)=>like.memberID).includes(isLogin.id))
+
+  useEffect(()=>{
+  
+      dispatch(getComment(post.id, setListComment));
+     setTotal(post.likes.length);
+     setLikes(()=> post.likes.map((like)=>like.memberID).includes(isLogin.id))
+  
+  },[post])
+
+  console.log(post)
+  // const onClickPostId = (id) => {
+  //   handleClick();
+  //   setLoading(true);
+  //   dispatch(getComment(id, setListComment));
+  //   setLoading(false);
+  // };
   const fomatDate = (date)=>{
     const date1 = new Date(date);
     const date2 = new Date();
@@ -35,6 +51,9 @@ function Comment({ post }) {
     return diffDays;
   }
 
+  const delCMT = async (id) => {
+    dispatch(delComment(id, setListComment));
+  }
 
   const onClickLike = async(e)=>{
      await like(isLogin.id, e)
@@ -64,7 +83,7 @@ function Comment({ post }) {
       <div className="flex space-x-4 lg:font-bold">
         <button
         onClick={()=>onClickLike(post.id)}
-        className={likes ? 'text-red-500 flex items-center space-x-2' : 'flex items-center space-x-2'} >
+        className={likes ? '!text-red-500 flex items-center space-x-2' : 'flex items-center space-x-2 '} >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
@@ -75,11 +94,11 @@ function Comment({ post }) {
           >
             <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
           </svg>
-          <div>  {total} Like</div>
+          <div>  {total } Like</div>
         </button>
         <button
           className="flex items-center space-x-2"
-          onClick={() => onClickPostId(post.id)}
+          // onClick={() => onClickPostId(post.id)}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -131,9 +150,10 @@ function Comment({ post }) {
                                 className="absolute h-full rounded-full w-full"
                               />
                             </div>
-                            <div className="text-gray-700 py-2 px-3 rounded-md bg-gray-100 h-full relative lg:ml-5 ml-2 lg:mr-20  dark:bg-gray-800 dark:text-gray-100">
-                              <p className="leading-6 flex gap-2 items-center"> 
-                                <strong>{comment.member.name ? comment.member.name :  isLogin.name }</strong> {comment.commentDetail}   <spam className="text-sm opacity-50">{fomatDate(comment.createDate)}</spam>
+                            <div className="text-gray-700 py-2 px-3 rounded-md bg-gray-100 h-full relative lg:ml-5 ml-2   dark:bg-gray-800 dark:text-gray-100">
+                              <p className="leading-6"> 
+                                <span className="min-w-max font-bold ">{comment.member.name ? comment.member.name :  isLogin.name } </span> 
+                                {comment.commentDetail}   <span className="text-sm opacity-50">{fomatDate(comment.createDate)}</span> {isLogin.id === comment.member.id && <span className="text-sm opacity-50 hover:text-red-500 hover:opacity-100 cursor-pointer" onClick={()=> delCMT(comment.id)}>Xóa</span>}
                                 <i className="uil-grin-tongue-wink"> </i>
                               </p>
                               <div className="absolute w-3 h-3 top-3 -left-1 bg-gray-100 transform rotate-45 dark:bg-gray-800" />

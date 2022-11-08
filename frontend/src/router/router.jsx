@@ -15,6 +15,7 @@ import { ErrPage } from "../page/err";
 import LandingPage from "../page/landing/index";
 import Trending from "../trending";
 import Message from "../message";
+import VerifyPage from "../page/sign/VerifyPage";
 export const mainRouter = [
   {
     path: "/",
@@ -102,6 +103,11 @@ export const signRouter = [
     exact: false,
     Component: ResetPassword,
   },
+  {
+    path: "/verify/:string",
+    exact: false,
+    Component: VerifyPage
+  }
 ];
 export const errRouter = [
   {

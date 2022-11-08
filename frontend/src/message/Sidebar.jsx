@@ -1,4 +1,5 @@
 import { useState } from "react";
+import defaltAvatar from '../images/avatar.png'
 
 export default function Sidebar({ users, setUsers, active, setActive }) {
     const [search, setSearch] = useState('');
@@ -16,25 +17,25 @@ export default function Sidebar({ users, setUsers, active, setActive }) {
                     {users?.map((user, i) => {
                         return user.name.toLowerCase().includes(search) ? (
                             <li key={i} onClick={() => setActive(user)} className="cursor-pointer">
-                                <a href="#/"  className={`'block flex items-center py-3 px-4 space-x-3 hover:bg-gray-100 dark:hover:bg-gray-700 ${active?.id === user.id ? "bg-gray-100" : ""}'`}>
+                                <div   className={`'block flex items-center py-3 px-4 space-x-3 hover:bg-gray-100 dark:hover:bg-gray-700 ${active?.id === user.id ? "bg-gray-100" : ""}'`}>
                                     <div className="w-12 h-12 rounded-full relative flex-shrink-0">
                                         <img
                                             src={
                                                 user.avatar
                                                     ? user.avatar
-                                                    : "https://images.squarespace-cdn.com/content/v1/54b7b93ce4b0a3e130d5d232/1519987020970-8IQ7F6Z61LLBCX85A65S/icon.png?format=1000w"
+                                                    : defaltAvatar
                                             }
                                             alt=""
                                             className="absolute h-full rounded-full w-full"
                                         />
-                                        <span className="absolute bg-green-500 border-2 border-white bottom-0 h-3 m-0.5 right-0 rounded-full shadow-md w-3"></span>
+                                        {/* <span className="absolute bg-green-500 border-2 border-white bottom-0 h-3 m-0.5 right-0 rounded-full shadow-md w-3"></span> */}
                                     </div>
                                     <div className="flex-1 min-w-0 relative text-gray-500">
                                         <h4 className="text-black font-semibold dark:text-white">{user.name}</h4>
                                         <span className="absolute right-0 top-1 text-xs">Sun</span>
                                         <p className="truncate">@{user.username}</p>
                                     </div>
-                                </a>
+                                </div>
                             </li>
                         ) : ''
                     })}

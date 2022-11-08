@@ -34,12 +34,12 @@ export const Post = ({ postBody, recipe, history }) => {
     };
 };
 
-export const getListPost = (page, posts, setPosts, setIsNothing) => {
+export const getListPost = (page, posts, setPosts, setIsNothing,url) => {
     return (dispatch) => {
         dispatch(startLoading());
         axios({
             method: "GET",
-            url: `${API_URL}/post?page=${page}&size=5`,
+            url: `${API_URL}/${url}?page=${page}&size=3`,
             data: null,
         })
             .then((res) => {
@@ -68,8 +68,27 @@ export const getComment = (id, setListComment) => {
             data: null,
         })
             .then((res) => {
-                console.log(res.data.list);
                 setListComment(res.data.list);
+            })
+            .catch((err) => {});
+    };
+};
+export const delComment = (id,setListComment) => {
+    const userLogin = localStorage.getItem("userLogin");
+    const token = userLogin ? JSON.parse(userLogin).token : "";
+    return (dispatch) => {
+        dispatch(startLoading());
+        axios({
+            method: "DELETE",
+            url: `${API_URL}/comment/${id}`,
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            data: null,
+        })
+            .then((res) => {
+                setListComment(pre=>pre.filter(item=>item.id != id));
             })
             .catch((err) => {});
     };

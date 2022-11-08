@@ -8,6 +8,7 @@ import PostByUser from "./PostByUser";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser, getPostByUser } from "../store/actions/user.action";
 import Load from "../components/load";
+import { useIsLogin } from "../hooks/useIsLogin";
 
 const Profile = () => {
     const { friends } = useSelector((state) => state.user);
@@ -22,6 +23,7 @@ const Profile = () => {
         // eslint-disable-next-line
         return friends.length ? !!friends.find((e) => e.id == userId) : false;
     };
+
 
     useEffect(
         () => {
@@ -57,8 +59,7 @@ const Profile = () => {
                         <div>
                             <div className="bg-gradient-to-tr from-yellow-600 to-pink-600 p-1 rounded-full m-0.5 mr-2  w-56 h-56 relative overflow-hidden uk-transition-toggle">
                                 <img
-                                    src={`${users.avatar}`}
-                                    onError={(i) => (i.target.src = `https://source.unsplash.com/random/?bakery,bake,${users.username}`)}
+                                    src={`${users.avatar ? users.avatar : 'https://images.squarespace-cdn.com/content/v1/54b7b93ce4b0a3e130d5d232/1519987020970-8IQ7F6Z61LLBCX85A65S/icon.png?format=1000w'}`}
                                     alt={users.name}
                                     className="bg-gray-200 border-4 border-white rounded-full w-full h-full dark:border-gray-900"
                                 />

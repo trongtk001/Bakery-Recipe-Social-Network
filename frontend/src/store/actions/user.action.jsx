@@ -23,14 +23,13 @@ export const postLogin = (email, password) => {
             .then((res) => {
                 dispatch(stopLoading());
                 dispatch(postLoginSuccess(res.data));
-                console.log(res.data);
                 localStorage.setItem("userLogin", JSON.stringify(res.data));
             })
             .catch((err) => {
                 dispatch(stopLoading());
                 dispatch(postLoginFailed(err));
                 console.log(err);
-                NotificationManager.error(err.response.data.message);
+                NotificationManager.error("Your username or password incorrect or your account is not verified");
             });
     };
 };
@@ -83,7 +82,7 @@ export const postRegister = (name, email, username, password, history) => {
             .then((res) => {
                 dispatch(stopLoading());
                 history.push("/SignIn");
-                NotificationManager.success("Registration is successful, please login", "", 3000);
+                NotificationManager.success("Registration is successful, please check your mail to verify your account", "", 5000);
             })
             .catch((err) => {
                 dispatch(stopLoading());
@@ -122,15 +121,16 @@ export const getUser = (userId, isOwner) => {
 
 export const getUserSuccess = (users, isOwner) => {
     if (isOwner) {
-        return ({
-            type: LOGIN_SUCCESS,
-            payload: users
-        })
-    } else {
-        return ({
+        users.token = JSON.parse(localStorage.getItem("userLogin")).token;
+        return {
             type: USER_SUCCESS,
-            payload: users
-        })
+            payload: users,
+        };
+    } else {
+        return {
+            type: "GET_OTHER",
+            payload: users,
+        };
     }
 };
 
@@ -201,6 +201,7 @@ export const putProfile = (name, email, dob, avatar, history) => {
             },
         })
             .then((res) => {
+                console.log(res)
                 dispatch(stopLoading());
                 history.goBack("/");
                 NotificationManager.success("Update Profile is successful");
@@ -212,13 +213,12 @@ export const putProfile = (name, email, dob, avatar, history) => {
     };
 };
 
-export const getFollowers = (userId, setFollowers) => {
+export const getFollowers = (userId) => {
     return (dispatch) => {
         dispatch(startLoading());
-        callApi(`follow/followers/${userId}`, "GET", {params: {page: 1, size: 100}})
+        callApi(`follow/followers/${userId}`, "GET", { params: { page: 1, size: 100 } })
             .then((res) => {
                 dispatch(stopLoading());
-                setFollowers(res.data.list);
                 dispatch({ type: "GET_FOLLOWER", payload: res.data.list });
             })
             .catch((err) => {
@@ -228,13 +228,12 @@ export const getFollowers = (userId, setFollowers) => {
     };
 };
 
-export const getFriends = (userId, setFriends) => {
+export const getFriends = (userId) => {
     return (dispatch) => {
         dispatch(startLoading());
-        callApi(`follow/friends/${userId}`, "GET", {params: {page: 1, size: 100}})
+        callApi(`follow/friends/${userId}`, "GET", { params: { page: 1, size: 100 } })
             .then((res) => {
                 dispatch(stopLoading());
-                setFriends(res.data.list);
                 dispatch({ type: "GET_FRIEND", payload: res.data.list });
             })
             .catch((err) => {

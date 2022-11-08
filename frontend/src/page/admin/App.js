@@ -13,7 +13,6 @@ function App() {
   let { path } = useRouteMatch();
 
   return (
-    <>
       <Switch>
         <Route path={`${path}/profile`}>
           <MainLayout>
@@ -64,7 +63,6 @@ function App() {
           <Redirect to={`${path}/users`} />
         </Route>
       </Switch>
-    </>
   );
 }
 

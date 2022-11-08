@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { findPeople } from "./apiUser";
 import { Link } from "react-router-dom";
+import { useIsLogin } from "../hooks/useIsLogin";
 
 function FindPeople() {
-    const [users, setUsers] = useState({ list: [] });
+    const [users, setUsers] = useState([]);
+    const {isLogin} = useIsLogin();
     useEffect(
         () => {
             findPeople().then((data) => {
                 if (data) {
-                    setUsers(data);
+                    setUsers(data.list.filter(e => e.id !== isLogin.id));
                 }
             });
         },
@@ -37,26 +39,31 @@ function FindPeople() {
                     </div>
                     <div className="divide-gray-300 divide-gray-50 divide-opacity-50 divide-y px-4 dark:divide-gray-800 dark:text-gray-100">
                         {users &&
-                            users.list?.map((user, i) => (
+                            users.map((user, i) => (
                                 <div className="flex items-center justify-between py-3" key={i}>
-                                    <div className="flex flex-1 items-center space-x-4">
-                                        <Link to={`/user/${user.id}`}>
+                                    <Link to={`/user/${user.id}`}>
+                                        <div className="flex items-center space-x-4">
                                             <img
-                                                src={`${user.avatar}`}
+                                                src={`${
+                                                    user?.avatar
+                                                        ? user.avatar
+                                                        : "https://images.squarespace-cdn.com/content/v1/54b7b93ce4b0a3e130d5d232/1519987020970-8IQ7F6Z61LLBCX85A65S/icon.png?format=1000w"
+                                                }`}
                                                 onError={(i) => (i.target.src = `https://source.unsplash.com/random/?bakery,bake,${user.username}`)}
                                                 alt={user.name}
                                                 className="bg-gray-200 rounded-full w-10 h-10"
                                             />
-                                        </Link>
-                                        <div className="flex flex-col ">
-                                            <span className="block capitalize font-semibold text-gray-500 dark:text-gray-100">{user.name}</span>
-                                            <span className="block capitalize text-sm text-gray-500 dark:text-gray-100  ">{user.email}</span>
+                                            <div className="flex flex-col overflow-hidden">
+                                                <span className="block capitalize font-semibold text-gray-500 dark:text-gray-100">{user.name}</span>
+                                                <span className="block capitalize text-sm text-gray-500 dark:text-gray-100  ">{user.email}</span>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <button
+                                    </Link>
+
+                                    {/* <button
                                         // onClick={() => clickFollow(user)}
                                         className="border border-gray-200 font-semibold px-4 py-1 rounded-full hover:bg-pink-600 hover:text-white hover:border-pink-600 dark:border-gray-800"
-                                    ></button>
+                                    ></button> */}
                                 </div>
                             ))}
                     </div>

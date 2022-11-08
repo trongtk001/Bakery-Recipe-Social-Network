@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../store/actions/user.action";
+import defaltAvatar from "../images/avatar.png";
 
 export function useIsLogin() {
     const { user } = useSelector((state) => state.user);
@@ -14,8 +15,7 @@ export function useIsLogin() {
         // eslint-disable-next-line
         []
     );
-    const { users } = useSelector((state) => state.user);
-    const avatar = users === null || users.avatar === null ? "" : users.avatar;
+    const avatar = !user || !user?.avatar ? defaltAvatar : user.avatar;
 
     return {
         isLogin: user,

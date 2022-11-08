@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { singlePost } from "./apiPost";
 import { Link, useParams } from "react-router-dom";
 import Comment from "./Comment";
+import axios from "axios";
+import { isAuthenticated } from "../auth";
 
 function SinglePost() {
     const { postId } = useParams();
@@ -45,21 +47,11 @@ function SinglePost() {
             ],
             tool: ["Dao", "Nồi"],
         },
-        likes: [
-            {
-                id: 1,
-                memberID: 3,
-                postID: 80,
-                action: null,
-            },
-            {
-                id: 2,
-                memberID: 2,
-                postID: 80,
-                action: null,
-            },
-        ],
+        likes: [],
     });
+
+    const [hidden ,setHidden] = useState(false)
+
     // const [like, setLike] = useState(false);
     // const [likes, setLikes] = useState(0);
     // const [comments, setComments] = useState([]);
@@ -79,7 +71,7 @@ function SinglePost() {
         [postId]
     );
 
-    console.log(post);
+   
     // const updateComments = (comments) => {
     //     setComments(comments);
     // };
@@ -104,6 +96,24 @@ function SinglePost() {
     //   }
     // };
 
+    const checkAuth = () => {
+        if (post.member.id === isAuthenticated().id) {
+            return true
+        }
+        return false
+    }
+
+
+
+    const handelEditPost = () => { }
+    const handelDelPost =  async () => { 
+       const resdel = await  axios.delete(`${process.env.REACT_APP_API_URL}/post/${post.id}`,{headers: {Authorization: `Bearer ${isAuthenticated().token}`,}})
+        if(resdel.status === 200){
+            window.location.reload()
+        }
+    
+    }
+
     return (
         <div className="flex justify-center w-full ">
             <div className="bg-white shadow rounded-md dark:bg-gray-900  w-full mx-4 lg:mx-0 max-w-[800px] mt-20 xl:mt-10 md:min-w-[800px] ">
@@ -127,6 +137,18 @@ function SinglePost() {
                             {new Date(post.createDate).toDateString()}
                         </span>
                     </div>
+                    {checkAuth() && (
+                    <p className="text-gray-400 w-4 h-4 pb-14 mr-4 cursor-pointer relative">
+                        <svg xmlns="http://www.w3.org/2000/svg" onClick={()=>setHidden(!hidden)} fill={hidden ? "#FF1493" : "#ccc"} viewBox="0 0 320 512"><path d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"/></svg>
+                        
+                            {hidden && (
+                                <div className="transition z-100000 absolute bg-white top-10 -left-16 !w-200 border rounded overflow-hidden ">
+                                    <p onClick={handelEditPost} className="px-4 py-2 hover:bg-gray-300 hover:text-white">Edit</p>
+                                    <p onClick={handelDelPost} className="px-4 py-2 hover:bg-gray-300 text-red-400">Delete</p>
+                                </div>
+                            )}
+                    </p>
+                )}
                 </div>
                 <div>
                     <h5 className="px-4 mt-4 text-3xl text-pink-600  font-bold pb-4">{post.postBody}</h5>
