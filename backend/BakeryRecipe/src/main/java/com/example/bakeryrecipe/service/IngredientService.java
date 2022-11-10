@@ -37,7 +37,8 @@ public class IngredientService implements BaseService<IngredientDTO> {
         } else {
             ingredient = ingredientRepository.findById(dto.getId()).orElse(null);
             if (ingredient != null) {
-                ingredient = ingredientRepository.save(mapper.toEntity(dto, ingredient));
+                mapper.toEntity(dto, ingredient);
+                ingredient = ingredientRepository.save(ingredient);
             } else {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found this ingredient");
             }
