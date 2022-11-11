@@ -36,13 +36,31 @@ export const list = (page) => {
     })
     .catch((err) => console.log(err));
 };
+
 export const listAll = async () => {
+  return await (await axios.get(`${process.env.REACT_APP_API_URL}/post?page=1&size=21`)).data.list;
+};
+
+export const listTrending = async () => {
   return await (await axios.get(`${process.env.REACT_APP_API_URL}/post?page=1&size=21`)).data.list;
 };
 
 export const singlePost = async (postId) => {
   return await fetch(`${process.env.REACT_APP_API_URL}/post/${postId}`, {
     method: "GET",
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .catch((err) => console.log(err));
+};
+export const getShare = async (id, token) => {
+  return await fetch(`${process.env.REACT_APP_API_URL}/share/user/${id}?page=1&size=20`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
   })
     .then((response) => {
       return response.json();

@@ -1,11 +1,14 @@
 package com.example.bakeryrecipe.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.List;
 
 @Entity
 @Table(name = "Ingredients")
@@ -23,6 +26,9 @@ public class Ingredient {
 
     @Column(name = "Unit", columnDefinition = "nvarchar(50)",nullable = false, length = 50)
     private String unit;
+
+    @OneToMany(mappedBy = "ingredients", cascade = CascadeType.REMOVE)
+    private List<StepIngredient> stepIngredientList;
 
     public Long getId() {
         return id;
@@ -56,4 +62,11 @@ public class Ingredient {
         this.unit = unit;
     }
 
+    public List<StepIngredient> getStepIngredientList() {
+        return stepIngredientList;
+    }
+
+    public void setStepIngredientList(List<StepIngredient> stepIngredientList) {
+        this.stepIngredientList = stepIngredientList;
+    }
 }

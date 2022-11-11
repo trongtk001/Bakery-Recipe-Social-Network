@@ -1,20 +1,26 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { listAll } from "../post/apiPost";
-import { findPeople } from "../user/apiUser";
+import { findPeople, findPeople2 } from "../user/apiUser";
 import UserSuggest from "./UserSuggest";
 import UserTrending from "./UserTrending";
 
 export default function Trending() {
     const [dataList, setDataList] = useState([]);
-    const [users, setUsers] = useState({ list: [] });
+    const [users, setUsers] = useState();
+    const [users2, setUsers2] = useState({ list: [] });
 
     useEffect(() => {
         async function fetchData() {
             setDataList(await listAll());
-            findPeople().then((data) => {
+            findPeople2().then((data) => {
                 if (data) {
                     setUsers(data);
+                }
+            });
+            findPeople().then((data) => {
+                if (data) {
+                    setUsers2(data);
                 }
             });
         }
@@ -22,20 +28,19 @@ export default function Trending() {
     }, []);
 
     return (
-        <div className="p-10">
-            <h1 className="font-extrabold leading-none mb-6 mt-8 lg:text-2xl text-lg text-gray-900 tracking-tight">People </h1>
+        <div className="p-4">
+            <h1 className="font-extrabold leading-none mb-6 lg:text-2xl text-lg text-gray-900 tracking-tight">People </h1>
             <UserTrending post={users}></UserTrending>
             <h1 className="font-extrabold leading-none mb-6 mt-8 lg:text-2xl text-lg text-gray-900 tracking-tight">Suggestion</h1>
-            <UserSuggest post={users}></UserSuggest>
+            <UserSuggest post={users2}></UserSuggest>
             <h1 className="font-extrabold leading-none mb-6 mt-8 lg:text-2xl text-lg text-gray-900 tracking-tight">Post</h1>
 
             <div className="mt-6 grid lg:grid-cols-3 grid-cols-2 gap-3 hover:text-yellow-700 uk-link-reset">
                 {dataList &&
                     dataList.map((item, index) => {
-                        console.log(item);
                         return (
                             <div key={index} className="aspect-square">
-                                <div className="bg-blue-400 max-w-full h-full w-full rounded-lg relative overflow-hidden shadow uk-transition-toggle">
+                                <div className="bg-blue-400 max-w-full h-full w-full rounded-lg relative overflow-hidden shadow ">
                                     <Link to={`post/${item.id}`} uk-toggle="true">
                                         <img
                                             alt=""
@@ -44,7 +49,7 @@ export default function Trending() {
                                             onError={(i) => (i.target.src = `https://source.unsplash.com/random/?bakery,bake,${index}`)}
                                         />
                                     </Link>
-                                    <div className="flex flex-1 items-center absolute bottom-0 w-full p-3 text-white custom-overly1 uk-transition-slide-bottom-medium">
+                                    <div className="flex flex-1 items-center absolute bottom-0 w-full p-3 text-white custom-overly1 ">
                                         <a href="/#" className="lg:flex flex-1 items-center hidden">
                                             <div className="bg-gradient-to-tr from-yellow-600 to-pink-600 p-1 rounded-full transform -rotate-2 hover:rotate-3 transition hover:scale-105 m-0.5 mr-2">
                                                 <img
@@ -67,6 +72,7 @@ export default function Trending() {
                                             </a>
                                         </div>
                                     </div>
+                                    
                                 </div>
                             </div>
                         );

@@ -1,5 +1,6 @@
 package com.example.bakeryrecipe.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -21,7 +22,7 @@ public class StepIngredient {
     private Ingredient ingredients;
 
     @MapsId("stepId")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "step_id", nullable = false)
     private Step step;
 

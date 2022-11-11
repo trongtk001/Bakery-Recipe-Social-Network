@@ -16,6 +16,8 @@ import LandingPage from "../page/landing/index";
 import Trending from "../trending";
 import Message from "../message";
 import VerifyPage from "../page/sign/VerifyPage";
+import Saved from "../saved/Saved";
+
 export const mainRouter = [
   {
     path: "/",
@@ -26,6 +28,11 @@ export const mainRouter = [
     path: "/users",
     exact: false,
     Component: Users,
+  },
+  {
+    path: "/saved",
+    exact: false,
+    Component: Saved,
   },
   {
     path: "/trending",

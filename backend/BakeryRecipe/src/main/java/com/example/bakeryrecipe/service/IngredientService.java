@@ -10,6 +10,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
+
 @Service
 public class IngredientService implements BaseService<IngredientDTO> {
 
@@ -25,44 +28,52 @@ public class IngredientService implements BaseService<IngredientDTO> {
     @Override
     public IngredientDTO save(IngredientDTO dto) {
         Ingredient ingredient;
-        if (dto.getId() == null) {
+        ingredient = ingredientRepository.findByIngredients(dto.getIngredients()).orElse(null);
 
-            ingredient = ingredientRepository.findByIngredients(dto.getIngredients()).orElse(null);
-            if (ingredient == null) {
-                ingredient = mapper.toEntity(dto);
-                ingredient = ingredientRepository.save(ingredient);
-            } else {
-                throw new ResponseStatusException(HttpStatus.CONFLICT, "Already have this ingredient");
-            }
-        } else {
-            ingredient = ingredientRepository.findById(dto.getId()).orElse(null);
-            if (ingredient != null) {
-                mapper.toEntity(dto, ingredient);
-                ingredient = ingredientRepository.save(ingredient);
-            } else {
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found this ingredient");
-            }
+        if (nonNull(ingredient)) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Already have this ingredient");
+
         }
+
+        ingredient = mapper.toEntity(dto);
+        ingredient = ingredientRepository.save(ingredient);
         return mapper.toDTO(ingredient);
     }
 
     @Override
     public IngredientDTO update(IngredientDTO dto) {
-        return null;
+        Ingredient ingredient;
+
+        if(isNull(dto.getId())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ID is empty");
+        }
+
+        ingredient = ingredientRepository.findById(dto.getId()).orElse(null);
+        if (isNull(ingredient)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found this ingredient");
+        }
+
+        mapper.toEntity(dto, ingredient);
+        ingredient = ingredientRepository.save(ingredient);
+        return mapper.toDTO(ingredient);
     }
 
     public IngredientDTO delete(long id) {
         Ingredient ingredient = ingredientRepository.findById(id).orElse(null);
-        if (ingredient != null) {
-            ingredientRepository.delete(ingredient);
-        } else {
+        if (isNull(ingredient)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found this ingredient");
         }
+
+        ingredientRepository.delete(ingredient);
         return mapper.toDTO(ingredient);
     }
 
     public IngredientDTO search(Long id) {
-        return mapper.toDTO(ingredientRepository.findById(id).orElse(null));
+        Ingredient ingredient = ingredientRepository.findById(id).orElse(null);
+        if (isNull(ingredient)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found this ingredient");
+        }
+        return mapper.toDTO(ingredient);
     }
 
     public List<IngredientDTO> searchByName(String name) {

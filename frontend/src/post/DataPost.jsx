@@ -102,19 +102,17 @@ function DataPost({ post }) {
                         {post.recipe?.steps &&
                             post.recipe.steps?.map((item, index) => {
                                 if (post.recipe.steps.length <= 1 || post.recipe.steps.length === null) {
-                                    if(item.image){
+                                    if(item.image) {
                                         return (
                                             <div key={index} className="w-full h-full" style={{ height: "30rem" }}>
-                                                if(item.image){
                                                     <img
                                                         src={item.image}
                                                         alt="recipe"
                                                         className="w-full h-full object-cover"
                                                     />
-                                                    }
                                             </div>
                                         );
-                                    }else{
+                                    } else {
                                         return (
                                             <div className="h-1"></div>
                                         );

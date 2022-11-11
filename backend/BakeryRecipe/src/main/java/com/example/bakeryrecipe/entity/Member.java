@@ -52,6 +52,13 @@ public class Member {
     @Column(name = "time_check")
     private LocalTime time;
 
+    public Member() {
+    }
+
+    public Member(Long id) {
+        this.id = id;
+    }
+
     public Long getId() {
         return id;
     }

@@ -96,7 +96,7 @@ export default function Message() {
             <div className="container m-auto pt-5">
                 <div className="lg:flex lg:shadow lg:bg-white lg:space-y-0 space-y-8 rounded-md lg:-mx-0 -mx-5 overflow-hidden lg:dark:bg-gray-800 h-full" >
                     <Sidebar users={users} setUsers={setUsers} active={active} setActive={setActive} listMess={listMess} ></Sidebar>
-                    <div className="lg:w-8/12 bg-white dark:bg-gray-800">
+                    <div className="lg:w-8/12 bg-white dark:border-[#ccc]">
                         <FrChat active={active} usersActive={usersActive} ></FrChat>
                         <FormChat active={active} message={message} setMessage={setMessage} chat={chat} listMess={messages}></FormChat>
                     </div>

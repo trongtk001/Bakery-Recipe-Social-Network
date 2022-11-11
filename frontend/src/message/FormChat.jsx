@@ -16,8 +16,8 @@ export default function FormChat({ active, listMess, setMessage, chat, message }
     }, [listMess]);
 
     return (
-        <div className="border-t dark:border-gray-600">
-            <div className="lg:p-8 p-4 space-y-5  h-[600px] overflow-scroll">
+        <div className="border-t dark:border-[#ccc]">
+            <div className="lg:p-8 p-4 space-y-5  h-[600px] overflow-y-scroll">
                 {listMess && listMess.map((mess, index) => {
                     if (mess.senderID === isLogin.id) {
                         return (
@@ -53,7 +53,7 @@ export default function FormChat({ active, listMess, setMessage, chat, message }
                 {/*
                  */}
             </div>
-            <div className="border-t flex p-6 dark:border-gray-700">
+            <div className="border-t flex p-6 dark:border-[#ccc]">
                 <input
                     onKeyDown={(e) => {
                         if (e.key === "Enter") handleChat();

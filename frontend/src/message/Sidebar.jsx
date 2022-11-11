@@ -5,8 +5,8 @@ export default function Sidebar({ users, setUsers, active, setActive }) {
     const [search, setSearch] = useState('');
 
     return (
-        <div className="lg:w-4/12 bg-white border-r overflow-hidden dark:bg-gray-800 dark:border-gray-600">
-            <div className="border-b px-4 py-4 dark:border-gray-600">
+        <div className="lg:w-4/12 bg-white border-r overflow-hidden dark:bg-gray-800 dark:border-[#ccc]">
+            <div className="border-b px-4 py-4 dark:border-[#ccc]">
                 <div className="bg-gray-100 input-with-icon rounded-md dark:bg-gray-700">
                     <input onChange={(e) => setSearch(e.target.value)} id="autocomplete-input" type="text" placeholder="Search" className="bg-transparent max-h-10 shadow-none" />
                     <i className="icon-material-outline-search"></i>

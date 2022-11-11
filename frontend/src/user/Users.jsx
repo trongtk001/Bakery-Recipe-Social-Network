@@ -58,7 +58,7 @@ function Users() {
 
   return (
     <div className="mx-auto max-w-[1440px] px-10 pro-container m-auto">
-      <h2 className=" mb-5">Users {text}</h2>
+      <h2 className=" font-bold text-2xl mt-5">Users {text}</h2>
       <div className="my-6 grid lg:grid-cols-2 grid-cols-2 gap-4">
         {!loading ? (
           data.list && data.list.length !== 0 ? (
@@ -83,7 +83,7 @@ function Users() {
           </div>
         )}
       </div>
-      <h2 className="mt-5 mb-5">Posts: {text}</h2>
+      <h2 className="mt-5 font-bold text-2xl">Posts: {text}</h2>
       <div className="my-6 grid lg:grid-cols-3 grid-cols-2 gap-6">
         {!loading ? (
           data2.list && data2.list.length !== 0 ? (

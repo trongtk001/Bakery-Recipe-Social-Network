@@ -57,6 +57,8 @@ export const getListPost = (page, posts, setPosts, setIsNothing,url) => {
 };
 
 export const getComment = (id, setListComment) => {
+    const userLogin = localStorage.getItem("userLogin");
+    const token = userLogin ? JSON.parse(userLogin).token : "";
     return (dispatch) => {
         dispatch(startLoading());
         axios({
@@ -64,6 +66,7 @@ export const getComment = (id, setListComment) => {
             url: `${API_URL}/comment?id=${id}&page=1&size=5`,
             headers: {
                 "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
             },
             data: null,
         })
@@ -93,8 +96,59 @@ export const delComment = (id,setListComment) => {
             .catch((err) => {});
     };
 };
+export const updateComment = (id,text,setListComment) => {
+    const userLogin = localStorage.getItem("userLogin");
+    const token = userLogin ? JSON.parse(userLogin).token : "";
+    return (dispatch) => {
+        dispatch(startLoading());
+        axios({
+            method: "DELETE",
+            url: `${API_URL}/comment/${id}`,
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            data: {
+                commentDetail: text,
+                image: '',
+                video: ''
+            },
+        })
+            .then((res) => {
+                setListComment(pre=>pre.filter(item=>item.id != id));
+            })
+            .catch((err) => {});
+    };
+};
+export const savePost = (_id,userID,setSave) => {
+    const userLogin = localStorage.getItem("userLogin");
+    const token = userLogin ? JSON.parse(userLogin).token : "";
+    return (dispatch) => {
+        dispatch(startLoading());
+        axios({
+            method: "POST",
+            url: `${API_URL}/share`,
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            data: {
+                memberID: userID,
+                postID: _id
+            },
+        })
+            .then((res) => {
+                setSave(true)
+            })
+            .catch((err) => {
+                setSave(true)
+            });
+    };
+};
 
 export const postComment = (commentDetail, image, memberID, id, setListComment, listComment) => {
+    const userLogin = localStorage.getItem("userLogin");
+    const token = userLogin ? JSON.parse(userLogin).token : "";
     return (dispatch) => {
         dispatch(startLoading());
         axios({
@@ -102,6 +156,7 @@ export const postComment = (commentDetail, image, memberID, id, setListComment, 
             url: `${API_URL}/comment`,
             headers: {
                 "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
             },
             data: {
                 commentDetail,
