@@ -1,0 +1,17 @@
+INSERT INTO BakeryRecipe.dbo.ingredients (ingredients_id, description, ingredients, unit) VALUES (3, N'dầu ăn truyền thống', N'dầu ăn', N'ml');
+INSERT INTO BakeryRecipe.dbo.ingredients (ingredients_id, description, ingredients, unit) VALUES (4, N'đường kính làm từ mía', N'đường', N'gram');
+INSERT INTO BakeryRecipe.dbo.ingredients (ingredients_id, description, ingredients, unit) VALUES (5, N'sữa tươi', N'sữa tươi', N'ml');
+INSERT INTO BakeryRecipe.dbo.ingredients (ingredients_id, description, ingredients, unit) VALUES (6, N'sữa tươi', N'trứng', N'trái');
+INSERT INTO BakeryRecipe.dbo.ingredients (ingredients_id, description, ingredients, unit) VALUES (7, N'men nở', N'men nở', N'gram');
+INSERT INTO BakeryRecipe.dbo.ingredients (ingredients_id, description, ingredients, unit) VALUES (8, N'Socola nguyên chất', N'Socola nguyên chất', N'gram');
+INSERT INTO BakeryRecipe.dbo.ingredients (ingredients_id, description, ingredients, unit) VALUES (24, N'Vanilla hay còn được gọi một cách phổ biến là vani, là một loại hương liệu vô cùng thân thuộc trong làm bánh, nấu chè hoặc kem. Vani có một mùi hương ngọt ngào đặc trưng giúp tăng thêm độ thơm cho món ăn.', N'Vani', N'Ống');
+INSERT INTO BakeryRecipe.dbo.ingredients (ingredients_id, description, ingredients, unit) VALUES (25, N'Bột bắp (bột ngô) là loại bột mịn được làm từ phần lõi của hạt bắp, đây là loại bột được sử dụng nhiều trong chế biến món ăn hay làm bánh. Bột bắp được sử dụng để tạo độ kết dính và chất làm đặc trong những món ăn khác nhau. Không giống như bột mì, bột bắp được định hình sau khi nấu chín.', N'bột bắp', N'Gram');
+INSERT INTO BakeryRecipe.dbo.ingredients (ingredients_id, description, ingredients, unit) VALUES (26, N'Bột chiên xù là một loại bột thực phẩm dạng mảnh, hạt hơi to, gồm có thành phần là bột gạo, bột mì, bột bắp và chất tạo điều vị. Phần bột này sẽ giúp cho thực phẩm trở nên xù và đạt độ giòn hơn khi chế biến.', N'Bột chiên xù', N'Gram');
+INSERT INTO BakeryRecipe.dbo.ingredients (ingredients_id, description, ingredients, unit) VALUES (27, N'bơ đậu phộng', N'bơ đậu phộng', N'gram');
+INSERT INTO BakeryRecipe.dbo.ingredients (ingredients_id, description, ingredients, unit) VALUES (28, N'đậu xanh', N'đậu xanh', N'gram');
+INSERT INTO BakeryRecipe.dbo.ingredients (ingredients_id, description, ingredients, unit) VALUES (29, N'bột mì đa dụng', N'bột mì đa dụng', N'gram');
+INSERT INTO BakeryRecipe.dbo.ingredients (ingredients_id, description, ingredients, unit) VALUES (30, N'muối', N'muối', N'gram');
+INSERT INTO BakeryRecipe.dbo.ingredients (ingredients_id, description, ingredients, unit) VALUES (31, N'chuối', N'chuối', N'gram');
+INSERT INTO BakeryRecipe.dbo.ingredients (ingredients_id, description, ingredients, unit) VALUES (32, N'chuối', N'Kiwi', N'gram');
+INSERT INTO BakeryRecipe.dbo.ingredients (ingredients_id, description, ingredients, unit) VALUES (34, N'Thơm tho', N'Tiêu', N'gram');
+INSERT INTO BakeryRecipe.dbo.ingredients (ingredients_id, description, ingredients, unit) VALUES (35, N'Beautity', N'Rice', N'Kg');

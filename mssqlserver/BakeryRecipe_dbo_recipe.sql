@@ -1,0 +1,11 @@
+INSERT INTO BakeryRecipe.dbo.recipe (post_id, name, tool) VALUES (1, N'Bánh sữa tươi chiên', N'Khuôn/nNồi/nChảo');
+INSERT INTO BakeryRecipe.dbo.recipe (post_id, name, tool) VALUES (18, N'bánh quy bơ Danisa', N'dao/nnồi /nchảo chống dính');
+INSERT INTO BakeryRecipe.dbo.recipe (post_id, name, tool) VALUES (19, N'Bánh trung thu nhân đậu xanh', N'dao/nkhuôn bánh/nnồi');
+INSERT INTO BakeryRecipe.dbo.recipe (post_id, name, tool) VALUES (20, N'Bánh Trung Thu nhân đậu xanh trứng muối', N'dao/nnồi /nlò nướng/nmáy xay sinh tố/nchén bát/nchảo chống dính');
+INSERT INTO BakeryRecipe.dbo.recipe (post_id, name, tool) VALUES (21, N'bánh chuối', N'chảo chiên/nvá /nmáy xay ');
+INSERT INTO BakeryRecipe.dbo.recipe (post_id, name, tool) VALUES (28, N'bánh quy bơ Danisa', N'Nồi/nChảo/nBếp Nướng');
+INSERT INTO BakeryRecipe.dbo.recipe (post_id, name, tool) VALUES (41, N'bánh quy bơ Danisa', N'dao/nthớt/nnồi hấp');
+INSERT INTO BakeryRecipe.dbo.recipe (post_id, name, tool) VALUES (48, N'bánh Mochi', N'Dao/nNồi');
+INSERT INTO BakeryRecipe.dbo.recipe (post_id, name, tool) VALUES (53, N'bánh quy bơ Danisa', N'dao/nchảo');
+INSERT INTO BakeryRecipe.dbo.recipe (post_id, name, tool) VALUES (59, N'bánh quy bơ Danisa', N'Bep nuong');
+INSERT INTO BakeryRecipe.dbo.recipe (post_id, name, tool) VALUES (60, N'bánh quy bơ Danisa', N'bep nuong');
