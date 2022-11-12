@@ -61,6 +61,7 @@ export default function FormChat({ active, listMess, setMessage, chat, message }
                     refs={textInput}
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
+                    on
                     cols="1"
                     rows="1"
                     placeholder="Your Message.."

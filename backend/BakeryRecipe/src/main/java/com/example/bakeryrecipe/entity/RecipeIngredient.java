@@ -11,40 +11,40 @@ import javax.persistence.MapsId;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Step_Ingredient")
-public class StepIngredient {
+@Table(name = "Recipe_Ingredient")
+public class RecipeIngredient {
     @EmbeddedId
-    private StepIngredientId stepIngredientId;
+    private RecipeIngredientId recipeIngredientId;
 
     @MapsId("ingredientsId")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "ingredients_id", nullable = false)
     private Ingredient ingredients;
 
-    @MapsId("stepId")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "step_id", nullable = false)
-    private Step step;
+    @MapsId("recipeId")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "recipe_id")
+    private Recipe recipe;
 
     @Column(name = "quantity", nullable = false)
     private Integer quantity;
 
-    public StepIngredient() {
+    public RecipeIngredient() {
     }
 
-    public StepIngredient(Ingredient ingredients, Step step, Integer quantity) {
-        this.stepIngredientId = new StepIngredientId(ingredients.getId(), step.getId());
+    public RecipeIngredient(Ingredient ingredients, Recipe recipe, Integer quantity) {
+        this.recipeIngredientId = new RecipeIngredientId(ingredients.getId(), recipe.getId());
         this.ingredients = ingredients;
-        this.step = step;
+        this.recipe = recipe;
         this.quantity = quantity;
     }
 
-    public StepIngredientId getStepIngredientId() {
-        return stepIngredientId;
+    public RecipeIngredientId getRecipeIngredientId() {
+        return recipeIngredientId;
     }
 
-    public void setStepIngredientId(StepIngredientId stepIngredientId) {
-        this.stepIngredientId = stepIngredientId;
+    public void setRecipeIngredientId(RecipeIngredientId recipeIngredientId) {
+        this.recipeIngredientId = recipeIngredientId;
     }
 
     public Ingredient getIngredients() {
@@ -55,12 +55,12 @@ public class StepIngredient {
         this.ingredients = ingredients;
     }
 
-    public Step getStep() {
-        return step;
+    public Recipe getRecipe() {
+        return recipe;
     }
 
-    public void setStep(Step step) {
-        this.step = step;
+    public void setRecipe(Recipe recipe) {
+        this.recipe = recipe;
     }
 
     public Integer getQuantity() {
@@ -70,5 +70,4 @@ public class StepIngredient {
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
-
 }

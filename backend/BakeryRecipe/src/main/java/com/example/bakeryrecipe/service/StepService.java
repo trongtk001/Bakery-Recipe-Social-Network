@@ -18,22 +18,18 @@ public class StepService implements BaseService<StepDTO> {
 
     private final StepRepository stepRepository;
     private final StepMapper mapper;
-    private final StepIngredientService stepIngredientService;
 
-    public StepService(StepRepository stepRepository, StepMapper mapper, StepIngredientService stepIngredientService) {
+    public StepService(StepRepository stepRepository, StepMapper mapper) {
         this.stepRepository = stepRepository;
         this.mapper = mapper;
-        this.stepIngredientService = stepIngredientService;
     }
 
     @Override
     public StepDTO save(StepDTO dto) {
         Step step = mapper.toEntity(dto);
         step = stepRepository.save(step);
-        List<IngredientDTO> ingredientDTOS = stepIngredientService.save(step, dto.getIngredients());
 
         dto = mapper.toDTO(step);
-        dto.setIngredients(ingredientDTOS);
         return dto;
     }
 
@@ -43,11 +39,8 @@ public class StepService implements BaseService<StepDTO> {
             step.setRecipe(recipe);
             step = stepRepository.save(step);
 
-            List<IngredientDTO> ingredientDTOS = nonNull(stepDTO.getIngredients()) ? stepIngredientService.save(step, stepDTO.getIngredients()) : null;
-
 
             stepDTO = mapper.toDTO(step);
-            stepDTO.setIngredients(ingredientDTOS);
             return stepDTO;
         }).collect(Collectors.toList());
     }

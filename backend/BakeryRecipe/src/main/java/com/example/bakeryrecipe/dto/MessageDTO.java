@@ -11,6 +11,9 @@ public class MessageDTO implements Serializable {
     private String messageBody;
     private Instant createDate;
 
+    public MessageDTO() {
+    }
+
     public Long getId() {
         return id;
     }

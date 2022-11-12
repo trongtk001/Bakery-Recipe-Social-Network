@@ -42,7 +42,7 @@ export const listAll = async () => {
 };
 
 export const listTrending = async () => {
-  return await (await axios.get(`${process.env.REACT_APP_API_URL}/post?page=1&size=21`)).data.list;
+  return await (await axios.get(`${process.env.REACT_APP_API_URL}/post/postlike`)).data;
 };
 
 export const singlePost = async (postId) => {

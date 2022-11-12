@@ -1,3 +1,5 @@
+SET IDENTITY_INSERT BakeryRecipe.dbo.member_role ON
+
 INSERT INTO BakeryRecipe.dbo.member_role (member_id, role_id) VALUES (1, 1);
 INSERT INTO BakeryRecipe.dbo.member_role (member_id, role_id) VALUES (1, 2);
 INSERT INTO BakeryRecipe.dbo.member_role (member_id, role_id) VALUES (2, 1);

@@ -27,12 +27,12 @@ export function validateRegister(values) {
   }
   if (!values.password) {
     errors.password = "Password is required";
-  } else if (values.password.length < 8) {
-    errors.password = "Password must be 8 or more characters";
+  } else if (values.password.length < 6) {
+    errors.password = "Password must be 6 or more characters";
   } else if (
-    !/\d/.test(values.password) ||
-    !/[!@#$%&?.]/g.test(values.password) ||
-    !/[A-Z]/g.test(values.password)
+    !/\d/.test(values.password) 
+    // !/[!@#$%&?.]/g.test(values.password) ||
+    // !/[A-Z]/g.test(values.password)
   ) {
     errors.password =
       "Password must contains at least 1 number, at least 1 capital character, 1 special character";

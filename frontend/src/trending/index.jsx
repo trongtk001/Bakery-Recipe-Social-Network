@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { listAll } from "../post/apiPost";
+import { listTrending } from "../post/apiPost";
 import { findPeople, findPeople2 } from "../user/apiUser";
 import UserSuggest from "./UserSuggest";
 import UserTrending from "./UserTrending";
@@ -12,7 +12,7 @@ export default function Trending() {
 
     useEffect(() => {
         async function fetchData() {
-            setDataList(await listAll());
+            setDataList(await listTrending());
             findPeople2().then((data) => {
                 if (data) {
                     setUsers(data);

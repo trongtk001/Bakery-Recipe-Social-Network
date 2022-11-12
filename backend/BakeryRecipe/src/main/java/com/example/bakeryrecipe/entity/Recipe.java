@@ -33,11 +33,11 @@ public class Recipe {
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.REMOVE)
     private List<Step> steps;
 
-    @Column(name = "tool", columnDefinition = "nvarchar(500)", nullable = false, length = 500)
-    private String tool;
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
+    private List<RecipeIngredient> ingredients;
 
-    @OneToMany(mappedBy = "step", cascade = CascadeType.REMOVE)
-    private List<StepIngredient> ingredients = new ArrayList<>();
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
+    private List<RecipeTool> tools;
 
     public Long getId() {
         return id;
@@ -71,23 +71,19 @@ public class Recipe {
         this.steps = steps;
     }
 
-    public String getTool() {
-        return tool;
-    }
-
-    public void setTool(String tool) {
-        this.tool = tool;
-    }
-
-    public List<StepIngredient> getIngredients() {
+    public List<RecipeIngredient> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(List<StepIngredient> ingredients) {
+    public void setIngredients(List<RecipeIngredient> ingredients) {
         this.ingredients = ingredients;
     }
 
-    public List<String> toolToList() {
-        return new ArrayList<>(Arrays.asList(tool.split("/n")));
+    public List<RecipeTool> getTools() {
+        return tools;
+    }
+
+    public void setTools(List<RecipeTool> tools) {
+        this.tools = tools;
     }
 }

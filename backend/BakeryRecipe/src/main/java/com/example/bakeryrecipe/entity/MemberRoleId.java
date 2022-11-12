@@ -10,6 +10,7 @@ import java.util.Objects;
 @Embeddable
 public class MemberRoleId implements Serializable {
     private static final long serialVersionUID = -847995915701855576L;
+
     @Column(name = "member_id", nullable = false)
     private Long memberId;
 

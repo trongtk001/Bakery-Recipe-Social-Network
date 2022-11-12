@@ -27,9 +27,6 @@ public class Ingredient {
     @Column(name = "Unit", columnDefinition = "nvarchar(50)",nullable = false, length = 50)
     private String unit;
 
-    @OneToMany(mappedBy = "ingredients", cascade = CascadeType.REMOVE)
-    private List<StepIngredient> stepIngredientList;
-
     public Long getId() {
         return id;
     }
@@ -62,11 +59,4 @@ public class Ingredient {
         this.unit = unit;
     }
 
-    public List<StepIngredient> getStepIngredientList() {
-        return stepIngredientList;
-    }
-
-    public void setStepIngredientList(List<StepIngredient> stepIngredientList) {
-        this.stepIngredientList = stepIngredientList;
-    }
 }

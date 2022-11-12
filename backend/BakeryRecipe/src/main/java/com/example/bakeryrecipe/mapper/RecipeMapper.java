@@ -15,15 +15,12 @@ public class RecipeMapper extends BaseMapper<Recipe, RecipeDTO> {
     public static PropertyMap<Recipe, RecipeDTO> entityToDTOPropertyMap = new PropertyMap<Recipe, RecipeDTO>() {
         @Override
         protected void configure() {
-            map(source.toolToList(), destination.getTool());
         }
     };
 
     public static PropertyMap<RecipeDTO, Recipe> dtoToEntityPropertyMap = new PropertyMap<RecipeDTO, Recipe>() {
         @Override
         protected void configure() {
-            map(source.toolToString(), destination.getTool());
-            skip(destination.getSteps());
         }
     };
 

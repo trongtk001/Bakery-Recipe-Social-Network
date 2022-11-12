@@ -44,7 +44,7 @@ public class Post {
     @Column(name = "post_body", columnDefinition = "nvarchar(3000)",nullable = false)
     private String postBody;
 
-    @OneToOne(mappedBy = "post", cascade = CascadeType.REMOVE)
+    @OneToOne(mappedBy = "post",fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private Recipe recipe;
 
     @Filter(name = "likeFilter", condition = "status = 1")

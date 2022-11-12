@@ -3,16 +3,22 @@ package com.example.bakeryrecipe.dto;
 import java.io.Serializable;
 
 public class IngredientDTO implements Serializable {
+    private static final long serialVersionUID = 5624337921962083412L;
+
     private Long id;
     private String ingredients;
     private String description;
     private String unit;
-    private int quantity;
+    private Integer quantity;
 
     public IngredientDTO() {
     }
 
-    public IngredientDTO(Long id, String ingredients, String description, String unit, int quantity) {
+    public IngredientDTO(Long id) {
+        this.id = id;
+    }
+
+    public IngredientDTO(Long id, String ingredients, String description, String unit, Integer quantity) {
         this.id = id;
         this.ingredients = ingredients;
         this.description = description;
@@ -52,11 +58,11 @@ public class IngredientDTO implements Serializable {
         this.unit = unit;
     }
 
-    public int getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 }
