@@ -1,6 +1,5 @@
 package com.example.bakeryrecipe.entity;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,10 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "step")
@@ -34,9 +30,6 @@ public class Step {
 
     @Column(name = "video", length = 250)
     private String video;
-
-    @OneToMany(mappedBy = "step", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
-    private List<StepIngredient> ingredients = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "post_id", nullable = false)
@@ -90,11 +83,4 @@ public class Step {
         this.recipe = recipe;
     }
 
-    public List<StepIngredient> getIngredients() {
-        return ingredients;
-    }
-
-    public void setIngredients(List<StepIngredient> ingredients) {
-        this.ingredients = ingredients;
-    }
 }

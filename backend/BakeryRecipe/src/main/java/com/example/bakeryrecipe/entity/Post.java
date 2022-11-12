@@ -18,11 +18,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import java.time.Instant;
 import java.util.List;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
+@Table(name = "post")
 @FilterDef(name = "likeFilter")
 public class Post {
     @Id
@@ -42,7 +44,7 @@ public class Post {
     @Column(name = "post_body", columnDefinition = "nvarchar(3000)",nullable = false)
     private String postBody;
 
-    @OneToOne(mappedBy = "post", cascade = CascadeType.REMOVE)
+    @OneToOne(mappedBy = "post",fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private Recipe recipe;
 
     @Filter(name = "likeFilter", condition = "status = 1")

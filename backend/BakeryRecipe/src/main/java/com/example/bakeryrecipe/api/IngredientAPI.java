@@ -4,12 +4,7 @@ package com.example.bakeryrecipe.api;
 import com.example.bakeryrecipe.dto.IngredientDTO;
 import com.example.bakeryrecipe.service.IngredientService;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,11 +25,24 @@ public class IngredientAPI {
         return ingredientService.save(ingredientDTO);
     }
 
+    @DeleteMapping("{id}")
+    @PreAuthorize("isAuthenticated()")
+    public IngredientDTO deleteIngredient(@PathVariable("id") long id) { return ingredientService.delete(id); }
+
     @GetMapping("")
-    public List<IngredientDTO> getIngredient() {
+    public List<IngredientDTO> getIngredients() {
         return ingredientService.findAllIngredients();
     }
 
+    @GetMapping("{id}")
+    public IngredientDTO getIngredients(@PathVariable("id") long id) {
+        return ingredientService.search(id);
+    }
 
+    @PutMapping("{id}")
+    public IngredientDTO editIngredient(@PathVariable("id") long id, @RequestBody IngredientDTO ingredientDTO) {
+        ingredientDTO.setId(id);
+        return ingredientService.update(ingredientDTO);
+    }
 
 }

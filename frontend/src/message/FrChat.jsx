@@ -3,7 +3,7 @@ import defaltAvatar from '../images/avatar.png'
 export default function FrChat({active, usersActive}) {
 
     return (
-        <div className="px-5 py-4 flex uk-flex-between">                        
+        <div className="px-5 py-4 flex">                        
             <a href="/#" className="flex items-center space-x-3">
                 <div className="w-10 h-10 rounded-full relative flex-shrink-0">
                     <img src={active?.avatar ? active.avatar : defaltAvatar} alt="" className="h-full rounded-full w-full"/>
@@ -14,9 +14,9 @@ export default function FrChat({active, usersActive}) {
                     <p className="font-semibold leading-3  text-sm">{usersActive?.includes(active?.username) ? 'Online ' : 'Offline'}</p>
                 </div>
             </a>                        
-            <a href="/#" className="flex hover:text-red-400 items-center leading-8 space-x-2 text-red-500 font-medium"> 
+            {/* <a href="/#" className="flex hover:text-red-400 items-center leading-8 space-x-2 text-red-500 font-medium"> 
                 <i className="uil-trash-alt"></i> <span className="lg:block hidden"> Delete </span> 
-            </a>
+            </a> */}
         </div>
     )
 

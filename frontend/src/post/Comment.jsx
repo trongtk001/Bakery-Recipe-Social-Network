@@ -6,8 +6,9 @@ import { useDispatch } from "react-redux";
 import Load from "../components/load";
 import { useIsHidden } from "../hooks/useIsHidden";
 import { useIsLogin } from "../hooks/useIsLogin";
-import { delComment, getComment, postComment } from "../store/actions/post.action";
+import { delComment, getComment, postComment, savePost } from "../store/actions/post.action";
 import { like } from "../user/apiUser";
+import Updatecmt from "./Updatecmt";
 
 function Comment({ post }) {
   const dispatch = useDispatch();
@@ -19,13 +20,14 @@ function Comment({ post }) {
   const [total,setTotal] = useState(post.likes.length);
 
   const [text, setText] = useState("");
+  const [save, setSave] = useState(false);
 
 
   console.log( post.likes.map((like)=>like.memberID).includes(isLogin.id))
 
   useEffect(()=>{
-  
-      dispatch(getComment(post.id, setListComment));
+
+    dispatch(getComment(post.id, setListComment));
      setTotal(post.likes.length);
      setLikes(()=> post.likes.map((like)=>like.memberID).includes(isLogin.id))
   
@@ -51,9 +53,7 @@ function Comment({ post }) {
     return diffDays;
   }
 
-  const delCMT = async (id) => {
-    dispatch(delComment(id, setListComment));
-  }
+
 
   const onClickLike = async(e)=>{
      await like(isLogin.id, e)
@@ -61,7 +61,7 @@ function Comment({ post }) {
       setTotal(likes ? total - 1 : total + 1)
   }
   const shareToFacebook = ()=>{
-    window.open(`https://www.facebook.com/sharer/sharer.php?u=${window.location.href}`, '_blank');
+    dispatch(savePost(post.id, isLogin.id, setSave));
   }
 
   const onComment = (e) => {
@@ -116,23 +116,22 @@ function Comment({ post }) {
           </svg>
           <div> Comment</div>
         </button>
+        <div className="flex items-center space-x-2 flex-1 justify-end">
+          
+        </div>
         <button className="flex items-center space-x-2 flex-1 justify-end">
-          <svg
+        <svg onClick={shareToFacebook} width={20}
+            height={20}
+            fill={save? '#f00000' : 'currentColor'}
             xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-            width={22}
-            height={22}
-            className="dark:text-gray-100 text-gray-500"
-          >
-            <path d="M15 8a3 3 0 10-2.977-2.63l-4.94 2.47a3 3 0 100 4.319l4.94 2.47a3 3 0 10.895-1.789l-4.94-2.47a3.027 3.027 0 000-.74l4.94-2.47C13.456 7.68 14.19 8 15 8z" />
-          </svg>
-          <div onClick={shareToFacebook} > Share</div>
+            viewBox="0 0 384 512">
+            <path d="M336 0h-288C21.49 0 0 21.49 0 48v431.9c0 24.7 26.79 40.08 48.12 27.64L192 423.6l143.9 83.93C357.2 519.1 384 504.6 384 479.9V48C384 21.49 362.5 0 336 0zM336 452L192 368l-144 84V54C48 50.63 50.63 48 53.1 48h276C333.4 48 336 50.63 336 54V452z"/></svg>
+          <div ></div>
         </button>
       </div>
       {hidden && (
         <>
-          <div className="border-t pt-4 space-y-4 dark:border-gray-600">
+          <div className="border-t pt-4 mb-6 space-y-4 dark:border-gray-600">
             {loading ? (
               <Load isSmall={true} />
             ) : (
@@ -150,13 +149,18 @@ function Comment({ post }) {
                                 className="absolute h-full rounded-full w-full"
                               />
                             </div>
-                            <div className="text-gray-700 py-2 px-3 rounded-md bg-gray-100 h-full relative lg:ml-5 ml-2   dark:bg-gray-800 dark:text-gray-100">
+                            <div>
+                            <div className="text-gray-700 py-2 px-3 rounded-md bg-gray-100 relative lg:ml-5 ml-2   dark:bg-gray-800 dark:text-gray-100">
                               <p className="leading-6"> 
                                 <span className="min-w-max font-bold ">{comment.member.name ? comment.member.name :  isLogin.name } </span> 
-                                {comment.commentDetail}   <span className="text-sm opacity-50">{fomatDate(comment.createDate)}</span> {isLogin.id === comment.member.id && <span className="text-sm opacity-50 hover:text-red-500 hover:opacity-100 cursor-pointer" onClick={()=> delCMT(comment.id)}>Xóa</span>}
+                                {comment.commentDetail} <span className="text-sm opacity-50">{fomatDate(comment.createDate)}</span> 
                                 <i className="uil-grin-tongue-wink"> </i>
                               </p>
                               <div className="absolute w-3 h-3 top-3 -left-1 bg-gray-100 transform rotate-45 dark:bg-gray-800" />
+                            </div>
+                              <div className="">
+                                  <Updatecmt comment={comment} setListComment={setListComment} ></Updatecmt>
+                              </div>
                             </div>
                           </div>
                         ))}

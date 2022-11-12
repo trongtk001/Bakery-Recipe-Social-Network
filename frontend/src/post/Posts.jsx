@@ -10,6 +10,8 @@ function Posts() {
     const dispatch = useDispatch();
     const [page, setPage] = useState(1);
     const [posts, setPosts] = useState([]);
+    const [b, setB] = useState(true);
+  
     const [isNotthing, setIsNothing] = useState(false);
     const [url, setUrl] = useState('post');
     const {isLogin} = useIsLogin();
@@ -30,7 +32,7 @@ function Posts() {
             }
 
             let a = h - this.pageYOffset;
-            if (a <= 1000 && !isNotthing) {
+            if (a <= 1000 ) {
                 setPage(page + 1);
             }
         };
@@ -45,18 +47,20 @@ function Posts() {
     }
 
     return posts.length === 0 ? (
-        <h5 className="px-4">not found</h5>
+        <h5 className="px-4 flex-shrink-0 lg:w-7/12"></h5>
     ) : (
         
         <div className="space-y-5 flex-shrink-0 lg:w-7/12 load-more">
 
-            <div className="flex gap-2 cursor-pointer ">
+            {b && (<div className="flex gap-2 cursor-pointer justify-end ">
                 <p onClick={()=>{setUrl('post');setPage(1)}} className={ url == 'post' ? 'text-pink-500' : ''}>Mọi người</p>
                 <p onClick={handleClick} className={ url == 'post' ? '' : 'text-pink-500'}>Follow</p>
-            </div>
-            {posts.map((post, i) => {
+            </div>)}
+            {
+            posts.map((post, i) => {
                 return <DataPost post={post} key={i} />;
             })}
+
             {!isNotthing ? (
                 <button
                     disabled

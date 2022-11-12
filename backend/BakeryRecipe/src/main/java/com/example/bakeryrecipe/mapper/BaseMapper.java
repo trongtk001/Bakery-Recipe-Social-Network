@@ -23,20 +23,18 @@ public class BaseMapper<T, K> {
         return (K) modelMapper.map(entity, dtoType);
     }
 
-    public K toDTO(T entity, K dto) {
+    public void toDTO(T entity, K dto) {
         modelMapper.getConfiguration().setPropertyCondition(Conditions.isNotNull());
         modelMapper.map(entity, dto);
-        return dto;
     }
 
     public T toEntity(K dto) {
         return (T) modelMapper.map(dto, entityType);
     }
 
-    public T toEntity(K dto, T entity) {
+    public void toEntity(K dto, T entity) {
         modelMapper.getConfiguration().setPropertyCondition(Conditions.isNotNull());
         modelMapper.map(dto, entity);
-        return entity;
     }
 
     public List<K> toDTOList(List<T> entities) {

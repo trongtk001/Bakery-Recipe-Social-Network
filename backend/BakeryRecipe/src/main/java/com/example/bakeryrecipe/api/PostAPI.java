@@ -58,7 +58,6 @@ public class PostAPI {
 
     @GetMapping("/postlike")
     public List<PostDTO> listPostByLike(){
-
         return postService.findAllByLike();
     }
 

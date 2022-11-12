@@ -9,7 +9,9 @@ public class StepDTO implements Serializable {
     private  String description;
     private String image;
     private String video;
-    private List<IngredientDTO> ingredients;
+
+    public StepDTO() {
+    }
 
     public Long getId() {
         return id;
@@ -49,13 +51,5 @@ public class StepDTO implements Serializable {
 
     public void setVideo(String video) {
         this.video = video;
-    }
-
-    public List<IngredientDTO> getIngredients() {
-        return ingredients;
-    }
-
-    public void setIngredients(List<IngredientDTO> ingredients) {
-        this.ingredients = ingredients;
     }
 }

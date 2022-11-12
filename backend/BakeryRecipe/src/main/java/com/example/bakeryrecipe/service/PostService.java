@@ -62,10 +62,9 @@ public class PostService implements BaseService<PostDTO> {
 
     @Override
     public PostDTO update(PostDTO dto) {
-        Post entity;
-        Post oldEntity = postRepository.findPostsById(dto.getId());
-        if (nonNull(oldEntity)) {
-            entity = mapper.toEntity(dto, oldEntity);
+        Post entity = postRepository.findPostsById(dto.getId());
+        if (nonNull(entity)) {
+            mapper.toEntity(dto, entity);
             entity = postRepository.save(entity);
             return mapper.toDTO(entity);
         } else {

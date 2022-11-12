@@ -114,3 +114,15 @@ export const findPeople = () => {
     })
     .catch((err) => console.log(err));
 };
+export const findPeople2 = () => {
+  return fetch(`${process.env.REACT_APP_API_URL}/member/top`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+    },
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .catch((err) => console.log(err));
+};

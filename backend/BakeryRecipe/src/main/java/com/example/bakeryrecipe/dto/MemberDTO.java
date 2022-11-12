@@ -1,9 +1,10 @@
 package com.example.bakeryrecipe.dto;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
-public class MemberDTO {
+public class MemberDTO implements Serializable {
     private Long id;
     private String name;
     private String email;

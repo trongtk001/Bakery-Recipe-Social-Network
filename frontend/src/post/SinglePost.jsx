@@ -119,11 +119,10 @@ function SinglePost() {
             <div className="bg-white shadow rounded-md dark:bg-gray-900  w-full mx-4 lg:mx-0 max-w-[800px] mt-20 xl:mt-10 md:min-w-[800px] ">
                 <div className="flex justify-between items-center px-4 py-3">
                     <div className="flex flex-1 items-center space-x-4">
-                        <Link to={`/${post.member.id}`}>
+                        <Link to={`/user/${post.member.id}`}>
                             <div className="bg-gradient-to-tr from-yellow-600 to-pink-600 p-0.5 rounded-full">
                                 <img
-                                    src={`${post.member.avatar}`}
-                                    onError={(i) => (i.target.src = `https://source.unsplash.com/random/?bakery,bake,${post.member.name}`)}
+                                    src={`${post.member.avatar ? post.member.avatar : 'https://images.squarespace-cdn.com/content/v1/54b7b93ce4b0a3e130d5d232/1519987020970-8IQ7F6Z61LLBCX85A65S/icon.png?format=1000w'}`}
                                     alt="avatar"
                                     className="bg-gray-200 border border-white rounded-full w-12 h-12"
                                 />

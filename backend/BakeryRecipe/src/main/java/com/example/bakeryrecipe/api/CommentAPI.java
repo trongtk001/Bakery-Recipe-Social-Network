@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("comment")
-@PreAuthorize("permitAll()")
+@PreAuthorize("isAuthenticated()")
 public class CommentAPI {
 
     private final CommentService commentService;
@@ -39,7 +39,7 @@ public class CommentAPI {
     @PutMapping("/{id}")
     public CommentDTO editComment(@PathVariable("id") Long id, @RequestBody CommentDTO commentDTO) {
         commentDTO.setId(id);
-        return commentService.save(commentDTO);
+        return commentService.update(commentDTO);
     }
 
     @GetMapping("")

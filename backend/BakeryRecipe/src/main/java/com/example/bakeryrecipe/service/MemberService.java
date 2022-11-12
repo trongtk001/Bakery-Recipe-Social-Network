@@ -79,7 +79,7 @@ public class MemberService implements BaseService<MemberDTO> {
             //edit member info
             memberEntity = memberRepository.findById(dto.getId()).orElse(null);
             if (null != memberEntity) {
-                memberEntity = mapper.toEntity(dto, memberEntity);
+                mapper.toEntity(dto, memberEntity);
                 memberEntity = memberRepository.save(memberEntity);
             } else {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found this user");

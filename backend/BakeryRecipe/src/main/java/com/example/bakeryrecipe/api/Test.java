@@ -1,8 +1,12 @@
 package com.example.bakeryrecipe.api;
 
 import com.example.bakeryrecipe.dto.MemberDTO;
+import com.example.bakeryrecipe.dto.RecipeDTO;
+import com.example.bakeryrecipe.dto.SharePostDTO;
 import com.example.bakeryrecipe.entity.Member;
 import com.example.bakeryrecipe.mapper.MemberMapper;
+import com.example.bakeryrecipe.service.RecipeService;
+import com.example.bakeryrecipe.service.SharePostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -27,11 +31,28 @@ public class Test {
     @Autowired
     MemberMapper mapper;
 
+    @Autowired
+    SharePostService sharePostService;
+
     @PostMapping("member")
     public MemberDTO getMember(@RequestBody MemberDTO memberDTO) {
         Member member = mapper.toEntity(memberDTO);
         System.out.println(member);
         return mapper.toDTO(member);
+    }
+
+    @PostMapping("sharepost")
+    public SharePostDTO sharePost(@RequestBody SharePostDTO sharePostDTO) {
+        return sharePostService.save(sharePostDTO);
+    }
+
+    @Autowired
+    RecipeService recipeService;
+
+    @PostMapping("recipe")
+    public RecipeDTO recipe() {
+        RecipeDTO recipeDTO = new RecipeDTO(1L);
+        return recipeDTO;
     }
 
 }

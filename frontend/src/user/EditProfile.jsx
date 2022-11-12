@@ -146,9 +146,7 @@ function EditProfile() {
                   </div>
                 </div>
               </div>
-              <div className="px-4 py-3 -mx-5 -mb-4 mt-5 border-t text-sm dark:border-gray-500 dark:text-gray-500">
-                Your Photo size Must be Maxmium 999MB
-              </div>
+            
             </div>
             <div className="bg-white dark:bg-gray-900 rounded-md lg:shadow-lg shadow col-span-2">
               <div className="grid grid-cols-2 gap-3 lg:p-6 p-4">

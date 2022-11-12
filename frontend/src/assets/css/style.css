@@ -1599,7 +1599,7 @@ strong {
 @media (min-width: 1024px) {
   .container {
     max-width: 900px !important;
-    padding-top: 45px;
+    padding-top: 20px;
   }
 }
 
@@ -2690,7 +2690,7 @@ header .uk-dropdown {
   }
 
   .main_content > .container {
-    padding-top: 90px !important;
+    padding-top: 30px !important;
   }
 
   .sidebar-active .sidebar {
@@ -3009,4 +3009,15 @@ header .uk-dropdown {
 
 .ldio-2jzvx09mle4 div {
   box-sizing: content-box;
+}
+
+
+.aa::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.aa {
+-ms-overflow-style: none;  /* IE and Edge */
+scrollbar-width: none;  /* Firefox */
 }

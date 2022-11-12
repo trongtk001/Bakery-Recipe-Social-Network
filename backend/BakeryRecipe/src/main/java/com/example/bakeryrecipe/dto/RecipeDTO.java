@@ -3,14 +3,23 @@ package com.example.bakeryrecipe.dto;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static java.util.Objects.isNull;
 
 public class RecipeDTO implements Serializable {
     private Long id;
     private String name;
     private List<StepDTO> steps;
-    private List<String> tool;
+    private List<Long> toolsId;
+    private List<IngredientDTO> ingredients;
+    private List<ToolDTO> tools;
 
     public RecipeDTO() {
+    }
+
+    public RecipeDTO(Long id) {
+        this.id = id;
     }
 
     public Long getId() {
@@ -37,15 +46,35 @@ public class RecipeDTO implements Serializable {
         this.steps = steps;
     }
 
-    public List<String> getTool() {
-        return tool;
+    public List<Long> getToolsId() {
+        return toolsId;
     }
 
-    public void setTool(List<String> tool) {
-        this.tool = tool;
+    public void setToolsId(List<Long> toolsId) {
+        this.toolsId = toolsId;
     }
 
-    public String toolToString() {
-        return String.join("/n", this.tool);
+    public List<IngredientDTO> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(List<IngredientDTO> ingredients) {
+        this.ingredients = ingredients;
+    }
+
+    public List<ToolDTO> getTools() {
+        return tools;
+    }
+
+    public void setTools(List<ToolDTO> tools) {
+        this.tools = tools;
+    }
+
+    public List<ToolDTO> toolDTOS() {
+        if (isNull(this.toolsId)) {
+            return null;
+        }
+
+        return this.toolsId.stream().map(id -> new ToolDTO(id)).collect(Collectors.toList());
     }
 }
